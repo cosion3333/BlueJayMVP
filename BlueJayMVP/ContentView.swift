@@ -9,16 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            NavigationStack { RecallView() }
+                .tabItem { Label("Recall", systemImage: "clock.arrow.circlepath") }
+
+            NavigationStack { RankingView() }
+                .tabItem { Label("Ranking", systemImage: "list.number") }
+
+            NavigationStack { CombosView() }
+                .tabItem { Label("BJ Combos", systemImage: "leaf") }
+
+            NavigationStack { CheckInView() }
+                .tabItem { Label("Check-In", systemImage: "checkmark.seal") }
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
-}
+#Preview { ContentView() }
