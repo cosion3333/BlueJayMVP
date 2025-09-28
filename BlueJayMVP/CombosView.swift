@@ -18,9 +18,9 @@ struct CombosView: View {
         .init(title: "Soda → Sparkling water + lime",
               details: "Keep cold cans ready. Add fresh lime; 0 kcal."),
         .init(title: "Chips → Greek yogurt + berries",
-              details: "150–200g 0% yogurt + 100g berries."),
+              details: "Greek yogurt (0%) + berries."),
         .init(title: "Drive-thru breakfast → Oats + protein",
-              details: "40g oats + scoop whey + cinnamon.")
+              details: "Oats + protein powder + cinnamon.")
     ]
 
     var body: some View {
