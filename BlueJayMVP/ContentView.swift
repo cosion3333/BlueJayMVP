@@ -11,16 +11,16 @@ struct ContentView: View {
     var body: some View {
         TabView {
             NavigationStack { RecallView() }
-                .tabItem { Label("Recall", systemImage: "clock.arrow.circlepath") }
+                .tabItem { Label("Recall", systemImage: "square.and.pencil") }
 
             NavigationStack { RankingView() }
                 .tabItem { Label("Ranking", systemImage: "list.number") }
 
             NavigationStack { CombosView() }
-                .tabItem { Label("BJ Combos", systemImage: "leaf") }
+                .tabItem { Label("Combos", systemImage: "wand.and.stars") }
 
             NavigationStack { CheckInView() }
-                .tabItem { Label("Check-In", systemImage: "checkmark.seal") }
+                .tabItem { Label("Check-In", systemImage: "checkmark.circle") }
         }
     }
 }

@@ -27,7 +27,7 @@ struct CombosView: View {
         List(combos) { combo in
             VStack(alignment: .leading, spacing: 6) {
                 Text(combo.title).font(.headline)
-                Text(combo.details).font(.subheadline).foregroundStyle(.secondary)
+                Text(combo.details).font(.subheadline).foregroundColor(.secondary)
             }
             .padding(.vertical, 4)
         }
@@ -35,4 +35,8 @@ struct CombosView: View {
     }
 }
 
-#Preview { NavigationStack { CombosView() } }
+struct CombosView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView { CombosView() }
+    }
+}
