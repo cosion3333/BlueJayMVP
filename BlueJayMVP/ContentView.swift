@@ -17,10 +17,7 @@ struct ContentView: View {
                 .tabItem { Label("Ranking", systemImage: "list.number") }
 
             NavigationStack { CombosView() }
-                .tabItem { Label("Combos", systemImage: "wand.and.stars") }
-
-            NavigationStack { CheckInView() }
-                .tabItem { Label("Check-In", systemImage: "checkmark.circle") }
+                .tabItem { Label("Combos", systemImage: "sparkles") }
         }
     }
 }
