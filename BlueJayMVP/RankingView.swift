@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct TargetFood: Identifiable {
+struct RankedFood: Identifiable {
     let id = UUID()
     var name: String
     var priority: Int   // 1 = replace first
 }
 
 struct RankingView: View {
-    @State private var items: [TargetFood] = [
+    @State private var items: [RankedFood] = [
         .init(name: "Sugary soda", priority: 1),
         .init(name: "Chips at night", priority: 2),
         .init(name: "Drive-thru breakfast", priority: 3)
