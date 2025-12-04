@@ -18,6 +18,8 @@ struct PersistenceService {
         static let recallItems = "recall_items"
         static let rankedFoods = "ranked_foods"
         static let selectedTargetFood = "selected_target_food"
+        static let focusedFood = "focused_food"
+        static let detectedFoods = "detected_foods"
         static let replacedToday = "replaced_today"
         static let replacementsCount = "replacements_count"
         static let cravingLevel = "craving_level"
@@ -66,6 +68,31 @@ struct PersistenceService {
         return TargetFood(rawValue: rawValue)
     }
     
+    // MARK: - Golden Path State
+    
+    static func saveFocusedFood(_ target: TargetFood?) {
+        defaults.set(target?.rawValue, forKey: Keys.focusedFood)
+    }
+    
+    static func loadFocusedFood() -> TargetFood? {
+        guard let rawValue = defaults.string(forKey: Keys.focusedFood) else {
+            return nil
+        }
+        return TargetFood(rawValue: rawValue)
+    }
+    
+    static func saveDetectedFoods(_ foods: [TargetFood]) {
+        let rawValues = foods.map { $0.rawValue }
+        defaults.set(rawValues, forKey: Keys.detectedFoods)
+    }
+    
+    static func loadDetectedFoods() -> [TargetFood] {
+        guard let rawValues = defaults.stringArray(forKey: Keys.detectedFoods) else {
+            return []
+        }
+        return rawValues.compactMap { TargetFood(rawValue: $0) }
+    }
+    
     // MARK: - Check-In State
     
     static func saveCheckInState(replacedToday: Bool, replacementsCount: Int, cravingLevel: Double) {
@@ -112,6 +139,8 @@ struct PersistenceService {
             Keys.recallItems,
             Keys.rankedFoods,
             Keys.selectedTargetFood,
+            Keys.focusedFood,
+            Keys.detectedFoods,
             Keys.replacedToday,
             Keys.replacementsCount,
             Keys.cravingLevel,

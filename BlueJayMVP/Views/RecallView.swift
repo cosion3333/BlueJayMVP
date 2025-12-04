@@ -10,9 +10,12 @@ import SwiftUI
 struct RecallView: View {
     @Environment(AppModel.self) private var appModel
     @State private var saved = false
+    @State private var showAnalysisAlert = false
 
     var body: some View {
         @Bindable var appModel = appModel
+        
+        let itemCount = appModel.recallItems.filter { !$0.isEmpty }.count
         
         Form {
             Section("24-hour Recall") {
@@ -20,11 +23,21 @@ struct RecallView: View {
                     TextField("Item \(index + 1)", text: $appModel.recallItems[index])
                 }
 
-                Button("Save") {
-                    appModel.saveRecall()
-                    saved = true
+                HStack(spacing: 12) {
+                    Button("Save") {
+                        appModel.saveRecall()
+                        saved = true
+                    }
+                    .buttonStyle(.bordered)
+                    
+                    Button("Analyze & Find Swaps") {
+                        appModel.saveRecall()
+                        appModel.analyzeRecall()
+                        showAnalysisAlert = true
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(itemCount < 2)
                 }
-                .buttonStyle(.borderedProminent)
             }
 
             Section("Tips") {
@@ -40,6 +53,15 @@ struct RecallView: View {
         .navigationTitle("Diet Recall")
         .alert("Saved", isPresented: $saved) {
             Button("OK", role: .cancel) {}
+        }
+        .alert("Analysis Complete!", isPresented: $showAnalysisAlert) {
+            Button("View Insights", role: .cancel) {}
+        } message: {
+            if appModel.detectedFoods.isEmpty {
+                Text("No swappable foods detected. Try adding items like soda, fries, or chips.")
+            } else {
+                Text("Found \(appModel.detectedFoods.count) food(s) you can swap! Go to the Insights tab to set your focus.")
+            }
         }
     }
 }

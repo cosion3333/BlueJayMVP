@@ -23,6 +23,11 @@ class AppModel {
     var activeCombos: [SwapCombo] = []
     var selectedTargetFood: TargetFood?
     
+    // MARK: - Analysis State (Golden Path)
+    var detectedFoods: [TargetFood] = []  // Foods detected from recall
+    var analysisComplete: Bool = false
+    var focusedFood: TargetFood?  // The food user wants to focus on swapping
+    
     // MARK: - Check-In State
     var replacedToday: Bool = false
     var replacementsCount: Int = 0
@@ -46,6 +51,29 @@ class AppModel {
     func saveRecall() {
         PersistenceService.saveRecallItems(recallItems)
         print("📝 Saved recall items: \(recallItems.filter { !$0.isEmpty })")
+    }
+    
+    /// Analyze recall items and detect swappable foods (Golden Path Step 1)
+    func analyzeRecall() {
+        let analysis = SwapEngine.analyzeRecall(recallItems)
+        detectedFoods = Array(analysis.keys).sorted { $0.rawValue < $1.rawValue }
+        analysisComplete = !detectedFoods.isEmpty
+        
+        // Persist detected foods
+        PersistenceService.saveDetectedFoods(detectedFoods)
+        
+        print("🔍 Analysis complete: Found \(detectedFoods.count) swappable food(s)")
+    }
+    
+    /// Set focus on a specific food to swap (Golden Path Step 2)
+    func setFocus(on food: TargetFood) {
+        focusedFood = food
+        loadSwaps(for: food)
+        
+        // Persist focused food
+        PersistenceService.saveFocusedFood(food)
+        
+        print("🎯 Focus set on: \(food.rawValue)")
     }
     
     /// Load suggested swaps for a target food
@@ -124,6 +152,10 @@ class AppModel {
         
         // Load target food selection
         selectedTargetFood = PersistenceService.loadSelectedTargetFood()
+        
+        // Load Golden Path state
+        detectedFoods = PersistenceService.loadDetectedFoods()
+        focusedFood = PersistenceService.loadFocusedFood()
         
         // Load check-in state
         let checkInState = PersistenceService.loadCheckInState()

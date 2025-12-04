@@ -14,7 +14,58 @@ struct InsightsView: View {
         @Bindable var appModel = appModel
         
         List {
-            Section("Tap to edit priority (1 = highest)") {
+            // Golden Path: Show detected foods from analysis
+            if !appModel.detectedFoods.isEmpty {
+                Section {
+                    ForEach(appModel.detectedFoods, id: \.self) { food in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(food.rawValue)
+                                    .font(.headline)
+                                Text("Tap to see swap options")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            if appModel.focusedFood == food {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundStyle(.green)
+                                    .font(.title3)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            appModel.setFocus(on: food)
+                        }
+                    }
+                } header: {
+                    Text("Detected from Your Recall")
+                } footer: {
+                    Text("Select a food to focus on swapping")
+                }
+            }
+            
+            // Guide user to next step
+            if appModel.focusedFood != nil {
+                Section {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Next Step: View Swaps")
+                                .font(.headline)
+                            Text("Go to the Swaps tab to see recommendations")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: "arrow.right.circle.fill")
+                            .foregroundStyle(.blue)
+                            .font(.title2)
+                    }
+                }
+            }
+            
+            // Optional: Existing food rankings section
+            Section {
                 ForEach($appModel.rankedFoods) { $item in
                     HStack {
                         Text(item.name)
@@ -34,10 +85,14 @@ struct InsightsView: View {
                     appModel.rankedFoods.move(fromOffsets: from, toOffset: to)
                     appModel.updateRanking(appModel.rankedFoods)
                 }
+            } header: {
+                Text("Your Priority List (Optional)")
+            } footer: {
+                Text("Tap to edit priority (1 = highest)")
             }
         }
         .toolbar { EditButton() }
-        .navigationTitle("Target Ranking")
+        .navigationTitle("Insights & Focus")
     }
 }
 
