@@ -13,11 +13,11 @@ struct ContentView: View {
             NavigationStack { RecallView() }
                 .tabItem { Label("Recall", systemImage: "square.and.pencil") }
 
-            NavigationStack { RankingView() }
-                .tabItem { Label("Ranking", systemImage: "list.number") }
+            NavigationStack { InsightsView() }
+                .tabItem { Label("Insights", systemImage: "list.number") }
 
-            NavigationStack { CombosView() }
-                .tabItem { Label("Combos", systemImage: "sparkles") }
+            NavigationStack { SwapsView() }
+                .tabItem { Label("Swaps", systemImage: "sparkles") }
         }
     }
 }

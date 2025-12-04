@@ -8,18 +8,20 @@
 import SwiftUI
 
 struct RecallView: View {
-    @State private var recallItems = Array(repeating: "", count: 6)
+    @Environment(AppModel.self) private var appModel
     @State private var saved = false
-    @State private var searchText = ""
 
     var body: some View {
+        @Bindable var appModel = appModel
+        
         Form {
             Section("24-hour Recall") {
                 ForEach(0..<6, id: \.self) { index in
-                    TextField("Item \(index + 1)", text: $recallItems[index])
+                    TextField("Item \(index + 1)", text: $appModel.recallItems[index])
                 }
 
                 Button("Save") {
+                    appModel.saveRecall()
                     saved = true
                 }
                 .buttonStyle(.borderedProminent)
@@ -32,7 +34,7 @@ struct RecallView: View {
             }
             
             Section("Search") {
-                TextField("Search food database", text: $searchText)
+                TextField("Search food database", text: $appModel.searchText)
             }
         }
         .navigationTitle("Diet Recall")
