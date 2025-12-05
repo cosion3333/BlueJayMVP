@@ -8,16 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTab = 0
+    
     var body: some View {
-        TabView {
-            NavigationStack { RecallView() }
+        TabView(selection: $selectedTab) {
+            NavigationStack { RecallView(selectedTab: $selectedTab) }
                 .tabItem { Label("Recall", systemImage: "square.and.pencil") }
+                .tag(0)
 
             NavigationStack { InsightsView() }
                 .tabItem { Label("Insights", systemImage: "list.number") }
+                .tag(1)
 
             NavigationStack { SwapsView() }
                 .tabItem { Label("Swaps", systemImage: "sparkles") }
+                .tag(2)
         }
     }
 }

@@ -12,6 +12,7 @@ struct RecallView: View {
     @State private var saved = false
     @State private var showAnalysisAlert = false
     @FocusState private var isInputFocused: Bool
+    @Binding var selectedTab: Int
 
     var body: some View {
         @Bindable var appModel = appModel
@@ -60,7 +61,11 @@ struct RecallView: View {
             Button("OK", role: .cancel) {}
         }
         .alert("Analysis Complete!", isPresented: $showAnalysisAlert) {
-            Button("View Insights", role: .cancel) {}
+            Button("View Insights") {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    selectedTab = 1
+                }
+            }
         } message: {
             if appModel.detectedFoods.isEmpty {
                 Text("No swappable foods detected. Try adding items like soda, fries, or chips.")
@@ -71,4 +76,9 @@ struct RecallView: View {
     }
 }
 
-#Preview { NavigationStack { RecallView() } }
+#Preview { 
+    @Previewable @State var tab = 0
+    NavigationStack { 
+        RecallView(selectedTab: $tab) 
+    } 
+}
