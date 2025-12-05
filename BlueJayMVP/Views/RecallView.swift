@@ -11,6 +11,7 @@ struct RecallView: View {
     @Environment(AppModel.self) private var appModel
     @State private var saved = false
     @State private var showAnalysisAlert = false
+    @FocusState private var isInputFocused: Bool
 
     var body: some View {
         @Bindable var appModel = appModel
@@ -21,16 +22,19 @@ struct RecallView: View {
             Section("24-hour Recall") {
                 ForEach(0..<6, id: \.self) { index in
                     TextField("Item \(index + 1)", text: $appModel.recallItems[index])
+                        .focused($isInputFocused)
                 }
 
                 HStack(spacing: 12) {
                     Button("Save") {
+                        isInputFocused = false
                         appModel.saveRecall()
                         saved = true
                     }
                     .buttonStyle(.bordered)
                     
                     Button("Analyze & Find Swaps") {
+                        isInputFocused = false
                         appModel.saveRecall()
                         appModel.analyzeRecall()
                         showAnalysisAlert = true
@@ -48,6 +52,7 @@ struct RecallView: View {
             
             Section("Search") {
                 TextField("Search food database", text: $appModel.searchText)
+                    .focused($isInputFocused)
             }
         }
         .navigationTitle("Diet Recall")
