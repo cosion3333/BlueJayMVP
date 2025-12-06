@@ -16,7 +16,7 @@ struct ContentView: View {
                 .tabItem { Label("Recall", systemImage: "square.and.pencil") }
                 .tag(0)
 
-            NavigationStack { InsightsView() }
+            NavigationStack { InsightsView(selectedTab: $selectedTab) }
                 .tabItem { Label("Insights", systemImage: "list.number") }
                 .tag(1)
 

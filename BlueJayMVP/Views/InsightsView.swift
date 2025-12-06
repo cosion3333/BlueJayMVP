@@ -9,6 +9,7 @@ import SwiftUI
 
 struct InsightsView: View {
     @Environment(AppModel.self) private var appModel
+    @Binding var selectedTab: Int
 
     var body: some View {
         @Bindable var appModel = appModel
@@ -52,7 +53,7 @@ struct InsightsView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Next Step: View Swaps")
                                 .font(.headline)
-                            Text("Go to the Swaps tab to see recommendations")
+                            Text("Tap to see recommendations")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -60,6 +61,12 @@ struct InsightsView: View {
                         Image(systemName: "arrow.right.circle.fill")
                             .foregroundStyle(.blue)
                             .font(.title2)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            selectedTab = 2
+                        }
                     }
                 }
             }
@@ -96,5 +103,10 @@ struct InsightsView: View {
     }
 }
 
-#Preview { NavigationStack { InsightsView() } }
+#Preview { 
+    @Previewable @State var tab = 1
+    NavigationStack { 
+        InsightsView(selectedTab: $tab) 
+    } 
+}
 
