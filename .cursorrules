@@ -19,7 +19,7 @@
   - ViewModels = state + business logic
   - Services = data, persistence, networking
 - **Navigation:** Use NavigationStack (NOT NavigationView - deprecated)
-- **Data Flow:** Use DataManager (EnvironmentObject) for app-wide state
+- **Data Flow:** Use AppModel (@Observable macro) with @Environment(AppModel.self) for app-wide state
 
 # --- APP STRUCTURE (3-TAB LAYOUT) --------------------------
 
@@ -37,7 +37,7 @@ The app MUST always follow this exact 3-tab structure:
    - Displays "Detected from Your Recall" section
    - Shows Focus Foods (with green checkmark when selected)
    - Shows Top 3 Problem Foods
-   - "View Swaps" button → navigates to Swaps tab
+   - Displays text guidance "Next Step: View Swaps" (user must manually tap Swaps tab)
    - Provides clear next-step guidance to users
 
 3. **Swaps Tab (Solutions):**
@@ -61,9 +61,9 @@ Do NOT invent new models without checking consistency with the spec.
 # --- DATA STORAGE RULES (MVP PHASE) -------------------------
 
 **CURRENT IMPLEMENTATION (MVP):**
-- Use DataManager with simple arrays for local state
-- DataManager should be passed as @EnvironmentObject
-- All recall items, focus foods, and swaps stored in memory for now
+- Use AppModel (@Observable macro) for app-wide state management
+- AppModel is injected via @Environment(AppModel.self) in views
+- All recall items, focus foods, and swaps persisted via PersistenceService (UserDefaults)
 
 **DO NOT IMPLEMENT YET (Future Migration):**
 - GRDB SQLite (planned for post-MVP)
@@ -80,7 +80,7 @@ Do NOT invent new models without checking consistency with the spec.
 # --- NAVIGATION RULES ----------------------------------------
 
 - Recall "Analyze & Find Swaps" button ALWAYS navigates to Insights tab
-- Insights "View Swaps" button ALWAYS navigates to Swaps tab
+- Insights tab displays text guidance to manually navigate to Swaps tab (no navigation button)
 - Use TabView with .tag() for tab switching
 - Never create new navigation stacks unless required by spec
 - Maintain NavigationStack within each tab if needed for detail views
@@ -102,8 +102,9 @@ Do NOT invent new models without checking consistency with the spec.
 **State Management:**
 - Use @State for local view state
 - Use @StateObject for view-owned ViewModels
-- Use @EnvironmentObject for app-wide DataManager
+- Use @Environment(AppModel.self) for app-wide state (iOS 17+ @Observable pattern)
 - Use @Binding for child view state
+- Use @Bindable when you need two-way bindings to @Observable properties
 
 **Business Logic:**
 - Keep ALL business logic OUT of Views
@@ -112,7 +113,7 @@ Do NOT invent new models without checking consistency with the spec.
 
 **Singletons:**
 - No singletons unless absolutely necessary
-- Prefer dependency injection via @EnvironmentObject
+- Prefer dependency injection via @Environment for @Observable models
 
 **Naming Conventions:**
 - Views: PascalCase + "View" suffix (e.g., RecallView)
@@ -189,8 +190,8 @@ The critical user flow MUST always work:
 4. User navigates to Insights tab
 5. User sees detected foods in "Detected from Your Recall"
 6. User taps a food to set as focus → green checkmark appears
-7. "Next Step: View Swaps" section appears
-8. User navigates to Swaps tab
+7. "Next Step: View Swaps" text guidance appears
+8. User manually taps Swaps tab to view recommendations
 9. "Your Focus" section shows selected food with target icon
 10. Recommended swaps displayed with calorie savings
 
