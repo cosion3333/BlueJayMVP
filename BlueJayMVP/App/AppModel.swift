@@ -13,8 +13,13 @@ import SwiftUI
 class AppModel {
     
     // MARK: - Recall State
-    var recallItems: [String] = Array(repeating: "", count: 6)
+    var recallItems: [String] = []
     var searchText: String = ""
+    
+    // Helper computed property for non-empty recall items
+    var activeRecallItems: [String] {
+        recallItems.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+    }
     
     // MARK: - Ranking State
     var rankedFoods: [RankedFood] = []
@@ -47,10 +52,25 @@ class AppModel {
     
     // MARK: - Actions
     
+    /// Add a new recall item
+    func addRecallItem(_ item: String) {
+        let trimmed = item.trimmingCharacters(in: .whitespaces)
+        guard !trimmed.isEmpty else { return }
+        recallItems.append(trimmed)
+        print("➕ Added recall item: \(trimmed)")
+    }
+    
+    /// Remove a recall item at index
+    func removeRecallItem(at index: Int) {
+        guard index >= 0 && index < recallItems.count else { return }
+        let removed = recallItems.remove(at: index)
+        print("➖ Removed recall item: \(removed)")
+    }
+    
     /// Save recall items
     func saveRecall() {
         PersistenceService.saveRecallItems(recallItems)
-        print("📝 Saved recall items: \(recallItems.filter { !$0.isEmpty })")
+        print("📝 Saved recall items: \(activeRecallItems)")
     }
     
     /// Analyze recall items and detect swappable foods (Golden Path Step 1)
@@ -135,8 +155,8 @@ class AppModel {
     
     /// Load all persisted data from UserDefaults
     private func loadPersistedData() {
-        // Load recall items
-        recallItems = PersistenceService.loadRecallItems()
+        // Load recall items (filter out any empty strings from old format)
+        recallItems = PersistenceService.loadRecallItems().filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
         
         // Load ranked foods or set defaults
         if let savedFoods = PersistenceService.loadRankedFoods() {
