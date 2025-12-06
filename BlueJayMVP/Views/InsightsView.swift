@@ -15,90 +15,132 @@ struct InsightsView: View {
         @Bindable var appModel = appModel
         
         List {
-            // Golden Path: Show detected foods from analysis
+            // Step indicator
+            Section {
+                Text("Step 2 · Focus")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                    .tracking(0.5)
+            }
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+            
+            // Main section: Top 3 detected foods with numbered badges
             if !appModel.detectedFoods.isEmpty {
                 Section {
-                    ForEach(appModel.detectedFoods, id: \.self) { food in
-                        HStack {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(food.rawValue)
-                                    .font(.headline)
-                                Text("Tap to see swap options")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                    ForEach(Array(appModel.detectedFoods.enumerated()), id: \.element) { index, food in
+                        Button {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                appModel.setFocus(on: food)
                             }
-                            Spacer()
-                            if appModel.focusedFood == food {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(.green)
-                                    .font(.title3)
+                        } label: {
+                            HStack(spacing: 16) {
+                                // Rank badge with number
+                                ZStack {
+                                    Circle()
+                                        .fill(appModel.focusedFood == food ? Color.green : Color.gray.opacity(0.2))
+                                        .frame(width: 36, height: 36)
+                                    
+                                    Text("\(index + 1)")
+                                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                                        .foregroundStyle(appModel.focusedFood == food ? .white : .secondary)
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(food.rawValue)
+                                        .font(.headline)
+                                        .foregroundStyle(.primary)
+                                    
+                                    Text(appModel.focusedFood == food ? "Current focus" : "Tap to focus & see swaps")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                                
+                                Spacer()
+                                
+                                // Visual indicator for selected
+                                if appModel.focusedFood == food {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundStyle(.green)
+                                        .font(.title3)
+                                }
                             }
+                            .padding(.vertical, 4)
                         }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            appModel.setFocus(on: food)
-                        }
+                        .buttonStyle(.plain)
                     }
                 } header: {
-                    Text("Detected from Your Recall")
+                    Text("Opportunities from Your Recall")
                 } footer: {
-                    Text("Select a food to focus on swapping")
+                    Text("Choose one food to focus on this week")
                 }
             }
             
-            // Guide user to next step
+            // CTA Card - Next step
             if appModel.focusedFood != nil {
                 Section {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Next Step: View Swaps")
-                                .font(.headline)
-                            Text("Tap to see recommendations")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        Image(systemName: "arrow.right.circle.fill")
-                            .foregroundStyle(.blue)
-                            .font(.title2)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
+                    Button {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             selectedTab = 2
                         }
+                    } label: {
+                        HStack(spacing: 12) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Next Step: View Swaps")
+                                    .font(.headline)
+                                    .foregroundStyle(.primary)
+                                
+                                Text("See your swap recommendations")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            
+                            Spacer()
+                            
+                            Image(systemName: "arrow.right.circle.fill")
+                                .foregroundStyle(.green)
+                                .font(.title2)
+                        }
+                        .padding(.vertical, 4)
                     }
+                    .buttonStyle(.plain)
                 }
             }
             
-            // Optional: Existing food rankings section
-            Section {
-                ForEach($appModel.rankedFoods) { $item in
-                    HStack {
-                        Text(item.name)
-                        Spacer()
-                        Stepper("Priority \(item.priority)", value: $item.priority, in: 1...9)
-                            .labelsHidden()
-                            .onChange(of: item.priority) { _, _ in
-                                appModel.updateRanking(appModel.rankedFoods)
-                            }
-                        Text("\(item.priority)")
-                            .monospacedDigit()
+            // Empty state (if no foods detected yet)
+            if appModel.detectedFoods.isEmpty {
+                Section {
+                    VStack(spacing: 16) {
+                        Image(systemName: "square.and.pencil")
+                            .font(.system(size: 50))
                             .foregroundStyle(.secondary)
-                            .frame(width: 22)
+                        
+                        VStack(spacing: 8) {
+                            Text("No Foods Analyzed Yet")
+                                .font(.headline)
+                            
+                            Text("Go to Recall to log your diet and find swap opportunities")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.center)
+                        }
+                        
+                        Button {
+                            selectedTab = 0
+                        } label: {
+                            HStack {
+                                Image(systemName: "square.and.pencil")
+                                Text("Go to Recall")
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 32)
                 }
-                .onMove { from, to in 
-                    appModel.rankedFoods.move(fromOffsets: from, toOffset: to)
-                    appModel.updateRanking(appModel.rankedFoods)
-                }
-            } header: {
-                Text("Your Priority List (Optional)")
-            } footer: {
-                Text("Tap to edit priority (1 = highest)")
             }
         }
-        .toolbar { EditButton() }
         .navigationTitle("Insights & Focus")
     }
 }
@@ -106,7 +148,8 @@ struct InsightsView: View {
 #Preview { 
     @Previewable @State var tab = 1
     NavigationStack { 
-        InsightsView(selectedTab: $tab) 
+        InsightsView(selectedTab: $tab)
+            .environment(AppModel())
     } 
 }
 
