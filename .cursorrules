@@ -1,0 +1,222 @@
+# ===========================================================
+# Cursor Rules for BlueJay iOS App (SwiftUI MVP)
+# These rules keep code style, architecture, and behavior stable
+# across all development sessions and devices.
+# ===========================================================
+
+# --- PRIMARY SOURCE OF TRUTH --------------------------------
+
+- **ALWAYS** read and follow BLUEJAY_SPEC.md (in repository root) before making changes.
+- If a user prompt contradicts the spec, ask for clarification first.
+- Check GOLDEN_PATH_TESTING.md for the primary user flow testing approach.
+
+# --- TECH STACK & VERSIONS ----------------------------------
+
+- **Language:** Swift 5.9+
+- **Framework:** SwiftUI (iOS 17+)
+- **Architecture:** MVVM (Model-View-ViewModel)
+  - Views = UI only
+  - ViewModels = state + business logic
+  - Services = data, persistence, networking
+- **Navigation:** Use NavigationStack (NOT NavigationView - deprecated)
+- **Data Flow:** Use DataManager (EnvironmentObject) for app-wide state
+
+# --- APP STRUCTURE (3-TAB LAYOUT) --------------------------
+
+The app MUST always follow this exact 3-tab structure:
+
+1. **Recall Tab (Input):**
+   - 24-hour diet input interface
+   - Search + add foods functionality
+   - "Analyze & Find Swaps" button → navigates to Insights tab
+   - Keyboard should dismiss when Analyze is tapped
+   - Minimum 2 items required before analysis
+
+2. **Insights Tab (Dashboard):**
+   - Shows analysis results from Recall data
+   - Displays "Detected from Your Recall" section
+   - Shows Focus Foods (with green checkmark when selected)
+   - Shows Top 3 Problem Foods
+   - "View Swaps" button → navigates to Swaps tab
+   - Provides clear next-step guidance to users
+
+3. **Swaps Tab (Solutions):**
+   - Shows alternative food suggestions ("BlueJay Combos")
+   - Displays "Your Focus" section when focus is set
+   - Shows recommended swaps with calorie savings
+   - THIS TAB will have the paywall/RevenueCat gating (future)
+   - Segmented picker to view swaps for different foods
+
+# --- DATA MODELS (FROM SPEC) --------------------------------
+
+Use ONLY the models defined in BLUEJAY_SPEC.md:
+- FocusFood
+- RecallEntry
+- FoodItem
+- BlueJayCombo
+- ProblemFood (for red-flagged items)
+
+Do NOT invent new models without checking consistency with the spec.
+
+# --- DATA STORAGE RULES (MVP PHASE) -------------------------
+
+**CURRENT IMPLEMENTATION (MVP):**
+- Use DataManager with simple arrays for local state
+- DataManager should be passed as @EnvironmentObject
+- All recall items, focus foods, and swaps stored in memory for now
+
+**DO NOT IMPLEMENT YET (Future Migration):**
+- GRDB SQLite (planned for post-MVP)
+- CoreData or SwiftData
+- Complex persistence layer
+
+**FUTURE STATE (Post-MVP):**
+- Will migrate to GRDB SQLite for local food database
+- Firebase/Firestore for:
+  - User-specific focus foods
+  - Personalized swaps
+  - Cloud sync of insights
+
+# --- NAVIGATION RULES ----------------------------------------
+
+- Recall "Analyze & Find Swaps" button ALWAYS navigates to Insights tab
+- Insights "View Swaps" button ALWAYS navigates to Swaps tab
+- Use TabView with .tag() for tab switching
+- Never create new navigation stacks unless required by spec
+- Maintain NavigationStack within each tab if needed for detail views
+
+# --- SUBSCRIPTION RULES (FUTURE) ----------------------------
+
+- Manage subscription state exclusively using RevenueCat (when implemented)
+- Only subscribers unlock detailed swaps view
+- Free tier: Recall → Insights only (no detailed combos)
+- Paywall appears on Swaps tab for free users
+- Do NOT hard-code subscription logic - use RevenueCat SDK
+
+# --- CODING STYLE RULES --------------------------------------
+
+**Async/Await:**
+- Prefer async/await for asynchronous operations
+- Use Task { } for launching async work from sync context
+
+**State Management:**
+- Use @State for local view state
+- Use @StateObject for view-owned ViewModels
+- Use @EnvironmentObject for app-wide DataManager
+- Use @Binding for child view state
+
+**Business Logic:**
+- Keep ALL business logic OUT of Views
+- Place logic in ViewModels or Services
+- Avoid massive ViewModels — split into smaller units if needed
+
+**Singletons:**
+- No singletons unless absolutely necessary
+- Prefer dependency injection via @EnvironmentObject
+
+**Naming Conventions:**
+- Views: PascalCase + "View" suffix (e.g., RecallView)
+- ViewModels: PascalCase + "ViewModel" suffix
+- Services: PascalCase + "Service" suffix
+- Keep naming consistent across Views, ViewModels, Models, Services
+
+# --- UI/UX CONSISTENCY ---------------------------------------
+
+**Colors:**
+- Primary: Blue Jay Blue (#4A90E2)
+- Success: Green (#4CAF50) - for focus foods, savings
+- Warning/Problem: Red/Amber - for problem foods
+- Use SF Symbols for all icons
+
+**User Flow:**
+- Every screen must have a clear call-to-action
+- Provide "next step" guidance after each action
+- Show clear alerts with actionable messages
+- No dead ends in the user flow
+
+**Visual Feedback:**
+- Green checkmark icon for focused foods
+- Target icon for "Your Focus" section
+- Calorie savings badges in green with light background
+- Loading states for async operations
+
+# --- MULTI-DEVICE CONTEXT ------------------------------------
+
+- We switch between Macs often; assume files might be fresh from git pull
+- Always check ContentView.swift to see current navigation structure
+- Don't assume local state or chat history exists
+- Reference BLUEJAY_SPEC.md as single source of truth
+
+# --- AGENT BEHAVIOR RULES ------------------------------------
+
+**Before Making Changes:**
+1. Read relevant sections of BLUEJAY_SPEC.md
+2. Check existing folder structure and naming conventions
+3. Verify changes align with current MVP phase
+
+**When Editing Files:**
+- Use incremental, clear, well-scoped changes
+- Maintain consistency with existing code style
+- Add comments for complex business logic
+- Update related files if models/interfaces change
+
+**Before Major Refactors:**
+1. Summarize proposed changes first
+2. Wait for user approval before applying
+3. Explain impact on existing features
+4. Consider MVP phase limitations
+
+**Code Quality:**
+- Fix any linter errors introduced by changes
+- Ensure new code follows Swift conventions
+- Keep functions focused and under 30 lines when possible
+- Use meaningful variable/function names
+
+# --- DO NOT TOUCH / PROTECTED FILES -------------------------
+
+- Do NOT modify BLUEJAY_SPEC.md unless explicitly instructed
+- Do NOT alter GOLDEN_PATH_TESTING.md without permission
+- Do NOT modify RevenueCat configuration files (when added)
+- Do NOT generate random placeholder food data in Views
+- Do NOT implement GRDB or complex persistence (not MVP phase yet)
+
+# --- GOLDEN PATH FLOW (PRIMARY USER JOURNEY) ----------------
+
+The critical user flow MUST always work:
+1. User enters foods in Recall tab (minimum 2 items)
+2. User taps "Analyze & Find Swaps"
+3. App detects swappable foods → shows alert
+4. User navigates to Insights tab
+5. User sees detected foods in "Detected from Your Recall"
+6. User taps a food to set as focus → green checkmark appears
+7. "Next Step: View Swaps" section appears
+8. User navigates to Swaps tab
+9. "Your Focus" section shows selected food with target icon
+10. Recommended swaps displayed with calorie savings
+
+This flow must persist across app restarts.
+
+# --- TESTING APPROACH ----------------------------------------
+
+- Reference GOLDEN_PATH_TESTING.md for primary flow tests
+- Test state persistence across app restarts
+- Test edge cases: no swappable foods, minimum items
+- Verify navigation between all tabs works correctly
+- Check that alerts provide clear, actionable messages
+
+# --- CURRENT MVP LIMITATIONS ---------------------------------
+
+**Not Implemented Yet (Don't Add Unless Asked):**
+- GRDB SQLite / complex database
+- Firebase integration
+- RevenueCat paywall (mentioned in UI but not functional)
+- Real food detection API
+- Search functionality in Recall view
+- Check-In view integration
+- Analytics tracking
+- Push notifications
+
+# ===========================================================
+# END OF CURSOR RULES FOR BLUEJAY MVP
+# ===========================================================
+
