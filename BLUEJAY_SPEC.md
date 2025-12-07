@@ -1,8 +1,57 @@
 # Blue Jay App Specification
 
-## Core Concept
+## Core Product Context
 
-A habit-change weight loss app that focuses on replacing 1 specific "target bad food" with a proprietary "Blue Jay Combo" (healthy swap).
+### Mission
+BlueJay helps users transition from their current unhealthy diet into the "Healthy Blue Jay Diet" — not all at once, but one weekly focus at a time.
+
+### The Core Loop
+```
+Recall → Focus → Go-To Swap → Track Usage → Win
+```
+
+Every feature in the app should support this cycle.
+
+### How It Works
+
+**1. Detection (Tab 1: Recall)**
+- User logs their current food intake (24-hour recall)
+- App analyzes and identifies specific "Opportunities" (e.g., Fries, Soda, Chips)
+- These are the unhealthy foods the user is currently eating
+
+**2. Selection (Tab 2: Insights)**
+- User selects **ONE "Weekly Focus"** / "Target" (e.g., "Stop eating Fries")
+- This target persists for the entire week
+- Other detected bad foods become "Secondary Opportunities" (visible, but not the active focus)
+
+**3. The Swap (Tab 3: Swaps)**
+- User pairs their Weekly Focus with a specific **"Blue Jay Combo/Swap"**
+- A Swap is a 2-3 food combination (e.g., Grilled Chicken Pita + Tzatziki + Side Salad)
+- **Key Mental Model:** This is a "Trade" — we trade the Focus (Bad) for the Swap (Good)
+- User selects their preferred swap as their "Go-To"
+
+**4. Track & Win**
+- User logs "I used my Go-To today" throughout the week
+- App provides light positive feedback and tracks weekly progress
+- User builds momentum with repeated wins on the same focus
+
+### Monetization Strategy
+
+The paywall is strategically placed where the **value** lives:
+
+- **Tab 1 (Recall):** Always Free — no barrier to logging food
+- **Tab 2 (Insights):** Weekly Focus selection is Free. Secondary Opportunities may be upsell targets
+- **Tab 3 (Swaps):** **PAYWALLED** — The Blue Jay Combos (the specific 2-3 food recipes) are Premium content
+
+Users must upgrade to unlock the detailed swap combos that solve their Weekly Focus.
+
+### Key Design Principles
+
+1. **No Dead-Ends:** Every "Log" leads to "Insights." Every "Insight" leads to a "Swap."
+2. **Persistence:** The Weekly Focus stays visible and active until the user changes it or completes the week
+3. **One Focus at a Time:** We don't overwhelm. One bad habit replaced per week
+4. **The Trade Model:** Always frame swaps as a trade, not a restriction
+5. **Light Touch:** Quick check-ins, not burdensome logging
 
 ---
 
