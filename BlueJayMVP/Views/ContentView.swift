@@ -20,7 +20,7 @@ struct ContentView: View {
                 .tabItem { Label("Insights", systemImage: "list.number") }
                 .tag(1)
 
-            NavigationStack { SwapsView() }
+            NavigationStack { SwapsView(selectedTab: $selectedTab) }
                 .tabItem { Label("Swaps", systemImage: "sparkles") }
                 .tag(2)
         }

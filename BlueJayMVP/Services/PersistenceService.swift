@@ -27,6 +27,8 @@ struct PersistenceService {
         static let currentStreak = "current_streak"
         static let totalReplacements = "total_replacements"
         static let completedCheckIns = "completed_check_ins"
+        static let goToSwap = "go_to_swap"
+        static let swapUsesThisWeek = "swap_uses_this_week"
     }
     
     // MARK: - Recall
@@ -131,6 +133,32 @@ struct PersistenceService {
         return (streak, totalReplacements, completedCheckIns)
     }
     
+    // MARK: - Go-To Swap
+    
+    static func saveGoToSwap(_ swap: SwapCombo?) {
+        if let swap = swap, let encoded = try? JSONEncoder().encode(swap) {
+            defaults.set(encoded, forKey: Keys.goToSwap)
+        } else {
+            defaults.removeObject(forKey: Keys.goToSwap)
+        }
+    }
+    
+    static func loadGoToSwap() -> SwapCombo? {
+        guard let data = defaults.data(forKey: Keys.goToSwap),
+              let swap = try? JSONDecoder().decode(SwapCombo.self, from: data) else {
+            return nil
+        }
+        return swap
+    }
+    
+    static func saveSwapUsesThisWeek(_ count: Int) {
+        defaults.set(count, forKey: Keys.swapUsesThisWeek)
+    }
+    
+    static func loadSwapUsesThisWeek() -> Int {
+        return defaults.integer(forKey: Keys.swapUsesThisWeek)
+    }
+    
     // MARK: - Reset
     
     /// Clear all persisted data (useful for testing or user logout)
@@ -147,7 +175,9 @@ struct PersistenceService {
             Keys.lastCheckInDate,
             Keys.currentStreak,
             Keys.totalReplacements,
-            Keys.completedCheckIns
+            Keys.completedCheckIns,
+            Keys.goToSwap,
+            Keys.swapUsesThisWeek
         ]
         
         keys.forEach { defaults.removeObject(forKey: $0) }

@@ -19,7 +19,7 @@ enum TargetFood: String, CaseIterable {
 // MARK: - Swap Combos
 
 /// A recommended food swap with nutritional info
-struct SwapCombo: Identifiable {
+struct SwapCombo: Identifiable, Codable {
     let id: UUID
     let title: String
     let description: String

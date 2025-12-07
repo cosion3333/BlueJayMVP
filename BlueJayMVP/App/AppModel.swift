@@ -27,6 +27,8 @@ class AppModel {
     // MARK: - Combos State
     var activeCombos: [SwapCombo] = []
     var selectedTargetFood: TargetFood?
+    var goToSwap: SwapCombo?  // User's committed swap for current focus
+    var swapUsesThisWeek: Int = 0  // Track swap usage
     
     // MARK: - Analysis State (Golden Path)
     var detectedFoods: [TargetFood] = []  // Foods detected from recall
@@ -103,6 +105,26 @@ class AppModel {
         PersistenceService.saveSelectedTargetFood(target)
     }
     
+    /// Set the user's Go-To swap for current focus
+    func setGoToSwap(_ combo: SwapCombo) {
+        goToSwap = combo
+        PersistenceService.saveGoToSwap(combo)
+        print("⭐ Go-To swap set: \(combo.title)")
+    }
+    
+    /// Log that user used their Go-To swap
+    func logSwapUse() {
+        swapUsesThisWeek += 1
+        PersistenceService.saveSwapUsesThisWeek(swapUsesThisWeek)
+        print("✅ Swap used! Total this week: \(swapUsesThisWeek)")
+    }
+    
+    /// Reset weekly swap usage (call on Monday)
+    func resetWeeklySwapUses() {
+        swapUsesThisWeek = 0
+        PersistenceService.saveSwapUsesThisWeek(0)
+    }
+    
     /// Save daily check-in
     func saveCheckIn() {
         lastCheckInDate = Date()
@@ -176,6 +198,10 @@ class AppModel {
         // Load Golden Path state
         detectedFoods = PersistenceService.loadDetectedFoods()
         focusedFood = PersistenceService.loadFocusedFood()
+        
+        // Load Go-To swap state
+        goToSwap = PersistenceService.loadGoToSwap()
+        swapUsesThisWeek = PersistenceService.loadSwapUsesThisWeek()
         
         // Load check-in state
         let checkInState = PersistenceService.loadCheckInState()
