@@ -26,54 +26,149 @@ struct InsightsView: View {
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             
-            // Main section: Top 3 detected foods with numbered badges
-            if !appModel.detectedFoods.isEmpty {
+            // Current Focus Section - Prominent display of active focus
+            if let focusedFood = appModel.focusedFood, !appModel.detectedFoods.isEmpty {
                 Section {
-                    ForEach(Array(appModel.detectedFoods.enumerated()), id: \.element) { index, food in
-                        Button {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                appModel.setFocus(on: food)
+                    HStack(spacing: 16) {
+                        // Rank badge with number
+                        ZStack {
+                            Circle()
+                                .fill(Color.green)
+                                .frame(width: 40, height: 40)
+                            
+                            if let index = appModel.detectedFoods.firstIndex(of: focusedFood) {
+                                Text("\(index + 1)")
+                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                    .foregroundStyle(.white)
                             }
-                        } label: {
-                            HStack(spacing: 16) {
-                                // Rank badge with number
-                                ZStack {
-                                    Circle()
-                                        .fill(appModel.focusedFood == food ? Color.green : Color.gray.opacity(0.2))
-                                        .frame(width: 36, height: 36)
-                                    
-                                    Text("\(index + 1)")
-                                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                                        .foregroundStyle(appModel.focusedFood == food ? .white : .secondary)
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(focusedFood.rawValue)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.primary)
+                            
+                            Text("Your weekly focus")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                            .font(.title2)
+                    }
+                    .padding(.vertical, 8)
+                } header: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "target")
+                            .font(.caption)
+                        Text("Your Current Focus")
+                    }
+                }
+            }
+            
+            // Other Opportunities Section - Alternative foods to focus on
+            if !appModel.detectedFoods.isEmpty {
+                let otherFoods = appModel.detectedFoods.filter { $0 != appModel.focusedFood }
+                
+                if !otherFoods.isEmpty {
+                    Section {
+                        ForEach(Array(otherFoods.enumerated()), id: \.element) { _, food in
+                            Button {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    appModel.setFocus(on: food)
                                 }
-                                
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(food.rawValue)
-                                        .font(.headline)
-                                        .foregroundStyle(.primary)
+                            } label: {
+                                HStack(spacing: 16) {
+                                    // Rank badge with number
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color.gray.opacity(0.2))
+                                            .frame(width: 36, height: 36)
+                                        
+                                        if let index = appModel.detectedFoods.firstIndex(of: food) {
+                                            Text("\(index + 1)")
+                                                .font(.system(size: 18, weight: .bold, design: .rounded))
+                                                .foregroundStyle(.secondary)
+                                        }
+                                    }
                                     
-                                    Text(appModel.focusedFood == food ? "Current focus" : "Tap to focus & see swaps")
-                                        .font(.caption)
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(food.rawValue)
+                                            .font(.headline)
+                                            .foregroundStyle(.primary)
+                                        
+                                        Text("Tap to switch focus")
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: "arrow.right.circle")
                                         .foregroundStyle(.secondary)
-                                }
-                                
-                                Spacer()
-                                
-                                // Visual indicator for selected
-                                if appModel.focusedFood == food {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundStyle(.green)
                                         .font(.title3)
                                 }
+                                .padding(.vertical, 4)
                             }
-                            .padding(.vertical, 4)
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
+                    } header: {
+                        Text("Other Opportunities")
+                    } footer: {
+                        Text("You can switch your focus at any time")
                     }
-                } header: {
-                    Text("Opportunities from Your Recall")
-                } footer: {
-                    Text("Choose one food to focus on this week")
+                }
+                
+                // If no focus selected yet, show all as opportunities
+                if appModel.focusedFood == nil {
+                    Section {
+                        ForEach(Array(appModel.detectedFoods.enumerated()), id: \.element) { index, food in
+                            Button {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    appModel.setFocus(on: food)
+                                }
+                            } label: {
+                                HStack(spacing: 16) {
+                                    // Rank badge with number
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color.gray.opacity(0.2))
+                                            .frame(width: 36, height: 36)
+                                        
+                                        Text("\(index + 1)")
+                                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(food.rawValue)
+                                            .font(.headline)
+                                            .foregroundStyle(.primary)
+                                        
+                                        Text("Tap to focus & see swaps")
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: "arrow.right.circle")
+                                        .foregroundStyle(.secondary)
+                                        .font(.title3)
+                                }
+                                .padding(.vertical, 4)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    } header: {
+                        Text("Opportunities from Your Recall")
+                    } footer: {
+                        Text("Choose one food to focus on this week")
+                    }
                 }
             }
             
