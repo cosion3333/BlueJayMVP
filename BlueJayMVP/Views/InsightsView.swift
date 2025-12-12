@@ -30,18 +30,12 @@ struct InsightsView: View {
             if let focusedFood = appModel.focusedFood, !appModel.detectedFoods.isEmpty {
                 Section {
                     HStack(spacing: 16) {
-                        // Rank badge with number
-                        ZStack {
-                            Circle()
-                                .fill(Color.green)
-                                .frame(width: 40, height: 40)
-                            
-                            if let index = appModel.detectedFoods.firstIndex(of: focusedFood) {
-                                Text("\(index + 1)")
-                                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                                    .foregroundStyle(.white)
-                            }
-                        }
+                        // Focus indicator icon
+                        Image(systemName: "target")
+                            .foregroundStyle(.white)
+                            .font(.title3)
+                            .frame(width: 40, height: 40)
+                            .background(Circle().fill(Color.green))
                         
                         VStack(alignment: .leading, spacing: 4) {
                             Text(focusedFood.rawValue)
@@ -83,18 +77,11 @@ struct InsightsView: View {
                                 }
                             } label: {
                                 HStack(spacing: 16) {
-                                    // Rank badge with number
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color.gray.opacity(0.2))
-                                            .frame(width: 36, height: 36)
-                                        
-                                        if let index = appModel.detectedFoods.firstIndex(of: food) {
-                                            Text("\(index + 1)")
-                                                .font(.system(size: 18, weight: .bold, design: .rounded))
-                                                .foregroundStyle(.secondary)
-                                        }
-                                    }
+                                    // Food indicator icon
+                                    Image(systemName: "circle")
+                                        .foregroundStyle(.secondary)
+                                        .font(.title2)
+                                        .frame(width: 36, height: 36)
                                     
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(food.rawValue)
@@ -134,16 +121,11 @@ struct InsightsView: View {
                             }
                         } label: {
                             HStack(spacing: 16) {
-                                // Rank badge with number
-                                ZStack {
-                                    Circle()
-                                        .fill(Color.gray.opacity(0.2))
-                                        .frame(width: 36, height: 36)
-                                    
-                                    Text("\(index + 1)")
-                                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                                        .foregroundStyle(.secondary)
-                                }
+                                // Food indicator icon
+                                Image(systemName: "circle.dotted")
+                                    .foregroundStyle(.secondary)
+                                    .font(.title2)
+                                    .frame(width: 36, height: 36)
                                 
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(food.rawValue)
