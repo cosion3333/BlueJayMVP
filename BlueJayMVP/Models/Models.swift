@@ -40,6 +40,20 @@ struct SwapCombo: Identifiable, Codable, Hashable {
         self.description = description
         self.foods = foods
     }
+    
+    // Custom decoding to generate UUID if not present in JSON
+    enum CodingKeys: String, CodingKey {
+        case id, targetFoodId, title, description, foods
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
+        self.targetFoodId = try container.decode(String.self, forKey: .targetFoodId)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.description = try container.decode(String.self, forKey: .description)
+        self.foods = try container.decode([String].self, forKey: .foods)
+    }
 }
 
 // MARK: - Ranked Foods (Keep for backwards compatibility if needed)
