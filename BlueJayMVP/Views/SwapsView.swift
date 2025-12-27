@@ -108,7 +108,7 @@ struct SwapsView: View {
                         .textCase(.uppercase)
                     
                     if let focused = appModel.focusedFood {
-                        Text(focused.rawValue)
+                        Text(focused.name)
                             .font(.title2)
                             .fontWeight(.semibold)
                     }
@@ -129,7 +129,7 @@ struct SwapsView: View {
                     .font(.title2)
             }
             .padding()
-            .background(Color(.systemBackground))
+            .background(.background)
             .cornerRadius(12)
             .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
         }
@@ -140,7 +140,7 @@ struct SwapsView: View {
     private var firstVisitSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             if let focused = appModel.focusedFood {
-                Text("We've picked a suggested swap for \(focused.rawValue). Tap a card to select, or choose another.")
+                Text("We've picked a suggested swap for \(focused.name). Tap a card to select, or choose another.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
@@ -184,16 +184,6 @@ struct SwapsView: View {
                 
                 Spacer()
                 
-                // Calorie badge
-                Text("-\(combo.estKcalDrop) kcal")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.green)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(Color.green.opacity(0.1))
-                    .cornerRadius(8)
-                
                 // Checkmark
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
@@ -202,7 +192,7 @@ struct SwapsView: View {
                 }
             }
             .padding()
-            .background(Color(.systemBackground))
+            .background(.background)
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
@@ -221,7 +211,7 @@ struct SwapsView: View {
             HStack {
                 Image(systemName: "star.fill")
                     .foregroundStyle(.yellow)
-                Text("Your Go-To for \(appModel.focusedFood?.rawValue ?? "")")
+                Text("Your Go-To for \(appModel.focusedFood?.name ?? "")")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .textCase(.uppercase)
@@ -248,11 +238,6 @@ struct SwapsView: View {
                 }
                 
                 Spacer()
-                
-                Text("-\(goToSwap.estKcalDrop) kcal")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.green)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
                     .background(Color.green.opacity(0.15))
@@ -314,15 +299,6 @@ struct SwapsView: View {
                 }
                 
                 Spacer()
-                
-                Text("-\(combo.estKcalDrop) kcal")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.green)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(Color.green.opacity(0.1))
-                    .cornerRadius(8)
             }
             
             HStack(spacing: 8) {
@@ -364,7 +340,7 @@ struct SwapsView: View {
             }
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(.background)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
     }
@@ -378,20 +354,14 @@ struct SwapsView: View {
                 HStack {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
-                    Text("Nice swap! +1 this week (~\(appModel.goToSwap?.estKcalDrop ?? 0) kcal saved)")
+                    Text("Nice swap! +1 this week")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
             
-            // Potential savings line
-            if !appModel.activeCombos.isEmpty {
-                let totalSavings = appModel.activeCombos.reduce(0) { $0 + $1.estKcalDrop }
-                Text("Potential savings: ~\(totalSavings) kcal per swap")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+            // Active swaps count
             
             // Primary action button
             Button {
@@ -444,7 +414,7 @@ struct SwapsView: View {
         }
         .padding()
         .background(
-            Color(.systemBackground)
+            Color(.white)
                 .shadow(color: .black.opacity(0.1), radius: 10, y: -5)
         )
     }

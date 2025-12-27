@@ -24,16 +24,15 @@ class AppModel {
     // MARK: - Ranking State
     var rankedFoods: [RankedFood] = []
     
+    // MARK: - Analysis State (Updated for new BadFood system)
+    var detectedFoods: [BadFood] = []  // Detected bad foods from recall
+    var analysisComplete: Bool = false
+    var focusedFood: BadFood?  // The bad food user wants to focus on
+    
     // MARK: - Combos State
     var activeCombos: [SwapCombo] = []
-    var selectedTargetFood: TargetFood?
     var goToSwap: SwapCombo?  // User's committed swap for current focus
     var swapUsesThisWeek: Int = 0  // Track swap usage
-    
-    // MARK: - Analysis State (Golden Path)
-    var detectedFoods: [TargetFood] = []  // Foods detected from recall
-    var analysisComplete: Bool = false
-    var focusedFood: TargetFood?  // The food user wants to focus on swapping
     
     // MARK: - Check-In State
     var replacedToday: Bool = false
@@ -49,7 +48,6 @@ class AppModel {
     // MARK: - Initialization
     init() {
         loadPersistedData()
-        loadDefaultCombos()
     }
     
     // MARK: - Actions
@@ -75,34 +73,45 @@ class AppModel {
         print("📝 Saved recall items: \(activeRecallItems)")
     }
     
-    /// Analyze recall items and detect swappable foods (Golden Path Step 1)
+    /// Analyze recall items and detect bad foods (Golden Path Step 1)
     func analyzeRecall() {
-        let analysis = SwapEngine.analyzeRecall(recallItems)
-        detectedFoods = Array(analysis.keys).sorted { $0.rawValue < $1.rawValue }
+        // Use new BadFoodsService to detect and sort by priority
+        detectedFoods = SwapEngine.analyzeRecall(recallItems)
         analysisComplete = !detectedFoods.isEmpty
         
-        // Persist detected foods
-        PersistenceService.saveDetectedFoods(detectedFoods)
+        // Auto-select the worst food (lowest priority) as focus
+        if let worstFood = detectedFoods.first {
+            focusedFood = worstFood
+            loadSwaps(for: worstFood)
+        }
         
-        print("🔍 Analysis complete: Found \(detectedFoods.count) swappable food(s)")
+        // Persist detected foods
+        PersistenceService.saveDetectedFoodIds(detectedFoods.map { $0.id })
+        if let focusedFood = focusedFood {
+            PersistenceService.saveFocusedFoodId(focusedFood.id)
+        }
+        
+        print("🔍 Analysis complete: Found \(detectedFoods.count) bad food(s)")
+        if let focused = focusedFood {
+            print("🎯 Auto-selected focus: \(focused.name) (Priority #\(focused.priority))")
+        }
     }
     
-    /// Set focus on a specific food to swap (Golden Path Step 2)
-    func setFocus(on food: TargetFood) {
+    /// Set focus on a specific bad food (Golden Path Step 2)
+    func setFocus(on food: BadFood) {
         focusedFood = food
         loadSwaps(for: food)
         
         // Persist focused food
-        PersistenceService.saveFocusedFood(food)
+        PersistenceService.saveFocusedFoodId(food.id)
         
-        print("🎯 Focus set on: \(food.rawValue)")
+        print("🎯 Focus set on: \(food.name) (Priority #\(food.priority))")
     }
     
-    /// Load suggested swaps for a target food
-    func loadSwaps(for target: TargetFood) {
-        selectedTargetFood = target
-        activeCombos = MockDataService.swaps(for: target)
-        PersistenceService.saveSelectedTargetFood(target)
+    /// Load suggested swaps for a bad food
+    func loadSwaps(for food: BadFood) {
+        activeCombos = BadFoodsService.getSwaps(forFoodId: food.id)
+        print("📋 Loaded \(activeCombos.count) swaps for \(food.name)")
     }
     
     /// Set the user's Go-To swap for current focus
@@ -177,14 +186,14 @@ class AppModel {
     
     /// Load all persisted data from UserDefaults
     private func loadPersistedData() {
-        // Load recall items (filter out any empty strings from old format)
-        recallItems = PersistenceService.loadRecallItems().filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+        // Load recall items
+        recallItems = PersistenceService.loadRecallItems()
+            .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
         
-        // Load ranked foods or set defaults
+        // Load ranked foods (legacy)
         if let savedFoods = PersistenceService.loadRankedFoods() {
             rankedFoods = savedFoods
         } else {
-            // First launch - set defaults
             rankedFoods = [
                 .init(name: "Sugary soda", priority: 1),
                 .init(name: "Chips at night", priority: 2),
@@ -192,12 +201,17 @@ class AppModel {
             ]
         }
         
-        // Load target food selection
-        selectedTargetFood = PersistenceService.loadSelectedTargetFood()
+        // Load detected foods (by IDs)
+        let detectedIds = PersistenceService.loadDetectedFoodIds()
+        detectedFoods = detectedIds.compactMap { BadFoodsService.getBadFood(byId: $0) }
+            .sorted { $0.priority < $1.priority }
         
-        // Load Golden Path state
-        detectedFoods = PersistenceService.loadDetectedFoods()
-        focusedFood = PersistenceService.loadFocusedFood()
+        // Load focused food (by ID)
+        if let focusedId = PersistenceService.loadFocusedFoodId(),
+           let food = BadFoodsService.getBadFood(byId: focusedId) {
+            focusedFood = food
+            loadSwaps(for: food)
+        }
         
         // Load Go-To swap state
         goToSwap = PersistenceService.loadGoToSwap()
@@ -215,11 +229,5 @@ class AppModel {
         currentStreak = progress.streak
         totalReplacements = progress.totalReplacements
         completedCheckIns = progress.completedCheckIns
-    }
-    
-    private func loadDefaultCombos() {
-        // Load combos for selected target or default to soda
-        let target = selectedTargetFood ?? .soda
-        activeCombos = MockDataService.swaps(for: target)
     }
 }

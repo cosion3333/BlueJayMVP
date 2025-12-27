@@ -1,0 +1,121 @@
+id,name,category,keywords,calories,priority,swap_num,swap_title,swap_description,swap_foods
+sugary_soda,Sugary Soda,drinks,soda|coke|pepsi|sprite|pop,150,1,1,Seltzer + Lemon,Refreshing,Seltzer water|Lemon
+sugary_soda,Sugary Soda,drinks,soda|coke|pepsi|sprite|pop,150,1,2,Sparkling Water + Cucumber Slices,Hydrating,Sparkling water|Cucumber
+sugary_soda,Sugary Soda,drinks,soda|coke|pepsi|sprite|pop,150,1,3,Unsweetened Iced Tea + Lemon,Natural,Unsweetened iced tea|Lemon
+diet_soda,Diet Soda,drinks,diet soda|diet coke|coke zero|diet pepsi,0,2,1,Seltzer + Lemon,No artificial sweeteners,Seltzer water|Lemon
+diet_soda,Diet Soda,drinks,diet soda|diet coke|coke zero|diet pepsi,0,2,2,Herbal Tea + Lemon,Natural flavors,Herbal tea|Lemon
+diet_soda,Diet Soda,drinks,diet soda|diet coke|coke zero|diet pepsi,0,2,3,Sparkling Water + Berries,Naturally sweet,Sparkling water|Mixed berries
+energy_drinks,Energy Drinks,drinks,energy drink|red bull|monster|rockstar,110,3,1,Black Coffee + Water,Natural caffeine,Black coffee|Water
+energy_drinks,Energy Drinks,drinks,energy drink|red bull|monster|rockstar,110,3,2,Green Tea + Almonds,Sustained energy,Green tea|Almonds
+energy_drinks,Energy Drinks,drinks,energy drink|red bull|monster|rockstar,110,3,3,Unsweetened Iced Tea + Walnuts,Omega-3s,Unsweetened iced tea|Walnuts
+fruit_juice,Fruit Juice,drinks,juice|orange juice|apple juice|fruit juice,120,4,1,Whole Orange + Water,More fiber,Whole orange|Water
+fruit_juice,Fruit Juice,drinks,juice|orange juice|apple juice|fruit juice,120,4,2,Apple + Seltzer,Satisfying crunch,Apple|Seltzer water
+fruit_juice,Fruit Juice,drinks,juice|orange juice|apple juice|fruit juice,120,4,3,Berries + Sparkling Water,Antioxidants,Mixed berries|Sparkling water
+sweetened_iced_tea,Sweetened Iced Tea / Lemonade,drinks,iced tea|sweet tea|lemonade|sweetened tea,90,5,1,Unsweetened Iced Tea + Lemon,No sugar,Unsweetened iced tea|Lemon
+sweetened_iced_tea,Sweetened Iced Tea / Lemonade,drinks,iced tea|sweet tea|lemonade|sweetened tea,90,5,2,Seltzer + Lemon,Crisp & clean,Seltzer water|Lemon
+sweetened_iced_tea,Sweetened Iced Tea / Lemonade,drinks,iced tea|sweet tea|lemonade|sweetened tea,90,5,3,Water + Berries (Infused),Natural sweetness,Water|Mixed berries
+specialty_coffee,Specialty Coffee (Frappuccinos),drinks,frappuccino|latte|mocha|specialty coffee|starbucks,400,6,1,Iced Coffee + Oat Milk,Still creamy,Black coffee|Ice|Oat milk
+specialty_coffee,Specialty Coffee (Frappuccinos),drinks,frappuccino|latte|mocha|specialty coffee|starbucks,400,6,2,Coffee + Low-Fat Milk,Protein boost,Coffee|Low-fat milk
+specialty_coffee,Specialty Coffee (Frappuccinos),drinks,frappuccino|latte|mocha|specialty coffee|starbucks,400,6,3,Coffee + Soy Milk,Plant-based,Coffee|Soy milk
+alcohol_beer,Alcohol / Beer,drinks,beer|alcohol|wine|liquor,150,7,1,Seltzer + Lemon,Social drink alternative,Seltzer water|Lemon
+alcohol_beer,Alcohol / Beer,drinks,beer|alcohol|wine|liquor,150,7,2,Sparkling Water + Berries,Festive,Sparkling water|Mixed berries
+alcohol_beer,Alcohol / Beer,drinks,beer|alcohol|wine|liquor,150,7,3,Herbal Tea + Lemon,Relaxing,Herbal tea|Lemon
+potato_chips,Potato Chips,snacks,chips|potato chips|lays|pringles,152,8,1,Hummus + Carrots,Crunchy & filling,Hummus|Carrots
+potato_chips,Potato Chips,snacks,chips|potato chips|lays|pringles,152,8,2,Hummus + Cucumber Slices,Refreshing crunch,Hummus|Cucumber
+potato_chips,Potato Chips,snacks,chips|potato chips|lays|pringles,152,8,3,Cottage Cheese + Cherry Tomatoes,High protein,Cottage cheese|Cherry tomatoes
+tortilla_chips,Tortilla Chips (Doritos),snacks,doritos|tortilla chips|nacho chips|tostitos,140,9,1,Avocado (Guac) + Cherry Tomatoes,Healthy fats,Avocado|Cherry tomatoes
+tortilla_chips,Tortilla Chips (Doritos),snacks,doritos|tortilla chips|nacho chips|tostitos,140,9,2,Hummus + Bell Pepper Strips,Colorful & crunchy,Hummus|Bell peppers
+tortilla_chips,Tortilla Chips (Doritos),snacks,doritos|tortilla chips|nacho chips|tostitos,140,9,3,Feta + Cucumber Slices,Mediterranean,Feta cheese|Cucumber
+cheese_puffs,Cheese Puffs (Cheetos),snacks,cheetos|cheese puffs|cheese balls,160,10,1,Mozzarella + Cherry Tomatoes,Fresh & cheesy,Mozzarella|Cherry tomatoes
+cheese_puffs,Cheese Puffs (Cheetos),snacks,cheetos|cheese puffs|cheese balls,160,10,2,Olives + Mozzarella,Savory,Olives|Mozzarella
+cheese_puffs,Cheese Puffs (Cheetos),snacks,cheetos|cheese puffs|cheese balls,160,10,3,Goat Cheese + Apple Slices,Sweet & tangy,Goat cheese|Apple
+pretzels,Pretzels,snacks,pretzels|pretzel,110,11,1,Boiled Eggs + Avocado,Protein-rich,Boiled eggs|Avocado
+pretzels,Pretzels,snacks,pretzels|pretzel,110,11,2,Hummus + Bell Pepper Strips,Light & crunchy,Hummus|Bell peppers
+pretzels,Pretzels,snacks,pretzels|pretzel,110,11,3,Greek Yogurt + Almonds,High protein,Greek yogurt|Almonds
+crackers,Crackers (Saltines/Ritz),snacks,crackers|ritz|saltines|wheat thins,80,12,1,Ricotta + Figs,Sweet & creamy,Ricotta cheese|Figs
+crackers,Crackers (Saltines/Ritz),snacks,crackers|ritz|saltines|wheat thins,80,12,2,Goat Cheese + Apple Slices,Satisfying,Goat cheese|Apple
+crackers,Crackers (Saltines/Ritz),snacks,crackers|ritz|saltines|wheat thins,80,12,3,Hummus + Cucumber,Light,Hummus|Cucumber
+movie_popcorn,Movie Theater Popcorn,snacks,popcorn|movie popcorn|buttered popcorn,600,13,1,Edamame + Cherry Tomatoes,Protein-packed,Edamame|Cherry tomatoes
+movie_popcorn,Movie Theater Popcorn,snacks,popcorn|movie popcorn|buttered popcorn,600,13,2,Olives + Mozzarella,Savory,Olives|Mozzarella
+movie_popcorn,Movie Theater Popcorn,snacks,popcorn|movie popcorn|buttered popcorn,600,13,3,Cottage Cheese + Berries,Sweet & filling,Cottage cheese|Mixed berries
+french_fries,French Fries,fried,fries|french fries|curly fries,365,14,1,Chicken + Brown Rice + Mushrooms + Broccoli,Balanced meal,Grilled chicken|Brown rice|Mushrooms|Broccoli
+french_fries,French Fries,fried,fries|french fries|curly fries,365,14,2,Salmon + Quinoa + Kale + Cherry Tomatoes,Omega-3 rich,Salmon|Quinoa|Kale|Cherry tomatoes
+french_fries,French Fries,fried,fries|french fries|curly fries,365,14,3,Tuna + Quinoa + Cucumbers + Olives,Mediterranean,Tuna|Quinoa|Cucumbers|Olives
+onion_rings,Onion Rings,fried,onion rings,410,15,1,Chicken + Farro + Mushrooms + Spinach,Hearty,Grilled chicken|Farro|Mushrooms|Spinach
+onion_rings,Onion Rings,fried,onion rings,410,15,2,Lean Beef + Broccoli + Brown Rice + Mushrooms,Iron-rich,Lean beef|Broccoli|Brown rice|Mushrooms
+onion_rings,Onion Rings,fried,onion rings,410,15,3,Shrimp + Quinoa + Cucumbers + Cherry Tomatoes,Light & fresh,Shrimp|Quinoa|Cucumbers|Cherry tomatoes
+fried_chicken,Fried Chicken,fried,fried chicken|kfc|popeyes,320,16,1,Chicken + Quinoa + Spinach + Feta,High protein,Grilled chicken|Quinoa|Spinach|Feta
+fried_chicken,Fried Chicken,fried,fried chicken|kfc|popeyes,320,16,2,Chicken + Corn + Chickpeas + Zucchini,Fiber-rich,Grilled chicken|Corn|Chickpeas|Zucchini
+fried_chicken,Fried Chicken,fried,fried chicken|kfc|popeyes,320,16,3,Chicken + Avocado + Corn + Tomatoes,Satisfying,Grilled chicken|Avocado|Corn|Tomatoes
+chicken_nuggets,Chicken Nuggets,fried,chicken nuggets|nuggets|mcnuggets,270,17,1,Chicken + Brown Rice + Broccoli + Mozzarella,Kid-friendly,Grilled chicken|Brown rice|Broccoli|Mozzarella
+chicken_nuggets,Chicken Nuggets,fried,chicken nuggets|nuggets|mcnuggets,270,17,2,Chicken + Couscous + Avocado + Corn,Tasty & filling,Grilled chicken|Couscous|Avocado|Corn
+chicken_nuggets,Chicken Nuggets,fried,chicken nuggets|nuggets|mcnuggets,270,17,3,Chicken + Mushrooms + Quinoa + Ricotta,Protein-packed,Grilled chicken|Mushrooms|Quinoa|Ricotta
+mozzarella_sticks,Mozzarella Sticks,fried,mozzarella sticks|cheese sticks|fried mozzarella,280,18,1,Mozzarella + Tomatoes + Arugula + Olives,Fresh Italian,Mozzarella|Tomatoes|Arugula|Olives
+mozzarella_sticks,Mozzarella Sticks,fried,mozzarella sticks|cheese sticks|fried mozzarella,280,18,2,Mozzarella + Quinoa + Cherry Tomatoes + Cucumbers,Light & fresh,Mozzarella|Quinoa|Cherry tomatoes|Cucumbers
+mozzarella_sticks,Mozzarella Sticks,fried,mozzarella sticks|cheese sticks|fried mozzarella,280,18,3,Feta + Chickpeas + Spinach + Olives,Mediterranean,Feta|Chickpeas|Spinach|Olives
+pizza,Pizza,fast_food,pizza|pizza slice|dominos|pizza hut,285,19,1,Tuna + Mozzarella + Tomatoes + Olives,Similar flavors,Tuna|Mozzarella|Tomatoes|Olives
+pizza,Pizza,fast_food,pizza|pizza slice|dominos|pizza hut,285,19,2,Chicken + Feta + Couscous + Olives,Mediterranean twist,Grilled chicken|Feta|Couscous|Olives
+pizza,Pizza,fast_food,pizza|pizza slice|dominos|pizza hut,285,19,3,Salmon + Avocado + Arugula + Beets,Gourmet option,Salmon|Avocado|Arugula|Beets
+hot_dogs,Hot Dogs,fast_food,hot dog|hotdog|hot dogs,290,20,1,Turkey + Avocado + Whole-Grain Toast + Tomatoes,Lean protein,Turkey breast|Avocado|Whole-grain toast|Tomatoes
+hot_dogs,Hot Dogs,fast_food,hot dog|hotdog|hot dogs,290,20,2,Chicken + Corn + Pinto Beans + Kale,Fiber-rich,Grilled chicken|Corn|Pinto beans|Kale
+hot_dogs,Hot Dogs,fast_food,hot dog|hotdog|hot dogs,290,20,3,Tuna + White Beans + Cucumbers + Cherry Tomatoes,Light & fresh,Tuna|White beans|Cucumbers|Cherry tomatoes
+hamburgers,Hamburgers (Fast Food),fast_food,hamburger|burger|cheeseburger|big mac,540,21,1,Lean Beef + Mushrooms + Broccoli + Brown Rice,Still satisfying,Lean beef|Mushrooms|Broccoli|Brown rice
+hamburgers,Hamburgers (Fast Food),fast_food,hamburger|burger|cheeseburger|big mac,540,21,2,Beef + Chickpeas + Spinach + Quinoa,Fiber boost,Lean beef|Chickpeas|Spinach|Quinoa
+hamburgers,Hamburgers (Fast Food),fast_food,hamburger|burger|cheeseburger|big mac,540,21,3,Chicken + Avocado + Feta + Spinach,Lighter option,Grilled chicken|Avocado|Feta|Spinach
+bacon,Bacon,processed_meat,bacon|bacon strips,43,22,1,Eggs + Avocado + Spinach + Feta,High protein,Eggs|Avocado|Spinach|Feta
+bacon,Bacon,processed_meat,bacon|bacon strips,43,22,2,Boiled Eggs + Avocado + Asparagus + Whole-Grain Toast,Satisfying,Boiled eggs|Avocado|Asparagus|Whole-grain toast
+bacon,Bacon,processed_meat,bacon|bacon strips,43,22,3,Turkey Bacon + Eggs + Spinach + Avocado,Leaner option,Turkey bacon|Eggs|Spinach|Avocado
+sausage,Sausage,processed_meat,sausage|breakfast sausage,300,23,1,Eggs + Avocado + Mozzarella + Tomatoes,Protein-rich,Eggs|Avocado|Mozzarella|Tomatoes
+sausage,Sausage,processed_meat,sausage|breakfast sausage,300,23,2,Eggs + Quinoa + Asparagus + Pesto,Flavorful,Eggs|Quinoa|Asparagus|Pesto
+sausage,Sausage,processed_meat,sausage|breakfast sausage,300,23,3,Turkey + Low-Fat Cheddar + Broccoli + Brown Rice,Lean protein,Turkey|Low-fat cheddar|Broccoli|Brown rice
+deli_meats,Deli Meats,processed_meat,deli meat|lunch meat|salami|ham|bologna,150,24,1,Tuna + Avocado + Whole Wheat Pita,Omega-3s,Tuna|Avocado|Whole wheat pita
+deli_meats,Deli Meats,processed_meat,deli meat|lunch meat|salami|ham|bologna,150,24,2,Chicken + White Beans + Kale + Parmesan,High protein,Grilled chicken|White beans|Kale|Parmesan
+deli_meats,Deli Meats,processed_meat,deli meat|lunch meat|salami|ham|bologna,150,24,3,Salmon + Avocado + Spinach + Edamame,Nutrient-dense,Salmon|Avocado|Spinach|Edamame
+instant_ramen,Instant Ramen,processed,ramen|instant noodles|top ramen,380,25,1,Miso Soup + Tofu + Mushrooms + Spinach,Much lower sodium,Miso soup|Tofu|Mushrooms|Spinach
+instant_ramen,Instant Ramen,processed,ramen|instant noodles|top ramen,380,25,2,Chicken + Wild Rice + Kale + Zucchini,Real food,Grilled chicken|Wild rice|Kale|Zucchini
+instant_ramen,Instant Ramen,processed,ramen|instant noodles|top ramen,380,25,3,Tuna + Quinoa + Cauliflower + Olives,Protein-packed,Tuna|Quinoa|Cauliflower|Olives
+boxed_mac_cheese,Boxed Mac & Cheese,processed,mac and cheese|macaroni|kraft mac,350,26,1,Cauliflower + Quinoa + Feta + Spinach,Veggie-packed,Cauliflower|Quinoa|Feta|Spinach
+boxed_mac_cheese,Boxed Mac & Cheese,processed,mac and cheese|macaroni|kraft mac,350,26,2,Chicken + Broccoli + Brown Rice + Low-Fat Cheddar,Protein boost,Grilled chicken|Broccoli|Brown rice|Low-fat cheddar
+boxed_mac_cheese,Boxed Mac & Cheese,processed,mac and cheese|macaroni|kraft mac,350,26,3,Tuna + Brown Rice + Mozzarella + Cherry Tomatoes,Still creamy,Tuna|Brown rice|Mozzarella|Cherry tomatoes
+canned_soup,Canned Soup,processed,canned soup|soup|campbell's,200,27,1,Kale + White Beans + Olive Oil + Parmesan,Fresh & hearty,Kale|White beans|Olive oil|Parmesan
+canned_soup,Canned Soup,processed,canned soup|soup|campbell's,200,27,2,Lentils + Green Beans + Avocado + Chives,Fiber-rich,Lentils|Green beans|Avocado|Chives
+canned_soup,Canned Soup,processed,canned soup|soup|campbell's,200,27,3,Chicken + Zucchini + Quinoa + Spinach,Protein-packed,Grilled chicken|Zucchini|Quinoa|Spinach
+frozen_dinners,Frozen TV Dinners,processed,frozen dinner|tv dinner|lean cuisine,350,28,1,Salmon + Asparagus + Quinoa + Lemon,Fresh ingredients,Salmon|Asparagus|Quinoa|Lemon
+frozen_dinners,Frozen TV Dinners,processed,frozen dinner|tv dinner|lean cuisine,350,28,2,Chicken + Brown Rice + Mushrooms + Broccoli,Balanced meal,Grilled chicken|Brown rice|Mushrooms|Broccoli
+frozen_dinners,Frozen TV Dinners,processed,frozen dinner|tv dinner|lean cuisine,350,28,3,Beef + Green Beans + Orzo + Mushrooms,Hearty,Lean beef|Green beans|Orzo|Mushrooms
+white_bread,White Bread,refined_grains,white bread|wonder bread|sandwich bread,80,29,1,Whole-Grain Toast + Avocado + Eggs,More fiber,Whole-grain toast|Avocado|Eggs
+white_bread,White Bread,refined_grains,white bread|wonder bread|sandwich bread,80,29,2,Tuna + Avocado + Whole-Grain Toast,Protein-rich,Tuna|Avocado|Whole-grain toast
+white_bread,White Bread,refined_grains,white bread|wonder bread|sandwich bread,80,29,3,Cottage Cheese + Pear + Whole-Grain Toast,Filling,Cottage cheese|Pear|Whole-grain toast
+bagels,Bagels,refined_grains,bagel|bagels,280,30,1,Greek Yogurt + Berries + Almonds + Chia Seeds,High protein,Greek yogurt|Mixed berries|Almonds|Chia seeds
+bagels,Bagels,refined_grains,bagel|bagels,280,30,2,Eggs + Avocado + Goat Cheese + Arugula,Savory option,Eggs|Avocado|Goat cheese|Arugula
+bagels,Bagels,refined_grains,bagel|bagels,280,30,3,Cottage Cheese + Cantaloupe + Almonds + Walnuts,Sweet & filling,Cottage cheese|Cantaloupe|Almonds|Walnuts
+pancakes_waffles,Pancakes / Waffles,breakfast,pancakes|waffles|pancake|waffle,350,31,1,Oatmeal + Milk + Walnuts + Berries,Fiber-rich,Oatmeal|Milk|Walnuts|Mixed berries
+pancakes_waffles,Pancakes / Waffles,breakfast,pancakes|waffles|pancake|waffle,350,31,2,Greek Yogurt + Banana + Walnuts + Chia Seeds,High protein,Greek yogurt|Banana|Walnuts|Chia seeds
+pancakes_waffles,Pancakes / Waffles,breakfast,pancakes|waffles|pancake|waffle,350,31,3,Eggs + Avocado + Corn + Tomatoes,Savory option,Eggs|Avocado|Corn|Tomatoes
+toaster_pastries,Toaster Pastries (Pop-Tarts),breakfast,pop tarts|toaster pastries|pop-tarts,200,32,1,Quinoa + Milk + Blueberries + Almonds,Protein & fiber,Quinoa|Milk|Blueberries|Almonds
+toaster_pastries,Toaster Pastries (Pop-Tarts),breakfast,pop tarts|toaster pastries|pop-tarts,200,32,2,Oatmeal + Greek Yogurt + Pecans + Apples,Filling,Oatmeal|Greek yogurt|Pecans|Apples
+toaster_pastries,Toaster Pastries (Pop-Tarts),breakfast,pop tarts|toaster pastries|pop-tarts,200,32,3,Cottage Cheese + Apple Slices + Walnuts,High protein,Cottage cheese|Apple|Walnuts
+donuts,Donuts,desserts,donut|doughnut|donuts|krispy kreme|dunkin,250,33,1,Greek Yogurt + Strawberries + Walnuts,Naturally sweet,Greek yogurt|Strawberries|Walnuts
+donuts,Donuts,desserts,donut|doughnut|donuts|krispy kreme|dunkin,250,33,2,Cottage Cheese + Mango + Cashews,Tropical twist,Cottage cheese|Mango|Cashews
+donuts,Donuts,desserts,donut|doughnut|donuts|krispy kreme|dunkin,250,33,3,Ricotta + Figs + Pecans,Gourmet option,Ricotta|Figs|Pecans
+muffins,Muffins,desserts,muffin|muffins|blueberry muffin,420,34,1,Greek Yogurt + Apple Slices + Almonds,Much lighter,Greek yogurt|Apple|Almonds
+muffins,Muffins,desserts,muffin|muffins|blueberry muffin,420,34,2,Cottage Cheese + Blueberries + Pecans,High protein,Cottage cheese|Blueberries|Pecans
+muffins,Muffins,desserts,muffin|muffins|blueberry muffin,420,34,3,Oatmeal + Milk + Walnuts,Fiber-rich,Oatmeal|Milk|Walnuts
+sugary_cereal,Sugary Cereal,breakfast,cereal|sugary cereal|frosted flakes|fruit loops,150,35,1,Oatmeal + Milk + Walnuts + Berries,No added sugar,Oatmeal|Milk|Walnuts|Mixed berries
+sugary_cereal,Sugary Cereal,breakfast,cereal|sugary cereal|frosted flakes|fruit loops,150,35,2,Greek Yogurt + Berries + Almonds + Chia Seeds,High protein,Greek yogurt|Mixed berries|Almonds|Chia seeds
+sugary_cereal,Sugary Cereal,breakfast,cereal|sugary cereal|frosted flakes|fruit loops,150,35,3,Cottage Cheese + Cantaloupe + Almonds + Walnuts,Protein-packed,Cottage cheese|Cantaloupe|Almonds|Walnuts
+granola_bars,Granola Bars,snacks,granola bar|granola bars|nature valley,140,36,1,Greek Yogurt + Berries,Fresh & light,Greek yogurt|Mixed berries
+granola_bars,Granola Bars,snacks,granola bar|granola bars|nature valley,140,36,2,Cottage Cheese + Apple Slices,Crunchy & sweet,Cottage cheese|Apple
+granola_bars,Granola Bars,snacks,granola bar|granola bars|nature valley,140,36,3,Almonds + Grapes,On-the-go,Almonds|Grapes
+ice_cream,Ice Cream,desserts,ice cream|gelato|frozen dessert,270,37,1,Greek Yogurt + Berries,Creamy & sweet,Greek yogurt|Mixed berries
+ice_cream,Ice Cream,desserts,ice cream|gelato|frozen dessert,270,37,2,Cottage Cheese + Mango,Tropical treat,Cottage cheese|Mango
+ice_cream,Ice Cream,desserts,ice cream|gelato|frozen dessert,270,37,3,Ricotta + Figs,Naturally sweet,Ricotta|Figs
+cookies,Cookies,desserts,cookies|oreos|chocolate chip cookies|cookie,140,38,1,Apple Slices + Walnuts,Naturally sweet,Apple|Walnuts
+cookies,Cookies,desserts,cookies|oreos|chocolate chip cookies|cookie,140,38,2,Greek Yogurt + Strawberries,Creamy & light,Greek yogurt|Strawberries
+cookies,Cookies,desserts,cookies|oreos|chocolate chip cookies|cookie,140,38,3,Cottage Cheese + Blueberries,Protein-rich,Cottage cheese|Blueberries
+cake_brownies,Cake / Brownies,desserts,cake|brownies|brownie|cupcake,350,39,1,Greek Yogurt + Berries,Much lighter,Greek yogurt|Mixed berries
+cake_brownies,Cake / Brownies,desserts,cake|brownies|brownie|cupcake,350,39,2,Cottage Cheese + Cherries,Sweet treat,Cottage cheese|Cherries
+cake_brownies,Cake / Brownies,desserts,cake|brownies|brownie|cupcake,350,39,3,Dark Chocolate + Almonds,Antioxidants,Dark chocolate|Almonds
+candy,Candy (Bars + Gummies),sweets,candy|chocolate bar|gummies|snickers|m&ms,200,40,1,Dark Chocolate + Almonds,Antioxidants,Dark chocolate|Almonds
+candy,Candy (Bars + Gummies),sweets,candy|chocolate bar|gummies|snickers|m&ms,200,40,2,Berries + Walnuts,Naturally sweet,Mixed berries|Walnuts
+candy,Candy (Bars + Gummies),sweets,candy|chocolate bar|gummies|snickers|m&ms,200,40,3,Apple Slices + Pecans,Crunchy & sweet,Apple|Pecans

@@ -12,41 +12,22 @@ struct SwapEngine {
     
     // MARK: - Food Matching
     
-    /// Find which TargetFood a food item matches (if any)
-    static func detectTargetFood(from foodName: String) -> TargetFood? {
-        let normalized = foodName.lowercased().trimmingCharacters(in: .whitespaces)
-        
-        // Fries detection
-        if normalized.contains("fries") || normalized.contains("french fries") {
-            return .fries
-        }
-        
-        // Soda detection
-        if normalized.contains("soda") || 
-           normalized.contains("coke") || 
-           normalized.contains("pepsi") ||
-           normalized.contains("sprite") ||
-           normalized.contains("cola") {
-            return .soda
-        }
-        
-        // Chips detection
-        if normalized.contains("chips") || 
-           normalized.contains("potato chips") ||
-           normalized.contains("doritos") ||
-           normalized.contains("lays") {
-            return .chips
-        }
-        
-        return nil
+    /// Find which BadFood a food item matches (if any)
+    static func detectTargetFood(from foodName: String) -> BadFood? {
+        return BadFoodsService.detectBadFood(from: foodName)
     }
     
-    /// Get swap recommendations for a food item
+    /// Get swap recommendations for a food item by name
     static func recommendSwaps(for foodName: String) -> [SwapCombo] {
-        guard let target = detectTargetFood(from: foodName) else {
+        guard let badFood = detectTargetFood(from: foodName) else {
             return []
         }
-        return MockDataService.swaps(for: target)
+        return BadFoodsService.getSwaps(forFoodId: badFood.id)
+    }
+    
+    /// Get swaps for a specific bad food
+    static func getSwaps(for badFood: BadFood) -> [SwapCombo] {
+        return BadFoodsService.getSwaps(forFoodId: badFood.id)
     }
     
     // MARK: - Filtering & Search
@@ -54,13 +35,16 @@ struct SwapEngine {
     /// Filter suggested foods based on search query
     static func filterSuggestions(query: String) -> [String] {
         guard !query.isEmpty else {
-            return MockDataService.suggestedFoods
+            return BadFoodsService.getAllBadFoods().map { $0.name }
         }
         
         let normalized = query.lowercased()
-        return MockDataService.suggestedFoods.filter { food in
-            food.lowercased().contains(normalized)
-        }
+        return BadFoodsService.getAllBadFoods()
+            .filter { food in
+                food.name.lowercased().contains(normalized) ||
+                food.keywords.contains { $0.lowercased().contains(normalized) }
+            }
+            .map { $0.name }
     }
     
     /// Get top suggestions (limited results for typeahead)
@@ -69,60 +53,44 @@ struct SwapEngine {
         return Array(filtered.prefix(limit))
     }
     
-    // MARK: - Ranking & Scoring
+    // MARK: - Ranking & Selection
     
-    /// Score a swap based on calorie drop (higher = better)
-    static func scoreSwap(_ swap: SwapCombo) -> Int {
-        return swap.estKcalDrop
+    /// Get first swap for a bad food
+    static func getBestSwap(for badFood: BadFood) -> SwapCombo? {
+        return BadFoodsService.getBestSwap(forFoodId: badFood.id)
     }
     
-    /// Get best swap for a target food (highest calorie drop)
-    static func getBestSwap(for target: TargetFood) -> SwapCombo? {
-        let swaps = MockDataService.swaps(for: target)
-        return swaps.max(by: { scoreSwap($0) < scoreSwap($1) })
-    }
-    
-    /// Rank swaps by effectiveness
-    static func rankedSwaps(for target: TargetFood) -> [SwapCombo] {
-        let swaps = MockDataService.swaps(for: target)
-        return swaps.sorted { scoreSwap($0) > scoreSwap($1) }
+    /// Get swaps in order (as defined in service)
+    static func rankedSwaps(for badFood: BadFood) -> [SwapCombo] {
+        return BadFoodsService.getSwaps(forFoodId: badFood.id)
     }
     
     // MARK: - Analysis
     
-    /// Analyze recall items and detect potential swaps
-    static func analyzeRecall(_ items: [String]) -> [TargetFood: [SwapCombo]] {
-        var results: [TargetFood: [SwapCombo]] = [:]
-        
-        for item in items where !item.isEmpty {
-            if let target = detectTargetFood(from: item) {
-                results[target] = MockDataService.swaps(for: target)
-            }
-        }
-        
-        return results
+    /// Analyze recall items and detect bad foods (returns sorted by priority)
+    static func analyzeRecall(_ items: [String]) -> [BadFood] {
+        return BadFoodsService.detectBadFoods(from: items)
     }
     
-    /// Calculate total potential calorie savings from swaps
-    static func calculatePotentialSavings(swaps: [SwapCombo]) -> Int {
-        return swaps.reduce(0) { $0 + $1.estKcalDrop }
+    /// Get the worst detected food (lowest priority number)
+    static func getWorstDetectedFood(from detected: [BadFood]) -> BadFood? {
+        return detected.min(by: { $0.priority < $1.priority })
     }
     
     /// Get summary of swap opportunities from recall
     static func getSwapSummary(from recallItems: [String]) -> String {
-        let analysis = analyzeRecall(recallItems)
+        let detected = analyzeRecall(recallItems)
         
-        guard !analysis.isEmpty else {
+        guard !detected.isEmpty else {
             return "No swap opportunities detected."
         }
         
-        let targetCount = analysis.keys.count
-        let totalSwaps = analysis.values.flatMap { $0 }.count
-        let potentialSavings = calculatePotentialSavings(
-            swaps: analysis.values.flatMap { $0 }
-        )
+        let foodCount = detected.count
+        let totalSwaps = detected.reduce(0) { count, food in
+            count + BadFoodsService.getSwaps(forFoodId: food.id).count
+        }
         
-        return "\(targetCount) target food(s) found • \(totalSwaps) swap(s) available • ~\(potentialSavings) kcal potential savings"
+        return "\(foodCount) target food(s) found • \(totalSwaps) swap(s) available"
     }
 }
 

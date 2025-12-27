@@ -20,6 +20,8 @@ struct PersistenceService {
         static let selectedTargetFood = "selected_target_food"
         static let focusedFood = "focused_food"
         static let detectedFoods = "detected_foods"
+        static let focusedFoodId = "focused_food_id"
+        static let detectedFoodIds = "detected_food_ids"
         static let replacedToday = "replaced_today"
         static let replacementsCount = "replacements_count"
         static let cravingLevel = "craving_level"
@@ -57,42 +59,26 @@ struct PersistenceService {
         return foods
     }
     
-    // MARK: - Target Food Selection
+    // MARK: - Legacy (kept for backwards compatibility, not actively used)
     
-    static func saveSelectedTargetFood(_ target: TargetFood?) {
-        defaults.set(target?.rawValue, forKey: Keys.selectedTargetFood)
+    // MARK: - Detected Foods (by IDs)
+    
+    static func saveDetectedFoodIds(_ ids: [String]) {
+        defaults.set(ids, forKey: Keys.detectedFoodIds)
     }
     
-    static func loadSelectedTargetFood() -> TargetFood? {
-        guard let rawValue = defaults.string(forKey: Keys.selectedTargetFood) else {
-            return nil
-        }
-        return TargetFood(rawValue: rawValue)
+    static func loadDetectedFoodIds() -> [String] {
+        return defaults.stringArray(forKey: Keys.detectedFoodIds) ?? []
     }
     
-    // MARK: - Golden Path State
+    // MARK: - Focused Food (by ID)
     
-    static func saveFocusedFood(_ target: TargetFood?) {
-        defaults.set(target?.rawValue, forKey: Keys.focusedFood)
+    static func saveFocusedFoodId(_ id: String) {
+        defaults.set(id, forKey: Keys.focusedFoodId)
     }
     
-    static func loadFocusedFood() -> TargetFood? {
-        guard let rawValue = defaults.string(forKey: Keys.focusedFood) else {
-            return nil
-        }
-        return TargetFood(rawValue: rawValue)
-    }
-    
-    static func saveDetectedFoods(_ foods: [TargetFood]) {
-        let rawValues = foods.map { $0.rawValue }
-        defaults.set(rawValues, forKey: Keys.detectedFoods)
-    }
-    
-    static func loadDetectedFoods() -> [TargetFood] {
-        guard let rawValues = defaults.stringArray(forKey: Keys.detectedFoods) else {
-            return []
-        }
-        return rawValues.compactMap { TargetFood(rawValue: $0) }
+    static func loadFocusedFoodId() -> String? {
+        return defaults.string(forKey: Keys.focusedFoodId)
     }
     
     // MARK: - Check-In State

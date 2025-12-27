@@ -10,223 +10,279 @@ import SwiftUI
 struct InsightsView: View {
     @Environment(AppModel.self) private var appModel
     @Binding var selectedTab: Int
-
+    @State private var showOtherOpportunities = false
+    
     var body: some View {
         @Bindable var appModel = appModel
         
-        List {
-            // Step indicator
-            Section {
-                Text("Step 2 · Focus")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .textCase(.uppercase)
-                    .tracking(0.5)
-            }
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-            
-            // Current Focus Section - Prominent display of active focus
-            if let focusedFood = appModel.focusedFood, !appModel.detectedFoods.isEmpty {
-                Section {
-                    HStack(spacing: 16) {
-                        // Focus indicator icon
-                        Image(systemName: "target")
-                            .foregroundStyle(.white)
-                            .font(.title3)
-                            .frame(width: 40, height: 40)
-                            .background(Circle().fill(Color.green))
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(focusedFood.rawValue)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.primary)
-                            
-                            Text("Your weekly focus")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
-                        
-                        Spacer()
-                        
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundStyle(.green)
-                            .font(.title2)
+        ScrollView {
+            VStack(spacing: 24) {
+                if appModel.detectedFoods.isEmpty {
+                    // Empty state
+                    emptyStateView
+                } else {
+                    // Top priority card (first = worst)
+                    if let topFood = appModel.detectedFoods.first {
+                        topPriorityCard(topFood)
                     }
-                    .padding(.vertical, 8)
-                } header: {
-                    HStack(spacing: 6) {
-                        Image(systemName: "target")
-                            .font(.caption)
-                        Text("Your Current Focus")
+                    
+                    // Other opportunities (if more than 1 detected)
+                    if appModel.detectedFoods.count > 1 {
+                        otherOpportunitiesSection
                     }
                 }
             }
+            .padding(.horizontal, 16)
+            .padding(.top, 16)
+        }
+        .navigationTitle("Insights")
+    }
+    
+    // MARK: - Empty State
+    
+    private var emptyStateView: some View {
+        VStack(spacing: 24) {
+            Image(systemName: "chart.bar.doc.horizontal")
+                .font(.system(size: 60))
+                .foregroundStyle(.secondary)
             
-            // Other Opportunities Section - Alternative foods to focus on
-            if !appModel.detectedFoods.isEmpty && appModel.focusedFood != nil {
-                let otherFoods = appModel.detectedFoods.filter { $0 != appModel.focusedFood }
+            VStack(spacing: 8) {
+                Text("No Analysis Yet")
+                    .font(.title2)
+                    .fontWeight(.semibold)
                 
-                if !otherFoods.isEmpty {
-                    Section {
-                        ForEach(Array(otherFoods.enumerated()), id: \.element) { _, food in
-                            Button {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                    appModel.setFocus(on: food)
-                                }
-                            } label: {
-                                HStack(spacing: 16) {
-                                    // Food indicator icon
-                                    Image(systemName: "circle")
-                                        .foregroundStyle(.secondary)
-                                        .font(.title2)
-                                        .frame(width: 36, height: 36)
-                                    
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(food.rawValue)
-                                            .font(.headline)
-                                            .foregroundStyle(.primary)
-                                        
-                                        Text("Tap to switch focus")
-                                            .font(.caption)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Image(systemName: "arrow.right.circle")
-                                        .foregroundStyle(.secondary)
-                                        .font(.title3)
-                                }
-                                .padding(.vertical, 4)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    } header: {
-                        Text("Other Opportunities")
-                    } footer: {
-                        Text("You can switch your focus at any time")
-                    }
-                }
+                Text("Log your diet on the Recall tab first, then analyze to see opportunities")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 20)
             }
             
-            // If no focus selected yet, show all as opportunities
-            if !appModel.detectedFoods.isEmpty && appModel.focusedFood == nil {
-                Section {
-                    ForEach(Array(appModel.detectedFoods.enumerated()), id: \.element) { index, food in
-                        Button {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                appModel.setFocus(on: food)
-                            }
-                        } label: {
-                            HStack(spacing: 16) {
-                                // Food indicator icon
-                                Image(systemName: "circle.dotted")
-                                    .foregroundStyle(.secondary)
-                                    .font(.title2)
-                                    .frame(width: 36, height: 36)
-                                
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(food.rawValue)
-                                        .font(.headline)
-                                        .foregroundStyle(.primary)
-                                    
-                                    Text("Tap to focus & see swaps")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                }
-                                
-                                Spacer()
-                                
-                                Image(systemName: "arrow.right.circle")
-                                    .foregroundStyle(.secondary)
-                                    .font(.title3)
-                            }
-                            .padding(.vertical, 4)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                } header: {
-                    Text("Opportunities from Your Recall")
-                } footer: {
-                    Text("Choose one food to focus on this week")
+            Button {
+                selectedTab = 0
+            } label: {
+                HStack {
+                    Image(systemName: "square.and.pencil")
+                    Text("Go to Recall")
                 }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.accentColor)
+                .foregroundStyle(.white)
+                .fontWeight(.semibold)
+                .cornerRadius(12)
             }
-            
-            // CTA Card - Next step
-            if appModel.focusedFood != nil {
-                Section {
-                    Button {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            selectedTab = 2
-                        }
-                    } label: {
-                        HStack(spacing: 12) {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Next Step: View Swaps")
-                                    .font(.headline)
-                                    .foregroundStyle(.primary)
-                                
-                                Text("See your swap recommendations")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                            
-                            Spacer()
-                            
-                            Image(systemName: "arrow.right.circle.fill")
-                                .foregroundStyle(.green)
-                                .font(.title2)
-                        }
+            .padding(.horizontal, 40)
+        }
+        .padding(.top, 60)
+    }
+    
+    // MARK: - Top Priority Card
+    
+    private func topPriorityCard(_ food: BadFood) -> some View {
+        VStack(spacing: 16) {
+            // Card content
+            VStack(alignment: .leading, spacing: 12) {
+                // Header
+                HStack {
+                    Text("YOUR TOP PRIORITY")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .textCase(.uppercase)
+                        .kerning(0.5)
+                    
+                    Spacer()
+                    
+                    // Priority badge
+                    Text("#\(food.priority)")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 8)
                         .padding(.vertical, 4)
-                    }
-                    .buttonStyle(.plain)
+                        .background(priorityColor(for: food.priority))
+                        .cornerRadius(6)
                 }
-            }
-            
-            // Empty state (if no foods detected yet)
-            if appModel.detectedFoods.isEmpty {
-                Section {
-                    VStack(spacing: 16) {
-                        Image(systemName: "square.and.pencil")
-                            .font(.system(size: 50))
+                
+                // Food info
+                HStack(spacing: 12) {
+                    // Icon
+                    Circle()
+                        .fill(priorityColor(for: food.priority).opacity(0.2))
+                        .frame(width: 50, height: 50)
+                        .overlay(
+                            Text(priorityEmoji(for: food.priority))
+                                .font(.title2)
+                        )
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(food.name)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                        
+                        Text("Priority #\(food.priority) of 40")
+                            .font(.subheadline)
                             .foregroundStyle(.secondary)
-                        
-                        VStack(spacing: 8) {
-                            Text("No Foods Analyzed Yet")
-                                .font(.headline)
-                            
-                            Text("Go to Recall to log your diet and find swap opportunities")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                                .multilineTextAlignment(.center)
-                        }
-                        
-                        Button {
-                            selectedTab = 0
-                        } label: {
-                            HStack {
-                                Image(systemName: "square.and.pencil")
-                                Text("Go to Recall")
-                            }
-                        }
-                        .buttonStyle(.borderedProminent)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 32)
+                    
+                    Spacer()
                 }
+                
+                // Auto-selected indicator
+                HStack(spacing: 6) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                        .font(.subheadline)
+                    
+                    Text("Set as This Week's Focus")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.top, 4)
+            }
+            .padding()
+            .background(.background)
+            .cornerRadius(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(priorityColor(for: food.priority).opacity(0.3), lineWidth: 2)
+            )
+            .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
+            
+            // Find Swaps Button
+            Button {
+                appModel.setFocus(on: food)
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    selectedTab = 2  // Navigate to Swaps tab
+                }
+            } label: {
+                HStack {
+                    Text("Find Swaps")
+                    Image(systemName: "arrow.right.circle.fill")
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.accentColor)
+                .foregroundStyle(.white)
+                .fontWeight(.semibold)
+                .cornerRadius(12)
             }
         }
-        .navigationTitle("Insights & Focus")
+    }
+    
+    // MARK: - Other Opportunities Section
+    
+    private var otherOpportunitiesSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Toggle header
+            Button {
+                withAnimation(.spring(response: 0.3)) {
+                    showOtherOpportunities.toggle()
+                }
+            } label: {
+                HStack {
+                    Image(systemName: showOtherOpportunities ? "chevron.down" : "chevron.right")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                    
+                    Text("Other Opportunities Detected (\(appModel.detectedFoods.count - 1))")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                    
+                    Spacer()
+                }
+                .foregroundStyle(.secondary)
+                .contentShape(Rectangle())
+            }
+            
+            // Expanded list
+            if showOtherOpportunities {
+                VStack(spacing: 8) {
+                    ForEach(appModel.detectedFoods.dropFirst(), id: \.id) { food in
+                        otherFoodRow(food)
+                    }
+                }
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+        .padding()
+        .background(.background)
+        .cornerRadius(12)
+        .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
+    }
+    
+    private func otherFoodRow(_ food: BadFood) -> some View {
+        HStack(spacing: 12) {
+            // Priority indicator
+            Circle()
+                .fill(priorityColor(for: food.priority).opacity(0.2))
+                .frame(width: 32, height: 32)
+                .overlay(
+                    Text("#\(food.priority)")
+                        .font(.caption2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(priorityColor(for: food.priority))
+                )
+            
+            // Food name
+            Text(food.name)
+                .font(.subheadline)
+            
+            Spacer()
+            
+            // Change focus button
+            Button {
+                appModel.setFocus(on: food)
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    selectedTab = 2
+                }
+            } label: {
+                Text("Select")
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundStyle(Color.accentColor)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Color.accentColor.opacity(0.1))
+                    .cornerRadius(8)
+            }
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 4)
+    }
+    
+    // MARK: - Helper Functions
+    
+    private func priorityColor(for priority: Int) -> Color {
+        switch priority {
+        case 1...10:
+            return .red
+        case 11...25:
+            return .orange
+        default:
+            return .green
+        }
+    }
+    
+    private func priorityEmoji(for priority: Int) -> String {
+        switch priority {
+        case 1...10:
+            return "🔴"
+        case 11...25:
+            return "🟡"
+        default:
+            return "🟢"
+        }
     }
 }
 
-#Preview { 
+// MARK: - Preview
+
+#Preview {
     @Previewable @State var tab = 1
-    NavigationStack { 
+    
+    NavigationStack {
         InsightsView(selectedTab: $tab)
             .environment(AppModel())
-    } 
+    }
 }
-

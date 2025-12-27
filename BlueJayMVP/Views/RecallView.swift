@@ -10,7 +10,6 @@ import SwiftUI
 struct RecallView: View {
     @Environment(AppModel.self) private var appModel
     @State private var newItemText = ""
-    @State private var showAnalysisAlert = false
     @FocusState private var isInputFocused: Bool
     @Binding var selectedTab: Int
     
@@ -58,7 +57,10 @@ struct RecallView: View {
                         isInputFocused = false
                         appModel.saveRecall()
                         appModel.analyzeRecall()
-                        showAnalysisAlert = true
+                        // Auto-navigate to Insights (Tab 2)
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            selectedTab = 1
+                        }
                     }
                 )
                 .padding(.horizontal, 16)
@@ -67,20 +69,6 @@ struct RecallView: View {
             }
         }
         .navigationTitle("Diet Recall")
-        .alert("Analysis Complete!", isPresented: $showAnalysisAlert) {
-            Button("View Insights") {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    selectedTab = 1
-                }
-            }
-            Button("OK", role: .cancel) {}
-        } message: {
-            if appModel.detectedFoods.isEmpty {
-                Text("No swappable foods detected. Try adding items like soda, fries, or chips.")
-            } else {
-                Text("Found \(appModel.detectedFoods.count) food(s) you can swap! Go to the Insights tab to set your focus.")
-            }
-        }
     }
 }
 
@@ -169,11 +157,11 @@ struct RecallCard: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
         }
-        .background(Color(.systemBackground))
+        .background(.background)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color(.separator), lineWidth: 0.5)
+                .strokeBorder(Color.gray.opacity(0.3), lineWidth: 0.5)
         )
         .shadow(color: .black.opacity(0.05), radius: 2, y: 1)
     }
@@ -224,11 +212,11 @@ struct TipsCard: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
-        .background(Color(.systemBackground))
+        .background(.background)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color(.separator), lineWidth: 0.5)
+                .strokeBorder(Color.gray.opacity(0.3), lineWidth: 0.5)
         )
         .shadow(color: .black.opacity(0.05), radius: 2, y: 1)
     }
