@@ -21,26 +21,23 @@ struct BadFood: Identifiable, Hashable, Codable {
 
 // MARK: - Swap Combos
 
-/// A recommended food swap with nutritional info
+/// A recommended food swap
 struct SwapCombo: Identifiable, Codable, Hashable {
     let id: UUID
     let targetFoodId: String  // Links to BadFood.id
     let title: String
     let description: String
-    let estKcalDrop: Int
     let foods: [String]
     
     init(id: UUID = UUID(),
          targetFoodId: String,
          title: String,
          description: String,
-         estKcalDrop: Int,
          foods: [String]) {
         self.id = id
         self.targetFoodId = targetFoodId
         self.title = title
         self.description = description
-        self.estKcalDrop = estKcalDrop
         self.foods = foods
     }
 }
