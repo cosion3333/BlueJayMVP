@@ -1,8 +1,8 @@
 {
   "badFoods": [
     {
-      "id": "sugary_soda",
-      "name": "Sugary Soda",
+      "id": "soda_regular",
+      "name": "Soda (Regular)",
       "category": "drinks",
       "keywords": [
         "soda",
@@ -11,33 +11,32 @@
         "sprite",
         "pop"
       ],
-      "avgCalories": 150,
+      "avgCalories": 0,
       "priority": 1
     },
     {
-      "id": "diet_soda",
-      "name": "Diet Soda",
-      "category": "drinks",
+      "id": "ice_cream",
+      "name": "Ice Cream",
+      "category": "desserts",
       "keywords": [
-        "diet soda",
-        "diet coke",
-        "coke zero",
-        "diet pepsi"
+        "ice cream",
+        "gelato",
+        "frozen dessert"
       ],
       "avgCalories": 0,
       "priority": 2
     },
     {
-      "id": "energy_drinks",
-      "name": "Energy Drinks",
-      "category": "drinks",
+      "id": "donuts",
+      "name": "Donuts",
+      "category": "desserts",
       "keywords": [
-        "energy drink",
-        "red bull",
-        "monster",
-        "rockstar"
+        "donut",
+        "doughnut",
+        "dunkin",
+        "krispy kreme"
       ],
-      "avgCalories": 110,
+      "avgCalories": 0,
       "priority": 3
     },
     {
@@ -50,48 +49,8 @@
         "apple juice",
         "fruit juice"
       ],
-      "avgCalories": 120,
+      "avgCalories": 0,
       "priority": 4
-    },
-    {
-      "id": "sweetened_iced_tea",
-      "name": "Sweetened Iced Tea / Lemonade",
-      "category": "drinks",
-      "keywords": [
-        "iced tea",
-        "sweet tea",
-        "lemonade",
-        "sweetened tea"
-      ],
-      "avgCalories": 90,
-      "priority": 5
-    },
-    {
-      "id": "specialty_coffee",
-      "name": "Specialty Coffee (Frappuccinos)",
-      "category": "drinks",
-      "keywords": [
-        "frappuccino",
-        "latte",
-        "mocha",
-        "specialty coffee",
-        "starbucks"
-      ],
-      "avgCalories": 400,
-      "priority": 6
-    },
-    {
-      "id": "alcohol_beer",
-      "name": "Alcohol / Beer",
-      "category": "drinks",
-      "keywords": [
-        "beer",
-        "alcohol",
-        "wine",
-        "liquor"
-      ],
-      "avgCalories": 150,
-      "priority": 7
     },
     {
       "id": "potato_chips",
@@ -103,127 +62,34 @@
         "lays",
         "pringles"
       ],
-      "avgCalories": 152,
-      "priority": 8
+      "avgCalories": 0,
+      "priority": 5
     },
     {
-      "id": "tortilla_chips",
-      "name": "Tortilla Chips (Doritos)",
-      "category": "snacks",
+      "id": "sugary_coffee",
+      "name": "Sugary Coffee Drinks (Latte/Frappe)",
+      "category": "drinks",
       "keywords": [
-        "doritos",
-        "tortilla chips",
-        "nacho chips",
-        "tostitos"
+        "frappuccino",
+        "latte",
+        "mocha",
+        "specialty coffee"
       ],
-      "avgCalories": 140,
-      "priority": 9
+      "avgCalories": 0,
+      "priority": 6
     },
     {
-      "id": "cheese_puffs",
-      "name": "Cheese Puffs (Cheetos)",
-      "category": "snacks",
+      "id": "sweetened_tea_lemonade",
+      "name": "Sweetened Iced Tea / Lemonade",
+      "category": "drinks",
       "keywords": [
-        "cheetos",
-        "cheese puffs",
-        "cheese balls"
+        "iced tea",
+        "sweet tea",
+        "lemonade",
+        "sweetened tea"
       ],
-      "avgCalories": 160,
-      "priority": 10
-    },
-    {
-      "id": "pretzels",
-      "name": "Pretzels",
-      "category": "snacks",
-      "keywords": [
-        "pretzels",
-        "pretzel"
-      ],
-      "avgCalories": 110,
-      "priority": 11
-    },
-    {
-      "id": "crackers",
-      "name": "Crackers (Saltines/Ritz)",
-      "category": "snacks",
-      "keywords": [
-        "crackers",
-        "ritz",
-        "saltines",
-        "wheat thins"
-      ],
-      "avgCalories": 80,
-      "priority": 12
-    },
-    {
-      "id": "movie_popcorn",
-      "name": "Movie Theater Popcorn",
-      "category": "snacks",
-      "keywords": [
-        "popcorn",
-        "movie popcorn",
-        "buttered popcorn"
-      ],
-      "avgCalories": 600,
-      "priority": 13
-    },
-    {
-      "id": "french_fries",
-      "name": "French Fries",
-      "category": "fried",
-      "keywords": [
-        "fries",
-        "french fries",
-        "curly fries"
-      ],
-      "avgCalories": 365,
-      "priority": 14
-    },
-    {
-      "id": "onion_rings",
-      "name": "Onion Rings",
-      "category": "fried",
-      "keywords": [
-        "onion rings"
-      ],
-      "avgCalories": 410,
-      "priority": 15
-    },
-    {
-      "id": "fried_chicken",
-      "name": "Fried Chicken",
-      "category": "fried",
-      "keywords": [
-        "fried chicken",
-        "kfc",
-        "popeyes"
-      ],
-      "avgCalories": 320,
-      "priority": 16
-    },
-    {
-      "id": "chicken_nuggets",
-      "name": "Chicken Nuggets",
-      "category": "fried",
-      "keywords": [
-        "chicken nuggets",
-        "nuggets",
-        "mcnuggets"
-      ],
-      "avgCalories": 270,
-      "priority": 17
-    },
-    {
-      "id": "mozzarella_sticks",
-      "name": "Mozzarella Sticks",
-      "category": "fried",
-      "keywords": [
-        "mozzarella sticks",
-        "cheese sticks",
-        "fried mozzarella"
-      ],
-      "avgCalories": 280,
-      "priority": 18
+      "avgCalories": 0,
+      "priority": 7
     },
     {
       "id": "pizza",
@@ -235,191 +101,122 @@
         "dominos",
         "pizza hut"
       ],
-      "avgCalories": 285,
-      "priority": 19
+      "avgCalories": 0,
+      "priority": 8
     },
     {
-      "id": "hot_dogs",
-      "name": "Hot Dogs",
-      "category": "fast_food",
+      "id": "french_fries",
+      "name": "French Fries",
+      "category": "fried",
       "keywords": [
-        "hot dog",
-        "hotdog",
-        "hot dogs"
+        "fries",
+        "french fries",
+        "curly fries"
       ],
-      "avgCalories": 290,
-      "priority": 20
+      "avgCalories": 0,
+      "priority": 9
     },
     {
-      "id": "hamburgers",
-      "name": "Hamburgers (Fast Food)",
+      "id": "burgers",
+      "name": "Burgers (Fast Food)",
       "category": "fast_food",
       "keywords": [
-        "hamburger",
         "burger",
+        "hamburger",
         "cheeseburger",
         "big mac"
       ],
-      "avgCalories": 540,
-      "priority": 21
+      "avgCalories": 0,
+      "priority": 10
     },
     {
-      "id": "bacon",
-      "name": "Bacon",
-      "category": "processed_meat",
+      "id": "fried_chicken",
+      "name": "Fried Chicken / Nuggets",
+      "category": "fried",
       "keywords": [
-        "bacon",
-        "bacon strips"
+        "fried chicken",
+        "chicken nuggets",
+        "kfc",
+        "popeyes"
       ],
-      "avgCalories": 43,
-      "priority": 22
+      "avgCalories": 0,
+      "priority": 11
     },
     {
-      "id": "sausage",
-      "name": "Sausage",
-      "category": "processed_meat",
+      "id": "candy_chocolate",
+      "name": "Candy & Chocolate (Gummies/Hard/Bars)",
+      "category": "sweets",
       "keywords": [
-        "sausage",
-        "breakfast sausage"
+        "candy",
+        "chocolate",
+        "gummies",
+        "snickers",
+        "m&ms"
       ],
-      "avgCalories": 300,
-      "priority": 23
+      "avgCalories": 0,
+      "priority": 12
     },
     {
-      "id": "deli_meats",
-      "name": "Deli Meats",
-      "category": "processed_meat",
-      "keywords": [
-        "deli meat",
-        "lunch meat",
-        "salami",
-        "ham",
-        "bologna"
-      ],
-      "avgCalories": 150,
-      "priority": 24
-    },
-    {
-      "id": "instant_ramen",
-      "name": "Instant Ramen",
-      "category": "processed",
-      "keywords": [
-        "ramen",
-        "instant noodles",
-        "top ramen"
-      ],
-      "avgCalories": 380,
-      "priority": 25
-    },
-    {
-      "id": "boxed_mac_cheese",
-      "name": "Boxed Mac & Cheese",
-      "category": "processed",
-      "keywords": [
-        "mac and cheese",
-        "macaroni",
-        "kraft mac"
-      ],
-      "avgCalories": 350,
-      "priority": 26
-    },
-    {
-      "id": "canned_soup",
-      "name": "Canned Soup",
-      "category": "processed",
-      "keywords": [
-        "canned soup",
-        "soup",
-        "campbell's"
-      ],
-      "avgCalories": 200,
-      "priority": 27
-    },
-    {
-      "id": "frozen_dinners",
-      "name": "Frozen TV Dinners",
-      "category": "processed",
-      "keywords": [
-        "frozen dinner",
-        "tv dinner",
-        "lean cuisine"
-      ],
-      "avgCalories": 350,
-      "priority": 28
-    },
-    {
-      "id": "white_bread",
-      "name": "White Bread",
-      "category": "refined_grains",
-      "keywords": [
-        "white bread",
-        "wonder bread",
-        "sandwich bread"
-      ],
-      "avgCalories": 80,
-      "priority": 29
-    },
-    {
-      "id": "bagels",
-      "name": "Bagels",
-      "category": "refined_grains",
-      "keywords": [
-        "bagel",
-        "bagels"
-      ],
-      "avgCalories": 280,
-      "priority": 30
-    },
-    {
-      "id": "pancakes_waffles",
-      "name": "Pancakes / Waffles",
-      "category": "breakfast",
-      "keywords": [
-        "pancakes",
-        "waffles",
-        "pancake",
-        "waffle"
-      ],
-      "avgCalories": 350,
-      "priority": 31
-    },
-    {
-      "id": "toaster_pastries",
-      "name": "Toaster Pastries (Pop-Tarts)",
-      "category": "breakfast",
-      "keywords": [
-        "pop tarts",
-        "toaster pastries",
-        "pop-tarts"
-      ],
-      "avgCalories": 200,
-      "priority": 32
-    },
-    {
-      "id": "donuts",
-      "name": "Donuts",
+      "id": "cake_cupcakes",
+      "name": "Cake / Cupcakes",
       "category": "desserts",
       "keywords": [
-        "donut",
-        "doughnut",
-        "donuts",
-        "krispy kreme",
-        "dunkin"
+        "cake",
+        "cupcakes",
+        "birthday cake",
+        "cupcake"
       ],
-      "avgCalories": 250,
-      "priority": 33
+      "avgCalories": 0,
+      "priority": 13
     },
     {
-      "id": "muffins",
-      "name": "Muffins",
+      "id": "cookies",
+      "name": "Cookies",
       "category": "desserts",
       "keywords": [
-        "muffin",
+        "cookies",
+        "oreos",
+        "chocolate chip cookies"
+      ],
+      "avgCalories": 0,
+      "priority": 14
+    },
+    {
+      "id": "pastries",
+      "name": "Pastries (Muffins/Danishes/Pop-Tarts)",
+      "category": "desserts",
+      "keywords": [
         "muffins",
-        "blueberry muffin"
+        "pastries",
+        "pop tarts",
+        "danishes"
       ],
-      "avgCalories": 420,
-      "priority": 34
+      "avgCalories": 0,
+      "priority": 15
+    },
+    {
+      "id": "tortilla_chips",
+      "name": "Tortilla Chips (Doritos)",
+      "category": "snacks",
+      "keywords": [
+        "doritos",
+        "tortilla chips",
+        "nacho chips"
+      ],
+      "avgCalories": 0,
+      "priority": 16
+    },
+    {
+      "id": "cheese_puffs",
+      "name": "Cheese Puffs (Cheetos)",
+      "category": "snacks",
+      "keywords": [
+        "cheetos",
+        "cheese puffs",
+        "cheese balls"
+      ],
+      "avgCalories": 0,
+      "priority": 17
     },
     {
       "id": "sugary_cereal",
@@ -431,95 +228,176 @@
         "frosted flakes",
         "fruit loops"
       ],
-      "avgCalories": 150,
-      "priority": 35
+      "avgCalories": 0,
+      "priority": 18
     },
     {
-      "id": "granola_bars",
-      "name": "Granola Bars",
+      "id": "pancakes_waffles",
+      "name": "Pancakes / Waffles",
+      "category": "breakfast",
+      "keywords": [
+        "pancakes",
+        "waffles",
+        "pancake",
+        "waffle"
+      ],
+      "avgCalories": 0,
+      "priority": 19
+    },
+    {
+      "id": "movie_popcorn",
+      "name": "Movie Theater Popcorn",
       "category": "snacks",
       "keywords": [
-        "granola bar",
-        "granola bars",
-        "nature valley"
+        "popcorn",
+        "movie popcorn",
+        "buttered popcorn"
       ],
-      "avgCalories": 140,
-      "priority": 36
+      "avgCalories": 0,
+      "priority": 20
     },
     {
-      "id": "ice_cream",
-      "name": "Ice Cream",
-      "category": "desserts",
+      "id": "refined_bread",
+      "name": "Refined Bread (White/Bagels)",
+      "category": "refined_grains",
       "keywords": [
-        "ice cream",
-        "gelato",
-        "frozen dessert"
+        "white bread",
+        "bagels",
+        "wonder bread"
       ],
-      "avgCalories": 270,
-      "priority": 37
+      "avgCalories": 0,
+      "priority": 21
     },
     {
-      "id": "cookies",
-      "name": "Cookies",
-      "category": "desserts",
+      "id": "sweetened_yogurt",
+      "name": "Sweetened Yogurt / Yogurt Drinks",
+      "category": "processed",
       "keywords": [
-        "cookies",
-        "oreos",
-        "chocolate chip cookies",
-        "cookie"
+        "sweetened yogurt",
+        "yogurt drinks",
+        "flavored yogurt"
       ],
-      "avgCalories": 140,
-      "priority": 38
+      "avgCalories": 0,
+      "priority": 22
     },
     {
-      "id": "cake_brownies",
-      "name": "Cake / Brownies",
-      "category": "desserts",
+      "id": "alcohol_beer",
+      "name": "Alcohol / Beer",
+      "category": "drinks",
       "keywords": [
-        "cake",
-        "brownies",
-        "brownie",
-        "cupcake"
+        "beer",
+        "alcohol",
+        "wine",
+        "liquor"
       ],
-      "avgCalories": 350,
-      "priority": 39
+      "avgCalories": 0,
+      "priority": 23
     },
     {
-      "id": "candy",
-      "name": "Candy (Bars + Gummies)",
-      "category": "sweets",
+      "id": "boxed_mac_cheese",
+      "name": "Boxed Mac & Cheese",
+      "category": "processed",
       "keywords": [
-        "candy",
-        "chocolate bar",
-        "gummies",
-        "snickers",
-        "m&ms"
+        "mac and cheese",
+        "macaroni",
+        "kraft mac"
       ],
-      "avgCalories": 200,
-      "priority": 40
+      "avgCalories": 0,
+      "priority": 24
+    },
+    {
+      "id": "frozen_meals",
+      "name": "Frozen Processed Meals",
+      "category": "processed",
+      "keywords": [
+        "frozen dinner",
+        "tv dinner",
+        "lean cuisine"
+      ],
+      "avgCalories": 0,
+      "priority": 25
+    },
+    {
+      "id": "instant_ramen",
+      "name": "Instant Ramen",
+      "category": "processed",
+      "keywords": [
+        "ramen",
+        "instant noodles",
+        "top ramen"
+      ],
+      "avgCalories": 0,
+      "priority": 26
+    },
+    {
+      "id": "bacon",
+      "name": "Bacon",
+      "category": "processed_meat",
+      "keywords": [
+        "bacon",
+        "bacon strips"
+      ],
+      "avgCalories": 0,
+      "priority": 27
+    },
+    {
+      "id": "sausage",
+      "name": "Sausage",
+      "category": "processed_meat",
+      "keywords": [
+        "sausage",
+        "breakfast sausage"
+      ],
+      "avgCalories": 0,
+      "priority": 28
+    },
+    {
+      "id": "hot_dogs",
+      "name": "Hot Dogs",
+      "category": "fast_food",
+      "keywords": [
+        "hot dog",
+        "hotdog",
+        "hot dogs"
+      ],
+      "avgCalories": 0,
+      "priority": 29
+    },
+    {
+      "id": "deli_meats",
+      "name": "Deli Meats",
+      "category": "processed_meat",
+      "keywords": [
+        "deli meat",
+        "lunch meat",
+        "salami",
+        "ham"
+      ],
+      "avgCalories": 0,
+      "priority": 30
     }
   ],
   "swaps": [
     {
-      "targetFoodId": "sugary_soda",
+      "targetFoodId": "soda_regular",
       "title": "Seltzer + Lemon",
-      "description": "Refreshing",
+      "description": "Zero calories, refreshing",
       "foods": [
         "Seltzer water",
         "Lemon"
       ]
     },
     {
-      "targetFoodId": "sugary_soda",
-      "title": "Sparkling Water + Cucumber Slices",
+      "targetFoodId": "soda_regular",
+      "title": "Sparkling Water + Cucumber",
       "description": "Hydrating",
       "foods": [
         "Sparkling water",
-        "Cucumber"
+        "Cucumber slices"
       ]
     },
     {
-      "targetFoodId": "sugary_soda",
+      "targetFoodId": "soda_regular",
       "title": "Unsweetened Iced Tea + Lemon",
       "description": "Natural",
       "foods": [
@@ -528,57 +406,60 @@
       ]
     },
     {
-      "targetFoodId": "diet_soda",
-      "title": "Seltzer + Lemon",
-      "description": "No artificial sweeteners",
+      "targetFoodId": "ice_cream",
+      "title": "Greek Yogurt + Berries",
+      "description": "Creamy & sweet",
       "foods": [
-        "Seltzer water",
-        "Lemon"
+        "Greek yogurt",
+        "Berries"
       ]
     },
     {
-      "targetFoodId": "diet_soda",
-      "title": "Herbal Tea + Lemon",
-      "description": "Natural flavors",
+      "targetFoodId": "ice_cream",
+      "title": "Cottage Cheese + Mango",
+      "description": "Tropical treat",
       "foods": [
-        "Herbal tea",
-        "Lemon"
+        "Cottage cheese",
+        "Mango"
       ]
     },
     {
-      "targetFoodId": "diet_soda",
-      "title": "Sparkling Water + Berries",
+      "targetFoodId": "ice_cream",
+      "title": "Ricotta + Figs",
       "description": "Naturally sweet",
       "foods": [
-        "Sparkling water",
-        "Mixed berries"
+        "Ricotta",
+        "Figs"
       ]
     },
     {
-      "targetFoodId": "energy_drinks",
-      "title": "Black Coffee + Water",
-      "description": "Natural caffeine",
+      "targetFoodId": "donuts",
+      "title": "Greek Yogurt + Strawberries + Walnuts",
+      "description": "Naturally sweet",
       "foods": [
-        "Black coffee",
-        "Water"
-      ]
-    },
-    {
-      "targetFoodId": "energy_drinks",
-      "title": "Green Tea + Almonds",
-      "description": "Sustained energy",
-      "foods": [
-        "Green tea",
-        "Almonds"
-      ]
-    },
-    {
-      "targetFoodId": "energy_drinks",
-      "title": "Unsweetened Iced Tea + Walnuts",
-      "description": "Omega-3s",
-      "foods": [
-        "Unsweetened iced tea",
+        "Greek yogurt",
+        "Strawberries",
         "Walnuts"
+      ]
+    },
+    {
+      "targetFoodId": "donuts",
+      "title": "Cottage Cheese + Mango + Cashews",
+      "description": "Tropical twist",
+      "foods": [
+        "Cottage cheese",
+        "Mango",
+        "Cashews"
+      ]
+    },
+    {
+      "targetFoodId": "donuts",
+      "title": "Ricotta + Figs + Pecans",
+      "description": "Gourmet option",
+      "foods": [
+        "Ricotta",
+        "Figs",
+        "Pecans"
       ]
     },
     {
@@ -596,7 +477,7 @@
       "description": "Satisfying crunch",
       "foods": [
         "Apple",
-        "Seltzer water"
+        "Seltzer"
       ]
     },
     {
@@ -604,90 +485,8 @@
       "title": "Berries + Sparkling Water",
       "description": "Antioxidants",
       "foods": [
-        "Mixed berries",
+        "Berries",
         "Sparkling water"
-      ]
-    },
-    {
-      "targetFoodId": "sweetened_iced_tea",
-      "title": "Unsweetened Iced Tea + Lemon",
-      "description": "No sugar",
-      "foods": [
-        "Unsweetened iced tea",
-        "Lemon"
-      ]
-    },
-    {
-      "targetFoodId": "sweetened_iced_tea",
-      "title": "Seltzer + Lemon",
-      "description": "Crisp & clean",
-      "foods": [
-        "Seltzer water",
-        "Lemon"
-      ]
-    },
-    {
-      "targetFoodId": "sweetened_iced_tea",
-      "title": "Water + Berries (Infused)",
-      "description": "Natural sweetness",
-      "foods": [
-        "Water",
-        "Mixed berries"
-      ]
-    },
-    {
-      "targetFoodId": "specialty_coffee",
-      "title": "Iced Coffee + Oat Milk",
-      "description": "Still creamy",
-      "foods": [
-        "Black coffee",
-        "Ice",
-        "Oat milk"
-      ]
-    },
-    {
-      "targetFoodId": "specialty_coffee",
-      "title": "Coffee + Low-Fat Milk",
-      "description": "Protein boost",
-      "foods": [
-        "Coffee",
-        "Low-fat milk"
-      ]
-    },
-    {
-      "targetFoodId": "specialty_coffee",
-      "title": "Coffee + Soy Milk",
-      "description": "Plant-based",
-      "foods": [
-        "Coffee",
-        "Soy milk"
-      ]
-    },
-    {
-      "targetFoodId": "alcohol_beer",
-      "title": "Seltzer + Lemon",
-      "description": "Social drink alternative",
-      "foods": [
-        "Seltzer water",
-        "Lemon"
-      ]
-    },
-    {
-      "targetFoodId": "alcohol_beer",
-      "title": "Sparkling Water + Berries",
-      "description": "Festive",
-      "foods": [
-        "Sparkling water",
-        "Mixed berries"
-      ]
-    },
-    {
-      "targetFoodId": "alcohol_beer",
-      "title": "Herbal Tea + Lemon",
-      "description": "Relaxing",
-      "foods": [
-        "Herbal tea",
-        "Lemon"
       ]
     },
     {
@@ -705,7 +504,7 @@
       "description": "Refreshing crunch",
       "foods": [
         "Hummus",
-        "Cucumber"
+        "Cucumber slices"
       ]
     },
     {
@@ -718,138 +517,90 @@
       ]
     },
     {
-      "targetFoodId": "tortilla_chips",
-      "title": "Avocado (Guac) + Cherry Tomatoes",
-      "description": "Healthy fats",
+      "targetFoodId": "sugary_coffee",
+      "title": "Iced Coffee + Oat Milk",
+      "description": "Still creamy",
       "foods": [
-        "Avocado",
-        "Cherry tomatoes"
+        "Iced coffee",
+        "Oat milk"
       ]
     },
     {
-      "targetFoodId": "tortilla_chips",
-      "title": "Hummus + Bell Pepper Strips",
-      "description": "Colorful & crunchy",
+      "targetFoodId": "sugary_coffee",
+      "title": "Coffee + Low-Fat Milk",
+      "description": "Protein boost",
       "foods": [
-        "Hummus",
-        "Bell peppers"
+        "Coffee",
+        "Low-fat milk"
       ]
     },
     {
-      "targetFoodId": "tortilla_chips",
-      "title": "Feta + Cucumber Slices",
-      "description": "Mediterranean",
+      "targetFoodId": "sugary_coffee",
+      "title": "Coffee + Soy Milk",
+      "description": "Plant-based",
       "foods": [
-        "Feta cheese",
-        "Cucumber"
+        "Coffee",
+        "Soy milk"
       ]
     },
     {
-      "targetFoodId": "cheese_puffs",
-      "title": "Mozzarella + Cherry Tomatoes",
-      "description": "Fresh & cheesy",
+      "targetFoodId": "sweetened_tea_lemonade",
+      "title": "Unsweetened Iced Tea + Lemon",
+      "description": "No sugar",
       "foods": [
+        "Unsweetened iced tea",
+        "Lemon"
+      ]
+    },
+    {
+      "targetFoodId": "sweetened_tea_lemonade",
+      "title": "Seltzer + Lemon",
+      "description": "Crisp & clean",
+      "foods": [
+        "Seltzer",
+        "Lemon"
+      ]
+    },
+    {
+      "targetFoodId": "sweetened_tea_lemonade",
+      "title": "Water + Berries (Infused)",
+      "description": "Natural sweetness",
+      "foods": [
+        "Water",
+        "Berries"
+      ]
+    },
+    {
+      "targetFoodId": "pizza",
+      "title": "Tuna + Mozzarella + Tomatoes + Olives",
+      "description": "Similar flavors",
+      "foods": [
+        "Tuna",
         "Mozzarella",
-        "Cherry tomatoes"
+        "Tomatoes",
+        "Olives"
       ]
     },
     {
-      "targetFoodId": "cheese_puffs",
-      "title": "Olives + Mozzarella",
-      "description": "Savory",
+      "targetFoodId": "pizza",
+      "title": "Chicken + Feta + Couscous + Olives",
+      "description": "Mediterranean twist",
       "foods": [
-        "Olives",
-        "Mozzarella"
+        "Chicken",
+        "Feta",
+        "Couscous",
+        "Olives"
       ]
     },
     {
-      "targetFoodId": "cheese_puffs",
-      "title": "Goat Cheese + Apple Slices",
-      "description": "Sweet & tangy",
+      "targetFoodId": "pizza",
+      "title": "Salmon + Avocado + Arugula + Beets",
+      "description": "Gourmet option",
       "foods": [
-        "Goat cheese",
-        "Apple"
-      ]
-    },
-    {
-      "targetFoodId": "pretzels",
-      "title": "Boiled Eggs + Avocado",
-      "description": "Protein-rich",
-      "foods": [
-        "Boiled eggs",
-        "Avocado"
-      ]
-    },
-    {
-      "targetFoodId": "pretzels",
-      "title": "Hummus + Bell Pepper Strips",
-      "description": "Light & crunchy",
-      "foods": [
-        "Hummus",
-        "Bell peppers"
-      ]
-    },
-    {
-      "targetFoodId": "pretzels",
-      "title": "Greek Yogurt + Almonds",
-      "description": "High protein",
-      "foods": [
-        "Greek yogurt",
-        "Almonds"
-      ]
-    },
-    {
-      "targetFoodId": "crackers",
-      "title": "Ricotta + Figs",
-      "description": "Sweet & creamy",
-      "foods": [
-        "Ricotta cheese",
-        "Figs"
-      ]
-    },
-    {
-      "targetFoodId": "crackers",
-      "title": "Goat Cheese + Apple Slices",
-      "description": "Satisfying",
-      "foods": [
-        "Goat cheese",
-        "Apple"
-      ]
-    },
-    {
-      "targetFoodId": "crackers",
-      "title": "Hummus + Cucumber",
-      "description": "Light",
-      "foods": [
-        "Hummus",
-        "Cucumber"
-      ]
-    },
-    {
-      "targetFoodId": "movie_popcorn",
-      "title": "Edamame + Cherry Tomatoes",
-      "description": "Protein-packed",
-      "foods": [
-        "Edamame",
-        "Cherry tomatoes"
-      ]
-    },
-    {
-      "targetFoodId": "movie_popcorn",
-      "title": "Olives + Mozzarella",
-      "description": "Savory",
-      "foods": [
-        "Olives",
-        "Mozzarella"
-      ]
-    },
-    {
-      "targetFoodId": "movie_popcorn",
-      "title": "Cottage Cheese + Berries",
-      "description": "Sweet & filling",
-      "foods": [
-        "Cottage cheese",
-        "Mixed berries"
+        "Salmon",
+        "Avocado",
+        "Arugula",
+        "Beets"
       ]
     },
     {
@@ -857,7 +608,7 @@
       "title": "Chicken + Brown Rice + Mushrooms + Broccoli",
       "description": "Balanced meal",
       "foods": [
-        "Grilled chicken",
+        "Chicken",
         "Brown rice",
         "Mushrooms",
         "Broccoli"
@@ -886,205 +637,7 @@
       ]
     },
     {
-      "targetFoodId": "onion_rings",
-      "title": "Chicken + Farro + Mushrooms + Spinach",
-      "description": "Hearty",
-      "foods": [
-        "Grilled chicken",
-        "Farro",
-        "Mushrooms",
-        "Spinach"
-      ]
-    },
-    {
-      "targetFoodId": "onion_rings",
-      "title": "Lean Beef + Broccoli + Brown Rice + Mushrooms",
-      "description": "Iron-rich",
-      "foods": [
-        "Lean beef",
-        "Broccoli",
-        "Brown rice",
-        "Mushrooms"
-      ]
-    },
-    {
-      "targetFoodId": "onion_rings",
-      "title": "Shrimp + Quinoa + Cucumbers + Cherry Tomatoes",
-      "description": "Light & fresh",
-      "foods": [
-        "Shrimp",
-        "Quinoa",
-        "Cucumbers",
-        "Cherry tomatoes"
-      ]
-    },
-    {
-      "targetFoodId": "fried_chicken",
-      "title": "Chicken + Quinoa + Spinach + Feta",
-      "description": "High protein",
-      "foods": [
-        "Grilled chicken",
-        "Quinoa",
-        "Spinach",
-        "Feta"
-      ]
-    },
-    {
-      "targetFoodId": "fried_chicken",
-      "title": "Chicken + Corn + Chickpeas + Zucchini",
-      "description": "Fiber-rich",
-      "foods": [
-        "Grilled chicken",
-        "Corn",
-        "Chickpeas",
-        "Zucchini"
-      ]
-    },
-    {
-      "targetFoodId": "fried_chicken",
-      "title": "Chicken + Avocado + Corn + Tomatoes",
-      "description": "Satisfying",
-      "foods": [
-        "Grilled chicken",
-        "Avocado",
-        "Corn",
-        "Tomatoes"
-      ]
-    },
-    {
-      "targetFoodId": "chicken_nuggets",
-      "title": "Chicken + Brown Rice + Broccoli + Mozzarella",
-      "description": "Kid-friendly",
-      "foods": [
-        "Grilled chicken",
-        "Brown rice",
-        "Broccoli",
-        "Mozzarella"
-      ]
-    },
-    {
-      "targetFoodId": "chicken_nuggets",
-      "title": "Chicken + Couscous + Avocado + Corn",
-      "description": "Tasty & filling",
-      "foods": [
-        "Grilled chicken",
-        "Couscous",
-        "Avocado",
-        "Corn"
-      ]
-    },
-    {
-      "targetFoodId": "chicken_nuggets",
-      "title": "Chicken + Mushrooms + Quinoa + Ricotta",
-      "description": "Protein-packed",
-      "foods": [
-        "Grilled chicken",
-        "Mushrooms",
-        "Quinoa",
-        "Ricotta"
-      ]
-    },
-    {
-      "targetFoodId": "mozzarella_sticks",
-      "title": "Mozzarella + Tomatoes + Arugula + Olives",
-      "description": "Fresh Italian",
-      "foods": [
-        "Mozzarella",
-        "Tomatoes",
-        "Arugula",
-        "Olives"
-      ]
-    },
-    {
-      "targetFoodId": "mozzarella_sticks",
-      "title": "Mozzarella + Quinoa + Cherry Tomatoes + Cucumbers",
-      "description": "Light & fresh",
-      "foods": [
-        "Mozzarella",
-        "Quinoa",
-        "Cherry tomatoes",
-        "Cucumbers"
-      ]
-    },
-    {
-      "targetFoodId": "mozzarella_sticks",
-      "title": "Feta + Chickpeas + Spinach + Olives",
-      "description": "Mediterranean",
-      "foods": [
-        "Feta",
-        "Chickpeas",
-        "Spinach",
-        "Olives"
-      ]
-    },
-    {
-      "targetFoodId": "pizza",
-      "title": "Tuna + Mozzarella + Tomatoes + Olives",
-      "description": "Similar flavors",
-      "foods": [
-        "Tuna",
-        "Mozzarella",
-        "Tomatoes",
-        "Olives"
-      ]
-    },
-    {
-      "targetFoodId": "pizza",
-      "title": "Chicken + Feta + Couscous + Olives",
-      "description": "Mediterranean twist",
-      "foods": [
-        "Grilled chicken",
-        "Feta",
-        "Couscous",
-        "Olives"
-      ]
-    },
-    {
-      "targetFoodId": "pizza",
-      "title": "Salmon + Avocado + Arugula + Beets",
-      "description": "Gourmet option",
-      "foods": [
-        "Salmon",
-        "Avocado",
-        "Arugula",
-        "Beets"
-      ]
-    },
-    {
-      "targetFoodId": "hot_dogs",
-      "title": "Turkey + Avocado + Whole-Grain Toast + Tomatoes",
-      "description": "Lean protein",
-      "foods": [
-        "Turkey breast",
-        "Avocado",
-        "Whole-grain toast",
-        "Tomatoes"
-      ]
-    },
-    {
-      "targetFoodId": "hot_dogs",
-      "title": "Chicken + Corn + Pinto Beans + Kale",
-      "description": "Fiber-rich",
-      "foods": [
-        "Grilled chicken",
-        "Corn",
-        "Pinto beans",
-        "Kale"
-      ]
-    },
-    {
-      "targetFoodId": "hot_dogs",
-      "title": "Tuna + White Beans + Cucumbers + Cherry Tomatoes",
-      "description": "Light & fresh",
-      "foods": [
-        "Tuna",
-        "White beans",
-        "Cucumbers",
-        "Cherry tomatoes"
-      ]
-    },
-    {
-      "targetFoodId": "hamburgers",
+      "targetFoodId": "burgers",
       "title": "Lean Beef + Mushrooms + Broccoli + Brown Rice",
       "description": "Still satisfying",
       "foods": [
@@ -1095,25 +648,507 @@
       ]
     },
     {
-      "targetFoodId": "hamburgers",
+      "targetFoodId": "burgers",
       "title": "Beef + Chickpeas + Spinach + Quinoa",
       "description": "Fiber boost",
       "foods": [
-        "Lean beef",
+        "Beef",
         "Chickpeas",
         "Spinach",
         "Quinoa"
       ]
     },
     {
-      "targetFoodId": "hamburgers",
+      "targetFoodId": "burgers",
       "title": "Chicken + Avocado + Feta + Spinach",
       "description": "Lighter option",
       "foods": [
-        "Grilled chicken",
+        "Chicken",
         "Avocado",
         "Feta",
         "Spinach"
+      ]
+    },
+    {
+      "targetFoodId": "fried_chicken",
+      "title": "Chicken + Quinoa + Spinach + Feta",
+      "description": "High protein",
+      "foods": [
+        "Chicken",
+        "Quinoa",
+        "Spinach",
+        "Feta"
+      ]
+    },
+    {
+      "targetFoodId": "fried_chicken",
+      "title": "Chicken + Brown Rice + Broccoli + Mozzarella",
+      "description": "Kid-friendly",
+      "foods": [
+        "Chicken",
+        "Brown rice",
+        "Broccoli",
+        "Mozzarella"
+      ]
+    },
+    {
+      "targetFoodId": "fried_chicken",
+      "title": "Chicken + Avocado + Corn + Tomatoes",
+      "description": "Satisfying",
+      "foods": [
+        "Chicken",
+        "Avocado",
+        "Corn",
+        "Tomatoes"
+      ]
+    },
+    {
+      "targetFoodId": "candy_chocolate",
+      "title": "Dark Chocolate + Almonds",
+      "description": "Antioxidants",
+      "foods": [
+        "Dark chocolate",
+        "Almonds"
+      ]
+    },
+    {
+      "targetFoodId": "candy_chocolate",
+      "title": "Berries + Walnuts",
+      "description": "Naturally sweet",
+      "foods": [
+        "Berries",
+        "Walnuts"
+      ]
+    },
+    {
+      "targetFoodId": "candy_chocolate",
+      "title": "Apple Slices + Pecans",
+      "description": "Crunchy & sweet",
+      "foods": [
+        "Apple slices",
+        "Pecans"
+      ]
+    },
+    {
+      "targetFoodId": "cake_cupcakes",
+      "title": "Greek Yogurt + Berries",
+      "description": "Much lighter",
+      "foods": [
+        "Greek yogurt",
+        "Berries"
+      ]
+    },
+    {
+      "targetFoodId": "cake_cupcakes",
+      "title": "Cottage Cheese + Cherries",
+      "description": "Sweet treat",
+      "foods": [
+        "Cottage cheese",
+        "Cherries"
+      ]
+    },
+    {
+      "targetFoodId": "cake_cupcakes",
+      "title": "Dark Chocolate + Almonds",
+      "description": "Antioxidants",
+      "foods": [
+        "Dark chocolate",
+        "Almonds"
+      ]
+    },
+    {
+      "targetFoodId": "cookies",
+      "title": "Apple Slices + Walnuts",
+      "description": "Naturally sweet",
+      "foods": [
+        "Apple slices",
+        "Walnuts"
+      ]
+    },
+    {
+      "targetFoodId": "cookies",
+      "title": "Greek Yogurt + Strawberries",
+      "description": "Creamy & light",
+      "foods": [
+        "Greek yogurt",
+        "Strawberries"
+      ]
+    },
+    {
+      "targetFoodId": "cookies",
+      "title": "Cottage Cheese + Blueberries",
+      "description": "Protein-rich",
+      "foods": [
+        "Cottage cheese",
+        "Blueberries"
+      ]
+    },
+    {
+      "targetFoodId": "pastries",
+      "title": "Greek Yogurt + Apple Slices + Almonds",
+      "description": "Much lighter",
+      "foods": [
+        "Greek yogurt",
+        "Apple slices",
+        "Almonds"
+      ]
+    },
+    {
+      "targetFoodId": "pastries",
+      "title": "Quinoa + Milk + Blueberries + Almonds",
+      "description": "Protein & fiber",
+      "foods": [
+        "Quinoa",
+        "Milk",
+        "Blueberries",
+        "Almonds"
+      ]
+    },
+    {
+      "targetFoodId": "pastries",
+      "title": "Oatmeal + Greek Yogurt + Pecans + Apples",
+      "description": "Filling",
+      "foods": [
+        "Oatmeal",
+        "Greek yogurt",
+        "Pecans",
+        "Apples"
+      ]
+    },
+    {
+      "targetFoodId": "tortilla_chips",
+      "title": "Avocado (Guac) + Cherry Tomatoes",
+      "description": "Healthy fats",
+      "foods": [
+        "Avocado",
+        "Cherry tomatoes"
+      ]
+    },
+    {
+      "targetFoodId": "tortilla_chips",
+      "title": "Hummus + Bell Pepper Strips",
+      "description": "Colorful & crunchy",
+      "foods": [
+        "Hummus",
+        "Bell pepper strips"
+      ]
+    },
+    {
+      "targetFoodId": "tortilla_chips",
+      "title": "Feta + Cucumber Slices",
+      "description": "Mediterranean",
+      "foods": [
+        "Feta",
+        "Cucumber slices"
+      ]
+    },
+    {
+      "targetFoodId": "cheese_puffs",
+      "title": "Mozzarella + Cherry Tomatoes",
+      "description": "Fresh & cheesy",
+      "foods": [
+        "Mozzarella",
+        "Cherry tomatoes"
+      ]
+    },
+    {
+      "targetFoodId": "cheese_puffs",
+      "title": "Olives + Mozzarella",
+      "description": "Savory",
+      "foods": [
+        "Olives",
+        "Mozzarella"
+      ]
+    },
+    {
+      "targetFoodId": "cheese_puffs",
+      "title": "Goat Cheese + Apple Slices",
+      "description": "Sweet & tangy",
+      "foods": [
+        "Goat cheese",
+        "Apple slices"
+      ]
+    },
+    {
+      "targetFoodId": "sugary_cereal",
+      "title": "Oatmeal + Milk + Walnuts + Berries",
+      "description": "No added sugar",
+      "foods": [
+        "Oatmeal",
+        "Milk",
+        "Walnuts",
+        "Berries"
+      ]
+    },
+    {
+      "targetFoodId": "sugary_cereal",
+      "title": "Greek Yogurt + Berries + Almonds + Chia Seeds",
+      "description": "High protein",
+      "foods": [
+        "Greek yogurt",
+        "Berries",
+        "Almonds",
+        "Chia seeds"
+      ]
+    },
+    {
+      "targetFoodId": "sugary_cereal",
+      "title": "Cottage Cheese + Cantaloupe + Almonds + Walnuts",
+      "description": "Protein-packed",
+      "foods": [
+        "Cottage cheese",
+        "Cantaloupe",
+        "Almonds",
+        "Walnuts"
+      ]
+    },
+    {
+      "targetFoodId": "pancakes_waffles",
+      "title": "Oatmeal + Milk + Walnuts + Berries",
+      "description": "Fiber-rich",
+      "foods": [
+        "Oatmeal",
+        "Milk",
+        "Walnuts",
+        "Berries"
+      ]
+    },
+    {
+      "targetFoodId": "pancakes_waffles",
+      "title": "Greek Yogurt + Banana + Walnuts + Chia Seeds",
+      "description": "High protein",
+      "foods": [
+        "Greek yogurt",
+        "Banana",
+        "Walnuts",
+        "Chia seeds"
+      ]
+    },
+    {
+      "targetFoodId": "pancakes_waffles",
+      "title": "Eggs + Avocado + Corn + Tomatoes",
+      "description": "Savory option",
+      "foods": [
+        "Eggs",
+        "Avocado",
+        "Corn",
+        "Tomatoes"
+      ]
+    },
+    {
+      "targetFoodId": "movie_popcorn",
+      "title": "Edamame + Cherry Tomatoes",
+      "description": "Protein-packed",
+      "foods": [
+        "Edamame",
+        "Cherry tomatoes"
+      ]
+    },
+    {
+      "targetFoodId": "movie_popcorn",
+      "title": "Olives + Mozzarella",
+      "description": "Savory",
+      "foods": [
+        "Olives",
+        "Mozzarella"
+      ]
+    },
+    {
+      "targetFoodId": "movie_popcorn",
+      "title": "Cottage Cheese + Berries",
+      "description": "Sweet & filling",
+      "foods": [
+        "Cottage cheese",
+        "Berries"
+      ]
+    },
+    {
+      "targetFoodId": "refined_bread",
+      "title": "Whole-Grain Toast + Avocado + Eggs",
+      "description": "More fiber",
+      "foods": [
+        "Whole-grain toast",
+        "Avocado",
+        "Eggs"
+      ]
+    },
+    {
+      "targetFoodId": "refined_bread",
+      "title": "Eggs + Avocado + Goat Cheese + Arugula",
+      "description": "Savory option",
+      "foods": [
+        "Eggs",
+        "Avocado",
+        "Goat cheese",
+        "Arugula"
+      ]
+    },
+    {
+      "targetFoodId": "refined_bread",
+      "title": "Greek Yogurt + Berries + Almonds + Chia Seeds",
+      "description": "High protein",
+      "foods": [
+        "Greek yogurt",
+        "Berries",
+        "Almonds",
+        "Chia seeds"
+      ]
+    },
+    {
+      "targetFoodId": "sweetened_yogurt",
+      "title": "Greek Yogurt + Berries",
+      "description": "No added sugar",
+      "foods": [
+        "Greek yogurt",
+        "Berries"
+      ]
+    },
+    {
+      "targetFoodId": "sweetened_yogurt",
+      "title": "Greek Yogurt + Berries + Almonds + Chia Seeds",
+      "description": "High protein",
+      "foods": [
+        "Greek yogurt",
+        "Berries",
+        "Almonds",
+        "Chia seeds"
+      ]
+    },
+    {
+      "targetFoodId": "sweetened_yogurt",
+      "title": "Cottage Cheese + Cantaloupe + Almonds + Walnuts",
+      "description": "Protein-packed",
+      "foods": [
+        "Cottage cheese",
+        "Cantaloupe",
+        "Almonds",
+        "Walnuts"
+      ]
+    },
+    {
+      "targetFoodId": "alcohol_beer",
+      "title": "Seltzer + Lemon",
+      "description": "Social drink alternative",
+      "foods": [
+        "Seltzer",
+        "Lemon"
+      ]
+    },
+    {
+      "targetFoodId": "alcohol_beer",
+      "title": "Sparkling Water + Berries",
+      "description": "Festive",
+      "foods": [
+        "Sparkling water",
+        "Berries"
+      ]
+    },
+    {
+      "targetFoodId": "alcohol_beer",
+      "title": "Herbal Tea + Lemon",
+      "description": "Relaxing",
+      "foods": [
+        "Herbal tea",
+        "Lemon"
+      ]
+    },
+    {
+      "targetFoodId": "boxed_mac_cheese",
+      "title": "Cauliflower + Quinoa + Feta + Spinach",
+      "description": "Veggie-packed",
+      "foods": [
+        "Cauliflower",
+        "Quinoa",
+        "Feta",
+        "Spinach"
+      ]
+    },
+    {
+      "targetFoodId": "boxed_mac_cheese",
+      "title": "Chicken + Broccoli + Brown Rice + Low-Fat Cheddar",
+      "description": "Protein boost",
+      "foods": [
+        "Chicken",
+        "Broccoli",
+        "Brown rice",
+        "Low-fat cheddar"
+      ]
+    },
+    {
+      "targetFoodId": "boxed_mac_cheese",
+      "title": "Tuna + Brown Rice + Mozzarella + Cherry Tomatoes",
+      "description": "Still creamy",
+      "foods": [
+        "Tuna",
+        "Brown rice",
+        "Mozzarella",
+        "Cherry tomatoes"
+      ]
+    },
+    {
+      "targetFoodId": "frozen_meals",
+      "title": "Salmon + Asparagus + Quinoa + Lemon",
+      "description": "Fresh ingredients",
+      "foods": [
+        "Salmon",
+        "Asparagus",
+        "Quinoa",
+        "Lemon"
+      ]
+    },
+    {
+      "targetFoodId": "frozen_meals",
+      "title": "Chicken + Brown Rice + Mushrooms + Broccoli",
+      "description": "Balanced meal",
+      "foods": [
+        "Chicken",
+        "Brown rice",
+        "Mushrooms",
+        "Broccoli"
+      ]
+    },
+    {
+      "targetFoodId": "frozen_meals",
+      "title": "Beef + Green Beans + Orzo + Mushrooms",
+      "description": "Hearty",
+      "foods": [
+        "Beef",
+        "Green beans",
+        "Orzo",
+        "Mushrooms"
+      ]
+    },
+    {
+      "targetFoodId": "instant_ramen",
+      "title": "Miso Soup + Tofu + Mushrooms + Spinach",
+      "description": "Much lower sodium",
+      "foods": [
+        "Miso soup",
+        "Tofu",
+        "Mushrooms",
+        "Spinach"
+      ]
+    },
+    {
+      "targetFoodId": "instant_ramen",
+      "title": "Chicken + Wild Rice + Kale + Zucchini",
+      "description": "Real food",
+      "foods": [
+        "Chicken",
+        "Wild rice",
+        "Kale",
+        "Zucchini"
+      ]
+    },
+    {
+      "targetFoodId": "instant_ramen",
+      "title": "Tuna + Quinoa + Cauliflower + Olives",
+      "description": "Protein-packed",
+      "foods": [
+        "Tuna",
+        "Quinoa",
+        "Cauliflower",
+        "Olives"
       ]
     },
     {
@@ -1183,6 +1218,39 @@
       ]
     },
     {
+      "targetFoodId": "hot_dogs",
+      "title": "Turkey + Avocado + Whole-Grain Toast + Tomatoes",
+      "description": "Lean protein",
+      "foods": [
+        "Turkey",
+        "Avocado",
+        "Whole-grain toast",
+        "Tomatoes"
+      ]
+    },
+    {
+      "targetFoodId": "hot_dogs",
+      "title": "Chicken + Corn + Pinto Beans + Kale",
+      "description": "Fiber-rich",
+      "foods": [
+        "Chicken",
+        "Corn",
+        "Pinto beans",
+        "Kale"
+      ]
+    },
+    {
+      "targetFoodId": "hot_dogs",
+      "title": "Tuna + White Beans + Cucumbers + Cherry Tomatoes",
+      "description": "Light & fresh",
+      "foods": [
+        "Tuna",
+        "White beans",
+        "Cucumbers",
+        "Cherry tomatoes"
+      ]
+    },
+    {
       "targetFoodId": "deli_meats",
       "title": "Tuna + Avocado + Whole Wheat Pita",
       "description": "Omega-3s",
@@ -1197,7 +1265,7 @@
       "title": "Chicken + White Beans + Kale + Parmesan",
       "description": "High protein",
       "foods": [
-        "Grilled chicken",
+        "Chicken",
         "White beans",
         "Kale",
         "Parmesan"
@@ -1212,494 +1280,6 @@
         "Avocado",
         "Spinach",
         "Edamame"
-      ]
-    },
-    {
-      "targetFoodId": "instant_ramen",
-      "title": "Miso Soup + Tofu + Mushrooms + Spinach",
-      "description": "Much lower sodium",
-      "foods": [
-        "Miso soup",
-        "Tofu",
-        "Mushrooms",
-        "Spinach"
-      ]
-    },
-    {
-      "targetFoodId": "instant_ramen",
-      "title": "Chicken + Wild Rice + Kale + Zucchini",
-      "description": "Real food",
-      "foods": [
-        "Grilled chicken",
-        "Wild rice",
-        "Kale",
-        "Zucchini"
-      ]
-    },
-    {
-      "targetFoodId": "instant_ramen",
-      "title": "Tuna + Quinoa + Cauliflower + Olives",
-      "description": "Protein-packed",
-      "foods": [
-        "Tuna",
-        "Quinoa",
-        "Cauliflower",
-        "Olives"
-      ]
-    },
-    {
-      "targetFoodId": "boxed_mac_cheese",
-      "title": "Cauliflower + Quinoa + Feta + Spinach",
-      "description": "Veggie-packed",
-      "foods": [
-        "Cauliflower",
-        "Quinoa",
-        "Feta",
-        "Spinach"
-      ]
-    },
-    {
-      "targetFoodId": "boxed_mac_cheese",
-      "title": "Chicken + Broccoli + Brown Rice + Low-Fat Cheddar",
-      "description": "Protein boost",
-      "foods": [
-        "Grilled chicken",
-        "Broccoli",
-        "Brown rice",
-        "Low-fat cheddar"
-      ]
-    },
-    {
-      "targetFoodId": "boxed_mac_cheese",
-      "title": "Tuna + Brown Rice + Mozzarella + Cherry Tomatoes",
-      "description": "Still creamy",
-      "foods": [
-        "Tuna",
-        "Brown rice",
-        "Mozzarella",
-        "Cherry tomatoes"
-      ]
-    },
-    {
-      "targetFoodId": "canned_soup",
-      "title": "Kale + White Beans + Olive Oil + Parmesan",
-      "description": "Fresh & hearty",
-      "foods": [
-        "Kale",
-        "White beans",
-        "Olive oil",
-        "Parmesan"
-      ]
-    },
-    {
-      "targetFoodId": "canned_soup",
-      "title": "Lentils + Green Beans + Avocado + Chives",
-      "description": "Fiber-rich",
-      "foods": [
-        "Lentils",
-        "Green beans",
-        "Avocado",
-        "Chives"
-      ]
-    },
-    {
-      "targetFoodId": "canned_soup",
-      "title": "Chicken + Zucchini + Quinoa + Spinach",
-      "description": "Protein-packed",
-      "foods": [
-        "Grilled chicken",
-        "Zucchini",
-        "Quinoa",
-        "Spinach"
-      ]
-    },
-    {
-      "targetFoodId": "frozen_dinners",
-      "title": "Salmon + Asparagus + Quinoa + Lemon",
-      "description": "Fresh ingredients",
-      "foods": [
-        "Salmon",
-        "Asparagus",
-        "Quinoa",
-        "Lemon"
-      ]
-    },
-    {
-      "targetFoodId": "frozen_dinners",
-      "title": "Chicken + Brown Rice + Mushrooms + Broccoli",
-      "description": "Balanced meal",
-      "foods": [
-        "Grilled chicken",
-        "Brown rice",
-        "Mushrooms",
-        "Broccoli"
-      ]
-    },
-    {
-      "targetFoodId": "frozen_dinners",
-      "title": "Beef + Green Beans + Orzo + Mushrooms",
-      "description": "Hearty",
-      "foods": [
-        "Lean beef",
-        "Green beans",
-        "Orzo",
-        "Mushrooms"
-      ]
-    },
-    {
-      "targetFoodId": "white_bread",
-      "title": "Whole-Grain Toast + Avocado + Eggs",
-      "description": "More fiber",
-      "foods": [
-        "Whole-grain toast",
-        "Avocado",
-        "Eggs"
-      ]
-    },
-    {
-      "targetFoodId": "white_bread",
-      "title": "Tuna + Avocado + Whole-Grain Toast",
-      "description": "Protein-rich",
-      "foods": [
-        "Tuna",
-        "Avocado",
-        "Whole-grain toast"
-      ]
-    },
-    {
-      "targetFoodId": "white_bread",
-      "title": "Cottage Cheese + Pear + Whole-Grain Toast",
-      "description": "Filling",
-      "foods": [
-        "Cottage cheese",
-        "Pear",
-        "Whole-grain toast"
-      ]
-    },
-    {
-      "targetFoodId": "bagels",
-      "title": "Greek Yogurt + Berries + Almonds + Chia Seeds",
-      "description": "High protein",
-      "foods": [
-        "Greek yogurt",
-        "Mixed berries",
-        "Almonds",
-        "Chia seeds"
-      ]
-    },
-    {
-      "targetFoodId": "bagels",
-      "title": "Eggs + Avocado + Goat Cheese + Arugula",
-      "description": "Savory option",
-      "foods": [
-        "Eggs",
-        "Avocado",
-        "Goat cheese",
-        "Arugula"
-      ]
-    },
-    {
-      "targetFoodId": "bagels",
-      "title": "Cottage Cheese + Cantaloupe + Almonds + Walnuts",
-      "description": "Sweet & filling",
-      "foods": [
-        "Cottage cheese",
-        "Cantaloupe",
-        "Almonds",
-        "Walnuts"
-      ]
-    },
-    {
-      "targetFoodId": "pancakes_waffles",
-      "title": "Oatmeal + Milk + Walnuts + Berries",
-      "description": "Fiber-rich",
-      "foods": [
-        "Oatmeal",
-        "Milk",
-        "Walnuts",
-        "Mixed berries"
-      ]
-    },
-    {
-      "targetFoodId": "pancakes_waffles",
-      "title": "Greek Yogurt + Banana + Walnuts + Chia Seeds",
-      "description": "High protein",
-      "foods": [
-        "Greek yogurt",
-        "Banana",
-        "Walnuts",
-        "Chia seeds"
-      ]
-    },
-    {
-      "targetFoodId": "pancakes_waffles",
-      "title": "Eggs + Avocado + Corn + Tomatoes",
-      "description": "Savory option",
-      "foods": [
-        "Eggs",
-        "Avocado",
-        "Corn",
-        "Tomatoes"
-      ]
-    },
-    {
-      "targetFoodId": "toaster_pastries",
-      "title": "Quinoa + Milk + Blueberries + Almonds",
-      "description": "Protein & fiber",
-      "foods": [
-        "Quinoa",
-        "Milk",
-        "Blueberries",
-        "Almonds"
-      ]
-    },
-    {
-      "targetFoodId": "toaster_pastries",
-      "title": "Oatmeal + Greek Yogurt + Pecans + Apples",
-      "description": "Filling",
-      "foods": [
-        "Oatmeal",
-        "Greek yogurt",
-        "Pecans",
-        "Apples"
-      ]
-    },
-    {
-      "targetFoodId": "toaster_pastries",
-      "title": "Cottage Cheese + Apple Slices + Walnuts",
-      "description": "High protein",
-      "foods": [
-        "Cottage cheese",
-        "Apple",
-        "Walnuts"
-      ]
-    },
-    {
-      "targetFoodId": "donuts",
-      "title": "Greek Yogurt + Strawberries + Walnuts",
-      "description": "Naturally sweet",
-      "foods": [
-        "Greek yogurt",
-        "Strawberries",
-        "Walnuts"
-      ]
-    },
-    {
-      "targetFoodId": "donuts",
-      "title": "Cottage Cheese + Mango + Cashews",
-      "description": "Tropical twist",
-      "foods": [
-        "Cottage cheese",
-        "Mango",
-        "Cashews"
-      ]
-    },
-    {
-      "targetFoodId": "donuts",
-      "title": "Ricotta + Figs + Pecans",
-      "description": "Gourmet option",
-      "foods": [
-        "Ricotta",
-        "Figs",
-        "Pecans"
-      ]
-    },
-    {
-      "targetFoodId": "muffins",
-      "title": "Greek Yogurt + Apple Slices + Almonds",
-      "description": "Much lighter",
-      "foods": [
-        "Greek yogurt",
-        "Apple",
-        "Almonds"
-      ]
-    },
-    {
-      "targetFoodId": "muffins",
-      "title": "Cottage Cheese + Blueberries + Pecans",
-      "description": "High protein",
-      "foods": [
-        "Cottage cheese",
-        "Blueberries",
-        "Pecans"
-      ]
-    },
-    {
-      "targetFoodId": "muffins",
-      "title": "Oatmeal + Milk + Walnuts",
-      "description": "Fiber-rich",
-      "foods": [
-        "Oatmeal",
-        "Milk",
-        "Walnuts"
-      ]
-    },
-    {
-      "targetFoodId": "sugary_cereal",
-      "title": "Oatmeal + Milk + Walnuts + Berries",
-      "description": "No added sugar",
-      "foods": [
-        "Oatmeal",
-        "Milk",
-        "Walnuts",
-        "Mixed berries"
-      ]
-    },
-    {
-      "targetFoodId": "sugary_cereal",
-      "title": "Greek Yogurt + Berries + Almonds + Chia Seeds",
-      "description": "High protein",
-      "foods": [
-        "Greek yogurt",
-        "Mixed berries",
-        "Almonds",
-        "Chia seeds"
-      ]
-    },
-    {
-      "targetFoodId": "sugary_cereal",
-      "title": "Cottage Cheese + Cantaloupe + Almonds + Walnuts",
-      "description": "Protein-packed",
-      "foods": [
-        "Cottage cheese",
-        "Cantaloupe",
-        "Almonds",
-        "Walnuts"
-      ]
-    },
-    {
-      "targetFoodId": "granola_bars",
-      "title": "Greek Yogurt + Berries",
-      "description": "Fresh & light",
-      "foods": [
-        "Greek yogurt",
-        "Mixed berries"
-      ]
-    },
-    {
-      "targetFoodId": "granola_bars",
-      "title": "Cottage Cheese + Apple Slices",
-      "description": "Crunchy & sweet",
-      "foods": [
-        "Cottage cheese",
-        "Apple"
-      ]
-    },
-    {
-      "targetFoodId": "granola_bars",
-      "title": "Almonds + Grapes",
-      "description": "On-the-go",
-      "foods": [
-        "Almonds",
-        "Grapes"
-      ]
-    },
-    {
-      "targetFoodId": "ice_cream",
-      "title": "Greek Yogurt + Berries",
-      "description": "Creamy & sweet",
-      "foods": [
-        "Greek yogurt",
-        "Mixed berries"
-      ]
-    },
-    {
-      "targetFoodId": "ice_cream",
-      "title": "Cottage Cheese + Mango",
-      "description": "Tropical treat",
-      "foods": [
-        "Cottage cheese",
-        "Mango"
-      ]
-    },
-    {
-      "targetFoodId": "ice_cream",
-      "title": "Ricotta + Figs",
-      "description": "Naturally sweet",
-      "foods": [
-        "Ricotta",
-        "Figs"
-      ]
-    },
-    {
-      "targetFoodId": "cookies",
-      "title": "Apple Slices + Walnuts",
-      "description": "Naturally sweet",
-      "foods": [
-        "Apple",
-        "Walnuts"
-      ]
-    },
-    {
-      "targetFoodId": "cookies",
-      "title": "Greek Yogurt + Strawberries",
-      "description": "Creamy & light",
-      "foods": [
-        "Greek yogurt",
-        "Strawberries"
-      ]
-    },
-    {
-      "targetFoodId": "cookies",
-      "title": "Cottage Cheese + Blueberries",
-      "description": "Protein-rich",
-      "foods": [
-        "Cottage cheese",
-        "Blueberries"
-      ]
-    },
-    {
-      "targetFoodId": "cake_brownies",
-      "title": "Greek Yogurt + Berries",
-      "description": "Much lighter",
-      "foods": [
-        "Greek yogurt",
-        "Mixed berries"
-      ]
-    },
-    {
-      "targetFoodId": "cake_brownies",
-      "title": "Cottage Cheese + Cherries",
-      "description": "Sweet treat",
-      "foods": [
-        "Cottage cheese",
-        "Cherries"
-      ]
-    },
-    {
-      "targetFoodId": "cake_brownies",
-      "title": "Dark Chocolate + Almonds",
-      "description": "Antioxidants",
-      "foods": [
-        "Dark chocolate",
-        "Almonds"
-      ]
-    },
-    {
-      "targetFoodId": "candy",
-      "title": "Dark Chocolate + Almonds",
-      "description": "Antioxidants",
-      "foods": [
-        "Dark chocolate",
-        "Almonds"
-      ]
-    },
-    {
-      "targetFoodId": "candy",
-      "title": "Berries + Walnuts",
-      "description": "Naturally sweet",
-      "foods": [
-        "Mixed berries",
-        "Walnuts"
-      ]
-    },
-    {
-      "targetFoodId": "candy",
-      "title": "Apple Slices + Pecans",
-      "description": "Crunchy & sweet",
-      "foods": [
-        "Apple",
-        "Pecans"
       ]
     }
   ]
