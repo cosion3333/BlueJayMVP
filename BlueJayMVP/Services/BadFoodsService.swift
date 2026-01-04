@@ -70,8 +70,15 @@ struct BadFoodsService {
     /// Detect bad food from user text input
     static func detectBadFood(from text: String) -> BadFood? {
         let normalized = text.lowercased().trimmingCharacters(in: .whitespaces)
+        
+        // Split input into words for whole-word matching (prevents "pop" matching "popcorn")
+        let words = normalized.components(separatedBy: .whitespaces)
+        
         return data.badFoods.first { food in
-            food.keywords.contains { normalized.contains($0.lowercased()) }
+            food.keywords.contains { keyword in
+                // Check if any word exactly matches the keyword
+                words.contains(keyword.lowercased())
+            }
         }
     }
     
