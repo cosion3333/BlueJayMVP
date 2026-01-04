@@ -13,7 +13,8 @@ from collections import defaultdict
 
 # Paths
 desktop = Path.home() / "Desktop"
-master_csv = desktop / "bluejay_master.csv"
+app_main = desktop / "App Main"
+master_csv = app_main / "bluejay_master.csv"
 json_file = Path(__file__).parent / "BlueJayMVP/Resources/bluejay_data.json"
 
 # Check if CSV exists

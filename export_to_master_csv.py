@@ -12,7 +12,8 @@ from pathlib import Path
 # Paths
 json_file = Path(__file__).parent / "BlueJayMVP/Resources/bluejay_data.json"
 desktop = Path.home() / "Desktop"
-master_csv = desktop / "bluejay_master.csv"
+app_main = desktop / "App Main"
+master_csv = app_main / "bluejay_master.csv"
 
 # Load JSON
 with open(json_file, 'r') as f:
