@@ -487,9 +487,25 @@ struct SwapsView: View {
             
             // Weekly usage tracker (when Go-To is set)
             if appModel.goToSwap != nil && appModel.swapUsesThisWeek > 0 {
-                Text("You've used your Go-To \(appModel.swapUsesThisWeek)× this week")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                HStack(spacing: 8) {
+                    Image(systemName: "flame.fill")
+                        .foregroundStyle(.orange)
+                        .font(.title3)
+                    
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("\(appModel.swapUsesThisWeek) swaps this week")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                        
+                        Text("Keep it going!")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(Color.orange.opacity(0.1))
+                .cornerRadius(10)
             }
         }
         .padding()
