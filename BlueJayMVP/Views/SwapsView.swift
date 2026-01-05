@@ -321,39 +321,19 @@ struct SwapsView: View {
                 Spacer()
             }
             
-            HStack(spacing: 8) {
-                Button {
-                    appModel.logSwapUse()
-                    withAnimation {
-                        showUsageConfirmation = true
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        withAnimation {
-                            showUsageConfirmation = false
-                        }
-                    }
-                } label: {
-                    Text("Use Once")
-                        .font(.caption)
-                        .fontWeight(.medium)
-                        .foregroundStyle(Color.accentColor)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(Color.accentColor.opacity(0.1))
-                        .cornerRadius(8)
-                }
-                
+            HStack {
+                Spacer()
                 Button {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                         appModel.setGoToSwap(combo)
                     }
                 } label: {
                     Text("Set as Go-To")
-                        .font(.caption)
-                        .fontWeight(.medium)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
                         .foregroundStyle(.white)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
                         .background(Color.accentColor)
                         .cornerRadius(8)
                 }
