@@ -321,8 +321,27 @@ struct SwapsView: View {
                 Spacer()
             }
             
-            HStack {
+            HStack(spacing: 12) {
+                // Small "Use Once" text link
+                Button {
+                    appModel.logSwapUse()
+                    withAnimation {
+                        showUsageConfirmation = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation {
+                            showUsageConfirmation = false
+                        }
+                    }
+                } label: {
+                    Text("Use Once")
+                        .font(.subheadline)
+                        .foregroundStyle(Color.accentColor)
+                }
+                
                 Spacer()
+                
+                // Prominent "Set as Go-To" button
                 Button {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                         appModel.setGoToSwap(combo)
