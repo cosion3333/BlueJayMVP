@@ -13,7 +13,14 @@ import SwiftUI
 class AppModel {
     
     // MARK: - Recall State
-    var recallItems: [String] = []
+    var recallItems: [String] = [] {
+        didSet {
+            // Mark analysis as stale if recall changes after analysis
+            if analysisComplete && recallItems != oldValue {
+                analysisComplete = false
+            }
+        }
+    }
     var searchText: String = ""
     
     // Helper computed property for non-empty recall items
@@ -33,6 +40,10 @@ class AppModel {
     var activeCombos: [SwapCombo] = []
     var goToSwap: SwapCombo?  // User's committed swap for current focus
     var swapUsesThisWeek: Int = 0  // Track swap usage
+    
+    // MARK: - Paywall State
+    var isPremium: Bool = false  // Dummy switch for Day 1 - will connect to RevenueCat later
+    @ObservationIgnored var showPaywall: Bool = false  // For Day 2
     
     // MARK: - Check-In State
     var replacedToday: Bool = false
@@ -81,15 +92,11 @@ class AppModel {
         
         // Auto-select the worst food (lowest priority) as focus
         if let worstFood = detectedFoods.first {
-            focusedFood = worstFood
-            loadSwaps(for: worstFood)
+            setFocus(on: worstFood)  // Use setFocus to set default go-to
         }
         
         // Persist detected foods
         PersistenceService.saveDetectedFoodIds(detectedFoods.map { $0.id })
-        if let focusedFood = focusedFood {
-            PersistenceService.saveFocusedFoodId(focusedFood.id)
-        }
         
         print("🔍 Analysis complete: Found \(detectedFoods.count) bad food(s)")
         if let focused = focusedFood {
@@ -102,10 +109,16 @@ class AppModel {
         focusedFood = food
         loadSwaps(for: food)
         
-        // Persist focused food
-        PersistenceService.saveFocusedFoodId(food.id)
+        // Set default go-to (first swap) - deterministic behavior
+        goToSwap = activeCombos.first
+        swapUsesThisWeek = 0
         
-        print("🎯 Focus set on: \(food.name) (Priority #\(food.priority))")
+        // Persist focused food and go-to
+        PersistenceService.saveFocusedFoodId(food.id)
+        PersistenceService.saveGoToSwap(goToSwap)
+        PersistenceService.saveSwapUsesThisWeek(0)
+        
+        print("🎯 Focus set on: \(food.name) (Priority #\(food.priority)), Default Go-To: \(goToSwap?.title ?? "none")")
     }
     
     /// Load suggested swaps for a bad food
@@ -119,6 +132,12 @@ class AppModel {
         goToSwap = combo
         PersistenceService.saveGoToSwap(combo)
         print("⭐ Go-To swap set: \(combo.title)")
+    }
+    
+    /// Present paywall (Day 1: stub, Day 2: shows sheet, Day 3: RevenueCat)
+    func presentPaywall() {
+        print("🔒 Paywall triggered - will connect to RevenueCat on Day 3")
+        // Day 2: showPaywall = true
     }
     
     /// Log that user used their Go-To swap

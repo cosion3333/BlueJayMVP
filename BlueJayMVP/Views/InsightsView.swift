@@ -17,6 +17,11 @@ struct InsightsView: View {
         
         ScrollView {
             VStack(spacing: 24) {
+                // Show warning if recall changed after analysis
+                if appModel.focusedFood != nil && !appModel.analysisComplete {
+                    recallChangedWarning
+                }
+                
                 if appModel.detectedFoods.isEmpty {
                     // Empty state
                     emptyStateView
@@ -36,6 +41,31 @@ struct InsightsView: View {
             .padding(.top, 16)
         }
         .navigationTitle("Insights")
+    }
+    
+    // MARK: - Recall Changed Warning
+    
+    private var recallChangedWarning: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.orange)
+                .font(.title3)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Recall Changed")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                
+                Text("Re-analyze to update your insights")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            
+            Spacer()
+        }
+        .padding()
+        .background(Color.orange.opacity(0.1))
+        .cornerRadius(12)
     }
     
     // MARK: - Empty State

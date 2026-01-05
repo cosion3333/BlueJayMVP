@@ -271,8 +271,19 @@ struct SwapsView: View {
             
             VStack(spacing: 12) {
                 ForEach(appModel.activeCombos.filter { $0.id != appModel.goToSwap?.id }) { combo in
-                    otherSwapCard(combo)
+                    if appModel.isPremium {
+                        // Premium: Show fully interactive cards
+                        otherSwapCard(combo)
+                    } else {
+                        // Free: Show locked/blurred cards
+                        lockedSwapCard(combo)
+                    }
                 }
+            }
+            
+            // Upgrade button for free users
+            if !appModel.isPremium {
+                upgradeButton
             }
         }
     }
@@ -343,6 +354,86 @@ struct SwapsView: View {
         .background(.background)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
+    }
+    
+    // MARK: - Locked Swap Card (Free Tier)
+    
+    private func lockedSwapCard(_ combo: SwapCombo) -> some View {
+        Button {
+            appModel.presentPaywall()
+        } label: {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 12) {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.gray.opacity(0.1))
+                        .frame(width: 50, height: 50)
+                        .overlay(
+                            Image(systemName: "lock.fill")
+                                .foregroundStyle(.secondary)
+                        )
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(combo.title)
+                            .font(.headline)
+                            .blur(radius: 4)
+                        
+                        Text(combo.description)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .blur(radius: 4)
+                            .lineLimit(2)
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: "lock.fill")
+                        .foregroundStyle(.blue)
+                        .font(.title3)
+                }
+            }
+            .padding()
+            .background(.background)
+            .cornerRadius(12)
+            .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+    
+    // MARK: - Upgrade Button
+    
+    private var upgradeButton: some View {
+        Button {
+            appModel.presentPaywall()
+        } label: {
+            VStack(spacing: 8) {
+                HStack {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                    Text("Unlock All Swaps")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                }
+                Text("Get all personalized recommendations")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(
+                LinearGradient(
+                    colors: [Color.blue, Color.blue.opacity(0.8)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .foregroundStyle(.white)
+            .cornerRadius(12)
+        }
+        .padding(.top, 8)
     }
     
     // MARK: - Bottom Action Bar
