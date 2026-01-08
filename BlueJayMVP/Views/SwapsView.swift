@@ -172,13 +172,13 @@ struct SwapsView: View {
             }
         } label: {
             HStack(spacing: 12) {
-                // Placeholder icon
+                // Food emoji icon
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.accentColor.opacity(0.1))
                     .frame(width: 50, height: 50)
                     .overlay(
-                        Image(systemName: "fork.knife")
-                            .foregroundStyle(Color.accentColor)
+                        Text(combo.emoji)
+                            .font(.largeTitle)
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -232,9 +232,8 @@ struct SwapsView: View {
                     .fill(Color.accentColor.opacity(0.1))
                     .frame(width: 60, height: 60)
                     .overlay(
-                        Image(systemName: "fork.knife")
-                            .font(.title2)
-                            .foregroundStyle(Color.accentColor)
+                        Text(goToSwap.emoji)
+                            .font(.system(size: 36))
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -305,8 +304,8 @@ struct SwapsView: View {
                     .fill(Color.gray.opacity(0.1))
                     .frame(width: 50, height: 50)
                     .overlay(
-                        Image(systemName: "fork.knife")
-                            .foregroundStyle(.secondary)
+                        Text(combo.emoji)
+                            .font(.largeTitle)
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
