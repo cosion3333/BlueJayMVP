@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SwapsView: View {
     @Environment(AppModel.self) private var appModel
+    @Environment(\.colorScheme) private var colorScheme
     @Binding var selectedTab: Int
     @State private var selectedSwapId: UUID?
     @State private var showUsageConfirmation = false
@@ -450,13 +451,19 @@ struct SwapsView: View {
         VStack(spacing: 12) {
             // Inline confirmation message
             if showUsageConfirmation {
-                HStack {
+                HStack(spacing: 6) {
                     Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(.green)
-                    Text("Nice swap! +1 this week")
+                        .foregroundStyle(.white)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                    Text("Nice swap! +1 this week")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
                 }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(Color.green)
+                .cornerRadius(20)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
             
@@ -487,20 +494,32 @@ struct SwapsView: View {
                 HStack {
                     if appModel.goToSwap == nil {
                         Text("Set as My Go-To Swap")
+                            .shadow(color: .black.opacity(0.25), radius: 1, x: 0, y: 1)
                     } else {
                         Text("I Used My Go-To Swap")
+                            .shadow(color: .black.opacity(0.25), radius: 1, x: 0, y: 1)
                     }
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(
                     (appModel.goToSwap != nil || selectedSwapId != nil) 
-                        ? Color.accentColor 
+                        ? Color(red: 0.0, green: 0.48, blue: 1.0)
                         : Color.gray
                 )
                 .foregroundStyle(.white)
-                .fontWeight(.semibold)
+                .fontWeight(.bold)
                 .cornerRadius(12)
+                .shadow(color: .black.opacity(0.2), radius: 4, y: 2)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(
+                            (appModel.goToSwap != nil || selectedSwapId != nil)
+                                ? Color(red: 0.0, green: 0.38, blue: 0.85)
+                                : Color.clear,
+                            lineWidth: 1
+                        )
+                )
             }
             .disabled(appModel.goToSwap == nil && selectedSwapId == nil)
             
@@ -508,22 +527,24 @@ struct SwapsView: View {
             if appModel.goToSwap != nil && appModel.swapUsesThisWeek > 0 {
                 HStack(spacing: 8) {
                     Image(systemName: "flame.fill")
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(.white)
                         .font(.title3)
                     
                     VStack(alignment: .leading, spacing: 2) {
                         Text("\(appModel.swapUsesThisWeek) swaps this week")
                             .font(.headline)
                             .fontWeight(.bold)
+                            .foregroundStyle(.white)
                         
                         Text("Keep it going!")
                             .font(.caption2)
-                            .foregroundStyle(.secondary)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.white.opacity(0.9))
                     }
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
-                .background(Color.orange.opacity(0.1))
+                .background(Color.orange)
                 .cornerRadius(10)
             }
         }
