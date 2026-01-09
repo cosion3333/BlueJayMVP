@@ -20,6 +20,16 @@ struct RecallView: View {
             // Main scrollable content
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
+                    // Instructions at top
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("List everything you ate today.")
+                            .font(.system(size: 22))
+                            .foregroundStyle(.secondary)
+                        Text("Rough estimates are fine.")
+                            .font(.system(size: 22))
+                            .foregroundStyle(.secondary)
+                    }
+                    
                     // 24-Hour Recall Section
                     VStack(alignment: .leading, spacing: 8) {
                         SectionLabel("24-HOUR RECALL")
@@ -35,12 +45,6 @@ struct RecallView: View {
                                 appModel.removeRecallItem(at: index)
                             }
                         )
-                    }
-                    
-                    // Tips Section
-                    VStack(alignment: .leading, spacing: 8) {
-                        SectionLabel("TIPS")
-                        TipsCard()
                     }
                 }
                 .padding(.horizontal, 16)
@@ -197,28 +201,6 @@ struct RecallItemRow: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .contentShape(Rectangle())
-    }
-}
-
-// MARK: - Tips Card
-
-struct TipsCard: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("List what you ate/drank from waking to bedtime. A rough list is enough – don't worry about exact amounts.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .background(.background)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color.gray.opacity(0.3), lineWidth: 0.5)
-        )
-        .shadow(color: .black.opacity(0.05), radius: 2, y: 1)
     }
 }
 
