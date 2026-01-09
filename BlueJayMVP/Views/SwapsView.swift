@@ -175,10 +175,10 @@ struct SwapsView: View {
                 // Food emoji icon
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.accentColor.opacity(0.1))
-                    .frame(width: 50, height: 50)
+                    .frame(width: 70, height: 50)
                     .overlay(
                         Text(combo.emoji)
-                            .font(.largeTitle)
+                            .font(.system(size: 28))
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -230,10 +230,10 @@ struct SwapsView: View {
             HStack(spacing: 12) {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.accentColor.opacity(0.1))
-                    .frame(width: 60, height: 60)
+                    .frame(width: 80, height: 60)
                     .overlay(
                         Text(goToSwap.emoji)
-                            .font(.system(size: 36))
+                            .font(.system(size: 32))
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -247,10 +247,6 @@ struct SwapsView: View {
                 }
                 
                 Spacer()
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(Color.green.opacity(0.15))
-                    .cornerRadius(10)
             }
         }
         .padding()
@@ -302,10 +298,10 @@ struct SwapsView: View {
             HStack(spacing: 12) {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.gray.opacity(0.1))
-                    .frame(width: 50, height: 50)
+                    .frame(width: 70, height: 50)
                     .overlay(
                         Text(combo.emoji)
-                            .font(.largeTitle)
+                            .font(.system(size: 28))
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {

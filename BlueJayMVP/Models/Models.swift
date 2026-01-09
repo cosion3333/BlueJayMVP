@@ -55,67 +55,73 @@ struct SwapCombo: Identifiable, Codable, Hashable {
         self.foods = try container.decode([String].self, forKey: .foods)
     }
     
-    // Smart emoji detection based on swap contents - shows single emoji
+    // Smart emoji detection based on swap contents - shows 2 key emojis
     var emoji: String {
+        var emojis: [String] = []
         let titleLower = title.lowercased()
         let allFoods = foods.joined(separator: " ").lowercased()
         
-        // Check title and foods for keywords (return first match)
-        if titleLower.contains("yogurt") || allFoods.contains("yogurt") { return "🥣" }
-        if titleLower.contains("cottage") { return "🧀" }
-        if titleLower.contains("ricotta") { return "🧈" }
+        // Proteins (highest priority - show first)
+        if titleLower.contains("chicken") || allFoods.contains("chicken") { emojis.append("🍗") }
+        if titleLower.contains("salmon") || allFoods.contains("salmon") { emojis.append("🐟") }
+        if titleLower.contains("tuna") || allFoods.contains("tuna") { emojis.append("🐟") }
+        if titleLower.contains("beef") || allFoods.contains("beef") { emojis.append("🥩") }
+        if titleLower.contains("egg") || allFoods.contains("egg") { emojis.append("🥚") }
         
-        // Fruits
-        if titleLower.contains("apple") || allFoods.contains("apple") { return "🍎" }
-        if titleLower.contains("strawberr") { return "🍓" }
-        if titleLower.contains("blueberr") { return "🫐" }
-        if titleLower.contains("berr") || allFoods.contains("berr") { return "🫐" }
-        if titleLower.contains("mango") || allFoods.contains("mango") { return "🥭" }
-        if titleLower.contains("orange") { return "🍊" }
-        if titleLower.contains("lemon") { return "🍋" }
-        if titleLower.contains("banana") { return "🍌" }
-        if titleLower.contains("cherr") { return "🍒" }
-        if titleLower.contains("fig") { return "🫒" }
-        if titleLower.contains("melon") { return "🍈" }
+        // Dairy/Protein alternatives
+        if titleLower.contains("yogurt") || allFoods.contains("yogurt") { emojis.append("🥣") }
+        if titleLower.contains("cottage") { emojis.append("🧀") }
+        if titleLower.contains("ricotta") { emojis.append("🧈") }
+        if titleLower.contains("cheese") && emojis.isEmpty { emojis.append("🧀") }
         
         // Vegetables
-        if titleLower.contains("avocado") || allFoods.contains("avocado") { return "🥑" }
-        if titleLower.contains("cucumber") { return "🥒" }
-        if titleLower.contains("carrot") { return "🥕" }
-        if titleLower.contains("tomato") { return "🍅" }
-        if titleLower.contains("broccoli") { return "🥦" }
-        if titleLower.contains("spinach") || titleLower.contains("kale") || titleLower.contains("arugula") { return "🥬" }
-        if titleLower.contains("mushroom") { return "🍄" }
-        if titleLower.contains("pepper") { return "🫑" }
-        if titleLower.contains("corn") { return "🌽" }
+        if titleLower.contains("broccoli") { emojis.append("🥦") }
+        if titleLower.contains("spinach") || titleLower.contains("kale") || titleLower.contains("arugula") { emojis.append("🥬") }
+        if titleLower.contains("tomato") { emojis.append("🍅") }
+        if titleLower.contains("avocado") || allFoods.contains("avocado") { emojis.append("🥑") }
+        if titleLower.contains("cucumber") { emojis.append("🥒") }
+        if titleLower.contains("carrot") { emojis.append("🥕") }
+        if titleLower.contains("mushroom") { emojis.append("🍄") }
+        if titleLower.contains("pepper") { emojis.append("🫑") }
+        if titleLower.contains("corn") { emojis.append("🌽") }
         
-        // Proteins
-        if titleLower.contains("salmon") || allFoods.contains("salmon") { return "🐟" }
-        if titleLower.contains("tuna") || allFoods.contains("tuna") { return "🐟" }
-        if titleLower.contains("chicken") || allFoods.contains("chicken") { return "🍗" }
-        if titleLower.contains("beef") || allFoods.contains("beef") { return "🥩" }
-        if titleLower.contains("egg") || allFoods.contains("egg") { return "🥚" }
-        
-        // Drinks
-        if titleLower.contains("seltzer") || titleLower.contains("sparkling") || titleLower.contains("water") { return "💧" }
-        if titleLower.contains("coffee") { return "☕" }
-        if titleLower.contains("tea") { return "🍵" }
+        // Fruits
+        if titleLower.contains("apple") || allFoods.contains("apple") { emojis.append("🍎") }
+        if titleLower.contains("strawberr") { emojis.append("🍓") }
+        if titleLower.contains("blueberr") { emojis.append("🫐") }
+        if titleLower.contains("berr") || allFoods.contains("berr") { emojis.append("🫐") }
+        if titleLower.contains("mango") || allFoods.contains("mango") { emojis.append("🥭") }
+        if titleLower.contains("orange") { emojis.append("🍊") }
+        if titleLower.contains("lemon") { emojis.append("🍋") }
+        if titleLower.contains("banana") { emojis.append("🍌") }
+        if titleLower.contains("cherr") { emojis.append("🍒") }
+        if titleLower.contains("fig") { emojis.append("🫒") }
+        if titleLower.contains("melon") { emojis.append("🍈") }
         
         // Grains
-        if titleLower.contains("oatmeal") || allFoods.contains("oatmeal") { return "🥣" }
-        if titleLower.contains("quinoa") || allFoods.contains("quinoa") { return "🍚" }
-        if titleLower.contains("rice") { return "🍚" }
+        if titleLower.contains("quinoa") || allFoods.contains("quinoa") { emojis.append("🍚") }
+        if titleLower.contains("rice") { emojis.append("🍚") }
+        if titleLower.contains("oatmeal") || allFoods.contains("oatmeal") { emojis.append("🥣") }
+        
+        // Nuts
+        if titleLower.contains("nut") || titleLower.contains("almond") || titleLower.contains("walnut") || titleLower.contains("pecan") || titleLower.contains("cashew") { emojis.append("🥜") }
+        
+        // Drinks
+        if titleLower.contains("seltzer") || titleLower.contains("sparkling") || titleLower.contains("water") { emojis.append("💧") }
+        if titleLower.contains("coffee") { emojis.append("☕") }
+        if titleLower.contains("tea") { emojis.append("🍵") }
         
         // Other
-        if titleLower.contains("chocolate") { return "🍫" }
-        if titleLower.contains("hummus") { return "🥙" }
-        if titleLower.contains("olive") { return "🫒" }
-        if titleLower.contains("edamame") { return "🫛" }
-        if titleLower.contains("nut") || titleLower.contains("almond") || titleLower.contains("walnut") || titleLower.contains("pecan") || titleLower.contains("cashew") { return "🥜" }
-        if titleLower.contains("cheese") { return "🧀" }
+        if titleLower.contains("chocolate") { emojis.append("🍫") }
+        if titleLower.contains("hummus") { emojis.append("🥙") }
+        if titleLower.contains("olive") { emojis.append("🫒") }
+        if titleLower.contains("edamame") { emojis.append("🫛") }
         
-        // Default fallback
-        return "🍽️"
+        // Return first 2 unique emojis
+        let uniqueEmojis = Array(NSOrderedSet(array: emojis)) as! [String]
+        let limitedEmojis = Array(uniqueEmojis.prefix(2))
+        
+        return limitedEmojis.isEmpty ? "🍽️" : limitedEmojis.joined()
     }
 }
 

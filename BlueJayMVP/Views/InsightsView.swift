@@ -10,7 +10,7 @@ import SwiftUI
 struct InsightsView: View {
     @Environment(AppModel.self) private var appModel
     @Binding var selectedTab: Int
-    @State private var showOtherOpportunities = false
+    @State private var showOtherOpportunities = true
     
     var body: some View {
         @Bindable var appModel = appModel
