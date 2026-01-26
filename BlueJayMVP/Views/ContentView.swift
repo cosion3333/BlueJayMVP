@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(AppModel.self) private var appModel
     @State private var selectedTab = 0
     
     var body: some View {
+        @Bindable var appModel = appModel
+        
         TabView(selection: $selectedTab) {
             NavigationStack { RecallView(selectedTab: $selectedTab) }
                 .tabItem { Label("Recall", systemImage: "square.and.pencil") }
@@ -24,7 +27,13 @@ struct ContentView: View {
                 .tabItem { Label("Swaps", systemImage: "sparkles") }
                 .tag(2)
         }
+        .sheet(isPresented: $appModel.showPaywall) {
+            PaywallView()
+        }
     }
 }
 
-#Preview { ContentView() }
+#Preview { 
+    ContentView()
+        .environment(AppModel())
+}

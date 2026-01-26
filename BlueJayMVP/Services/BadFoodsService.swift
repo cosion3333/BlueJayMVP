@@ -11,20 +11,28 @@ struct BadFoodsService {
     
     // MARK: - Data Loading
     
+    /// Indicates if data loaded successfully
+    private(set) static var dataLoadError: String?
+    
     private static let data: FoodData = {
         // Try to find the JSON file in the bundle
         guard let url = Bundle.main.url(forResource: "bluejay_data", withExtension: "json") else {
-            print("❌ Could not find bluejay_data.json in bundle")
+            let errorMsg = "Could not find bluejay_data.json in bundle"
+            print("❌ \(errorMsg)")
             print("Bundle path: \(Bundle.main.bundlePath)")
             print("Resource path: \(Bundle.main.resourcePath ?? "nil")")
-            fatalError("Failed to find bluejay_data.json in bundle")
+            dataLoadError = errorMsg
+            return FoodData(badFoods: [], swaps: [])
         }
         
         print("✅ Found JSON at: \(url.path)")
         
         // Load the data
         guard let jsonData = try? Data(contentsOf: url) else {
-            fatalError("Failed to read bluejay_data.json")
+            let errorMsg = "Failed to read bluejay_data.json"
+            print("❌ \(errorMsg)")
+            dataLoadError = errorMsg
+            return FoodData(badFoods: [], swaps: [])
         }
         
         print("✅ Loaded \(jsonData.count) bytes")
@@ -35,8 +43,10 @@ struct BadFoodsService {
             print("✅ Decoded \(foodData.badFoods.count) foods and \(foodData.swaps.count) swaps")
             return foodData
         } catch {
-            print("❌ Decode error: \(error)")
-            fatalError("Failed to decode bluejay_data.json: \(error)")
+            let errorMsg = "Failed to decode bluejay_data.json: \(error.localizedDescription)"
+            print("❌ \(errorMsg)")
+            dataLoadError = errorMsg
+            return FoodData(badFoods: [], swaps: [])
         }
     }()
     

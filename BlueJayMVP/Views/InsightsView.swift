@@ -19,23 +19,28 @@ struct InsightsView: View {
             // Main scrollable content
             ScrollView {
                 VStack(spacing: 24) {
-                    // Show warning if recall changed after analysis
-                    if appModel.focusedFood != nil && !appModel.analysisComplete {
-                        recallChangedWarning
-                    }
-                    
-                    if appModel.detectedFoods.isEmpty {
-                        // Empty state
-                        emptyStateView
+                    // Show data load error if data failed to load
+                    if let errorMsg = BadFoodsService.dataLoadError {
+                        dataLoadErrorView(errorMsg)
                     } else {
+                        // Show warning if recall changed after analysis
+                        if appModel.focusedFood != nil && !appModel.analysisComplete {
+                            recallChangedWarning
+                        }
+                        
+                        if appModel.detectedFoods.isEmpty {
+                            // Empty state
+                            emptyStateView
+                        } else {
                         // Top priority card (first = worst)
                         if let topFood = appModel.detectedFoods.first {
                             topPriorityCardContent(topFood)
                         }
                         
-                        // Other opportunities (if more than 1 detected)
-                        if appModel.detectedFoods.count > 1 {
-                            otherOpportunitiesSection
+                            // Other opportunities (if more than 1 detected)
+                            if appModel.detectedFoods.count > 1 {
+                                otherOpportunitiesSection
+                            }
                         }
                     }
                 }
@@ -76,6 +81,34 @@ struct InsightsView: View {
         .navigationTitle("Insights")
     }
     
+    // MARK: - Data Load Error View
+    
+    private func dataLoadErrorView(_ errorMsg: String) -> some View {
+        VStack(spacing: 24) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 60))
+                .foregroundStyle(.orange)
+            
+            VStack(spacing: 8) {
+                Text("Data Load Error")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                
+                Text("The app's food database couldn't be loaded. Please reinstall the app.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 20)
+                
+                Text(errorMsg)
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+                    .padding(.top, 4)
+            }
+        }
+        .padding(.top, 60)
+    }
+    
     // MARK: - Recall Changed Warning
     
     private var recallChangedWarning: some View {
@@ -89,12 +122,26 @@ struct InsightsView: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 
-                Text("Re-analyze to update your insights")
+                Text("Your insights may be outdated")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
             
             Spacer()
+            
+            Button {
+                // Force re-analyze
+                appModel.analyzeRecall()
+            } label: {
+                Text("Refresh")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Color.orange)
+                    .cornerRadius(8)
+            }
         }
         .padding()
         .background(Color.orange.opacity(0.1))

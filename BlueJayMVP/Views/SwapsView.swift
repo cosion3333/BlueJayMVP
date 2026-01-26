@@ -21,6 +21,11 @@ struct SwapsView: View {
             // Main content
             ScrollView {
                 VStack(spacing: 20) {
+                    // Show warning if insights are stale
+                    if appModel.focusedFood != nil && !appModel.analysisComplete {
+                        staleInsightsWarning
+                    }
+                    
                     // State 1: No focus set - Empty state
                     if appModel.focusedFood == nil {
                         emptyStateView
@@ -57,6 +62,44 @@ struct SwapsView: View {
                 selectedSwapId = appModel.activeCombos[0].id
             }
         }
+    }
+    
+    // MARK: - Stale Insights Warning
+    
+    private var staleInsightsWarning: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.orange)
+                .font(.title3)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Recall Changed")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                
+                Text("Refresh your insights for updated swaps")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            
+            Spacer()
+            
+            Button {
+                selectedTab = 1 // Go to Insights tab
+            } label: {
+                Text("Review")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Color.orange)
+                    .cornerRadius(8)
+            }
+        }
+        .padding()
+        .background(Color.orange.opacity(0.1))
+        .cornerRadius(12)
     }
     
     // MARK: - Empty State (No Focus)

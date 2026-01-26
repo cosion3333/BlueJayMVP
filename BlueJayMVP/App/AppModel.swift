@@ -43,7 +43,7 @@ class AppModel {
     
     // MARK: - Paywall State
     var isPremium: Bool = false  // Dummy switch for Day 1 - will connect to RevenueCat later
-    @ObservationIgnored var showPaywall: Bool = false  // For Day 2
+    var showPaywall: Bool = false  // Controls paywall sheet visibility
     
     // MARK: - Check-In State
     var replacedToday: Bool = false
@@ -134,10 +134,10 @@ class AppModel {
         print("⭐ Go-To swap set: \(combo.title)")
     }
     
-    /// Present paywall (Day 1: stub, Day 2: shows sheet, Day 3: RevenueCat)
+    /// Present paywall (Day 2: shows sheet, Day 3: RevenueCat)
     func presentPaywall() {
-        print("🔒 Paywall triggered - will connect to RevenueCat on Day 3")
-        // Day 2: showPaywall = true
+        showPaywall = true
+        print("🔒 Paywall triggered")
     }
     
     /// Log that user used their Go-To swap
