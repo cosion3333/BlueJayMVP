@@ -182,7 +182,9 @@ struct SwapsView: View {
                 appModel.isPremium.toggle()
                 let status = appModel.isPremium ? "UNLOCKED ✅" : "LOCKED 🔒"
                 print("🔓 Debug: Premium = \(status)")
+                #if os(iOS)
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                #endif
             }
             #endif
         }
