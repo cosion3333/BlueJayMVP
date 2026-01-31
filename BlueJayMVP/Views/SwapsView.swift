@@ -176,17 +176,6 @@ struct SwapsView: View {
             .background(.background)
             .cornerRadius(12)
             .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
-            #if DEBUG
-            // ⚠️ DEV ONLY: Triple-tap this card to toggle premium (auto-removed in Release)
-            .onTapGesture(count: 3) {
-                appModel.isPremium.toggle()
-                let status = appModel.isPremium ? "UNLOCKED ✅" : "LOCKED 🔒"
-                print("🔓 Debug: Premium = \(status)")
-                #if os(iOS)
-                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                #endif
-            }
-            #endif
         }
     }
     

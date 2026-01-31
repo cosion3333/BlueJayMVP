@@ -2,44 +2,138 @@
 //  PaywallView.swift
 //  BlueJayMVP
 //
-//  Created by Cursor AI on 1/25/26.
+//  RevenueCat Paywall Integration
 //
 
 import SwiftUI
+import RevenueCat
+import RevenueCatUI
 
 struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AppModel.self) private var appModel
+    @Environment(RevenueCatService.self) private var revenueCat
+    
+    @State private var purchaseError: Error?
+    @State private var showError = false
+    @State private var showRestoreSuccess = false
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            // Main content
-            ScrollView {
-                VStack(spacing: 32) {
-                    // Header
-                    VStack(spacing: 12) {
-                        Image(systemName: "star.circle.fill")
-                            .font(.system(size: 80))
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [.yellow, .orange],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
+            // Use RevenueCat's native paywall if offerings are loaded
+            if let offering = revenueCat.offerings?.current {
+                RevenueCatUI.PaywallView(
+                    offering: offering,
+                    displayCloseButton: false,
+                    performPurchase: { package in
+                        do {
+                            _ = try await revenueCat.purchase(package: package)
+                            print("✅ Purchase completed!")
+                            dismiss()
+                            return (false, nil)
+                        } catch {
+                            let nsError = error as NSError
+                            let isCancelled = (error as? ErrorCode) == .purchaseCancelledError ||
+                                nsError.code == ErrorCode.purchaseCancelledError.rawValue
+                            if !isCancelled {
+                                purchaseError = error
+                                showError = true
+                            }
+                            return (isCancelled, isCancelled ? nil : error)
+                        }
+                    },
+                    performRestore: {
+                        do {
+                            _ = try await revenueCat.restorePurchases()
+                            print("✅ Restore completed!")
+                            if revenueCat.isPremium {
+                                showRestoreSuccess = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    dismiss()
+                                }
+                                return (true, nil)
+                            } else {
+                                let error = NSError(
+                                    domain: "BlueJay",
+                                    code: -1,
+                                    userInfo: [NSLocalizedDescriptionKey: "No active subscriptions found"]
                                 )
-                            )
-                        
-                        Text("Unlock All Blue Jay Swaps")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .multilineTextAlignment(.center)
-                        
-                        Text("Get unlimited access to 90+ healthy alternatives")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 20)
+                                purchaseError = error
+                                showError = true
+                                return (false, error)
+                            }
+                        } catch {
+                            purchaseError = error
+                            showError = true
+                            return (false, error)
+                        }
                     }
-                    .padding(.top, 40)
+                )
+                .paywallFooter()
+            } else {
+                // Custom paywall fallback
+                customPaywallView
+            }
+            
+            // Close button
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title2)
+                    .foregroundStyle(.tertiary)
+                    .padding()
+            }
+        }
+        .alert("Purchase Failed", isPresented: $showError) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            if let error = purchaseError {
+                Text(error.localizedDescription)
+            }
+        }
+        .alert("Purchases Restored", isPresented: $showRestoreSuccess) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("Your premium access has been restored!")
+        }
+        .task {
+            // Ensure offerings are loaded
+            if revenueCat.offerings == nil {
+                await revenueCat.loadOfferings()
+            }
+        }
+    }
+    
+    // MARK: - Custom Paywall (Fallback)
+    
+    private var customPaywallView: some View {
+        ScrollView {
+            VStack(spacing: 32) {
+                // Header
+                VStack(spacing: 12) {
+                    Image(systemName: "star.circle.fill")
+                        .font(.system(size: 80))
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [.yellow, .orange],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                    
+                    Text("Unlock All Blue Jay Swaps")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                    
+                    Text("Get unlimited access to 90+ healthy alternatives")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
+                }
+                .padding(.top, 40)
                     
                     // Features
                     VStack(spacing: 20) {
@@ -69,95 +163,73 @@ struct PaywallView: View {
                     }
                     .padding(.horizontal, 24)
                     
-                    // Pricing (stub for now)
-                    VStack(spacing: 16) {
-                        // Annual plan (recommended)
-                        PricingCard(
-                            title: "Annual",
-                            price: "$29.99/year",
-                            savings: "Save 50%",
-                            isRecommended: true
-                        )
-                        
-                        // Monthly plan
-                        PricingCard(
-                            title: "Monthly",
-                            price: "$4.99/month",
-                            savings: nil,
-                            isRecommended: false
-                        )
-                    }
-                    .padding(.horizontal, 24)
-                    
-                    // CTA Button
-                    Button {
-                        // For now, just toggle premium (Day 3: connect RevenueCat)
-                        appModel.isPremium = true
-                        dismiss()
-                        print("🎉 Premium unlocked (stub - will connect RevenueCat)")
-                    } label: {
-                        Text("Start Free Trial")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(
-                                LinearGradient(
-                                    colors: [Color.blue, Color.blue.opacity(0.8)],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .foregroundStyle(.white)
-                            .cornerRadius(12)
-                    }
-                    .padding(.horizontal, 24)
-                    
-                    // Fine print
-                    VStack(spacing: 8) {
-                        Text("7-day free trial, then $29.99/year")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        
-                        Button {
-                            // Restore purchases (stub)
-                            print("Restore purchases (stub)")
-                        } label: {
-                            Text("Restore Purchases")
-                                .font(.caption)
-                                .foregroundStyle(.blue)
+                    // Pricing with actual RevenueCat packages
+                    if !revenueCat.availablePackages.isEmpty {
+                        VStack(spacing: 16) {
+                            ForEach(revenueCat.availablePackages, id: \.identifier) { package in
+                                PricingCard(
+                                    package: package,
+                                    isRecommended: package.packageType == .annual
+                                ) {
+                                    Task {
+                                        do {
+                                            _ = try await revenueCat.purchase(package: package)
+                                            dismiss()
+                                        } catch {
+                                            purchaseError = error
+                                            showError = true
+                                        }
+                                    }
+                                }
+                            }
                         }
+                        .padding(.horizontal, 24)
+                    } else {
+                        // Loading state
+                        ProgressView()
+                            .padding(.horizontal, 24)
                     }
+                    
+                    // Restore purchases button
+                    Button {
+                        Task {
+                            do {
+                                _ = try await revenueCat.restorePurchases()
+                                if revenueCat.isPremium {
+                                    showRestoreSuccess = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                        dismiss()
+                                    }
+                                } else {
+                                    purchaseError = NSError(domain: "BlueJay", code: -1, userInfo: [NSLocalizedDescriptionKey: "No active subscriptions found"])
+                                    showError = true
+                                }
+                            } catch {
+                                purchaseError = error
+                                showError = true
+                            }
+                        }
+                    } label: {
+                        Text("Restore Purchases")
+                            .font(.caption)
+                            .foregroundStyle(.blue)
+                    }
+                    .padding(.top, 8)
                     
                     // Legal links
                     HStack(spacing: 16) {
-                        Button("Terms") {
-                            // TODO: Open terms URL
-                        }
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        Link("Terms", destination: URL(string: "https://www.revenuecat.com/terms")!)
+                            .font(.caption2)
+                            .foregroundStyle(.tertiary)
                         
                         Text("•")
                             .foregroundStyle(.tertiary)
                         
-                        Button("Privacy") {
-                            // TODO: Open privacy URL
-                        }
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        Link("Privacy", destination: URL(string: "https://www.revenuecat.com/privacy")!)
+                            .font(.caption2)
+                            .foregroundStyle(.tertiary)
                     }
                     .padding(.bottom, 32)
-                }
-            }
-            
-            // Close button
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title2)
-                    .foregroundStyle(.tertiary)
-                    .padding()
             }
         }
     }
@@ -194,60 +266,64 @@ struct FeatureRow: View {
 // MARK: - Pricing Card
 
 struct PricingCard: View {
-    let title: String
-    let price: String
-    let savings: String?
+    let package: Package
     let isRecommended: Bool
+    let onPurchase: () -> Void
     
     var body: some View {
-        VStack(spacing: 8) {
-            if isRecommended {
+        Button(action: onPurchase) {
+            VStack(spacing: 8) {
+                if isRecommended {
+                    HStack {
+                        Spacer()
+                        Text("RECOMMENDED")
+                            .font(.caption2)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 4)
+                            .background(Color.green)
+                            .cornerRadius(4)
+                        Spacer()
+                    }
+                    .padding(.top, -8)
+                }
+                
                 HStack {
-                    Spacer()
-                    Text("RECOMMENDED")
-                        .font(.caption2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 4)
-                        .background(Color.green)
-                        .cornerRadius(4)
-                    Spacer()
-                }
-                .padding(.top, -8)
-            }
-            
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(title)
-                        .font(.headline)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(package.storeProduct.localizedTitle)
+                            .font(.headline)
+                            .foregroundStyle(.primary)
+                        
+                        Text(package.localizedPriceString)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.primary)
+                    }
                     
-                    Text(price)
-                        .font(.title3)
-                        .fontWeight(.bold)
+                    Spacer()
+                    
+                    if isRecommended {
+                        Text("Best Value")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.green)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color.green.opacity(0.1))
+                            .cornerRadius(6)
+                    }
                 }
-                
-                Spacer()
-                
-                if let savings = savings {
-                    Text(savings)
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.green)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(Color.green.opacity(0.1))
-                        .cornerRadius(6)
-                }
+                .padding()
             }
-            .padding()
+            .background(isRecommended ? Color.blue.opacity(0.05) : Color.gray.opacity(0.05))
+            .cornerRadius(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(isRecommended ? Color.blue : Color.gray.opacity(0.3), lineWidth: isRecommended ? 2 : 1)
+            )
         }
-        .background(isRecommended ? Color.blue.opacity(0.05) : Color.gray.opacity(0.05))
-        .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(isRecommended ? Color.blue : Color.gray.opacity(0.3), lineWidth: isRecommended ? 2 : 1)
-        )
+        .buttonStyle(.plain)
     }
 }
 
@@ -256,4 +332,5 @@ struct PricingCard: View {
 #Preview {
     PaywallView()
         .environment(AppModel())
+        .environment(RevenueCatService.shared)
 }

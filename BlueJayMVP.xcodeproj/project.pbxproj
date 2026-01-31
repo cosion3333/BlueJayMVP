@@ -23,6 +23,11 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXBuildFile section */
+		E06020302F2E5E2B00465B34 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = E060202F2F2E5E2B00465B34 /* RevenueCat */; };
+		E06020322F2E5E2B00465B34 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = E06020312F2E5E2B00465B34 /* RevenueCatUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		E056F8262E65EFA100C7417B /* BlueJayMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueJayMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E056F8342E65EFA200C7417B /* BlueJayMVPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueJayMVPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E06020302F2E5E2B00465B34 /* RevenueCat in Frameworks */,
+				E06020322F2E5E2B00465B34 /* RevenueCatUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +119,8 @@
 			);
 			name = BlueJayMVP;
 			packageProductDependencies = (
+				E060202F2F2E5E2B00465B34 /* RevenueCat */,
+				E06020312F2E5E2B00465B34 /* RevenueCatUI */,
 			);
 			productName = BlueJayMVP;
 			productReference = E056F8262E65EFA100C7417B /* BlueJayMVP.app */;
@@ -195,6 +204,9 @@
 			);
 			mainGroup = E056F81D2E65EFA100C7417B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E060202E2F2E5E0600465B34 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E056F8272E65EFA100C7417B /* Products */;
 			projectDirPath = "";
@@ -585,6 +597,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E060202F2F2E5E2B00465B34 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E060202E2F2E5E0600465B34 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		E06020312F2E5E2B00465B34 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E060202E2F2E5E0600465B34 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E060202E2F2E5E0600465B34 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.56.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = E056F81E2E65EFA100C7417B /* Project object */;
 }

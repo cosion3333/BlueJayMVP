@@ -41,8 +41,14 @@ class AppModel {
     var goToSwap: SwapCombo?  // User's committed swap for current focus
     var swapUsesThisWeek: Int = 0  // Track swap usage
     
-    // MARK: - Paywall State
-    var isPremium: Bool = false  // Dummy switch for Day 1 - will connect to RevenueCat later
+    // MARK: - Paywall State (RevenueCat Integration)
+    var revenueCat: RevenueCatService
+    
+    /// Check premium status from RevenueCat
+    var isPremium: Bool {
+        revenueCat.isPremium
+    }
+    
     var showPaywall: Bool = false  // Controls paywall sheet visibility
     
     // MARK: - Check-In State
@@ -57,7 +63,8 @@ class AppModel {
     var completedCheckIns: Int = 0
     
     // MARK: - Initialization
-    init() {
+    init(revenueCat: RevenueCatService = .shared) {
+        self.revenueCat = revenueCat
         loadPersistedData()
     }
     
@@ -134,10 +141,15 @@ class AppModel {
         print("⭐ Go-To swap set: \(combo.title)")
     }
     
-    /// Present paywall (Day 2: shows sheet, Day 3: RevenueCat)
+    /// Present paywall with RevenueCat
     func presentPaywall() {
         showPaywall = true
         print("🔒 Paywall triggered")
+    }
+    
+    /// Sync premium status from RevenueCat
+    func syncPremiumStatus() {
+        revenueCat.syncCustomerInfo()
     }
     
     /// Log that user used their Go-To swap
