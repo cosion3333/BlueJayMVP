@@ -1,0 +1,212 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                  REVENUECAT QUICK REFERENCE                       ║
+║                        Blue Jay App                               ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 🎯 CRITICAL INFO (Keep This Handy)                               │
+└──────────────────────────────────────────────────────────────────┘
+
+TEST API KEY:   test_DWbLlQNWFHLimjMuupRGeegPNlL
+ENTITLEMENT:    Blue Jay Swaps Pro
+PRODUCT IDs:    monthly, yearly
+
+SDK URL:        https://github.com/RevenueCat/purchases-ios-spm.git
+DASHBOARD:      https://app.revenuecat.com
+APP STORE:      https://appstoreconnect.apple.com
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 📋 QUICK START (Do These In Order)                               │
+└──────────────────────────────────────────────────────────────────┘
+
+1. INSTALL SDK (Xcode)
+   File → Add Package Dependencies...
+   → Paste SDK URL above
+   → Add: RevenueCat + RevenueCatUI
+
+2. ADD FILES (Xcode)
+   Services/RevenueCatService.swift → Add to target
+   Views/CustomerCenterView.swift → Add to target
+
+3. BUILD & RUN
+   Cmd+B → Build
+   Cmd+R → Run
+   Check console: "✅ RevenueCat configured"
+
+4. CONFIGURE DASHBOARD
+   Create entitlement: "Blue Jay Swaps Pro"
+   Add products: monthly, yearly
+   Create offering: mark as "Current"
+
+5. APP STORE CONNECT
+   Subscription group: "Blue Jay Pro"
+   Add: monthly subscription
+   Add: yearly subscription
+   Create: sandbox tester
+
+6. TEST
+   Sign out of App Store (Settings)
+   Run app → Swaps tab → Tap locked swap
+   Purchase with sandbox credentials
+   Verify: all swaps unlock
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 🔍 CONSOLE MESSAGES (What to Look For)                           │
+└──────────────────────────────────────────────────────────────────┘
+
+GOOD (Expected):
+✅ RevenueCat configured with API key
+✅ Customer info refreshed - Premium: false
+✅ Offerings loaded - Current: default
+   Packages: monthly, yearly
+🔒 Paywall triggered
+✅ Purchase successful - Premium: true
+
+BAD (Needs Attention):
+❌ Error fetching customer info: [message]
+⚠️ No current offering found
+❌ Purchase failed: [message]
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 🐛 COMMON ISSUES & QUICK FIXES                                   │
+└──────────────────────────────────────────────────────────────────┘
+
+"No offerings found"
+→ Check dashboard has "Current Offering" set
+
+"Invalid Product ID"
+→ Verify IDs match exactly in RevenueCat + App Store Connect
+→ Wait 2-4 hours after creating products
+
+"Cannot connect to iTunes Store"
+→ Use real device (not simulator)
+→ Sign out of App Store in Settings
+→ Use sandbox tester credentials
+
+"Build errors after adding SDK"
+→ Clean build folder: Cmd+Shift+K
+→ Restart Xcode
+→ Check both RevenueCat + RevenueCatUI are added
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 📖 DOCUMENTATION (Which to Read When)                            │
+└──────────────────────────────────────────────────────────────────┘
+
+README_REVENUECAT.md          → First read - overview
+REVENUECAT_INTEGRATION.md     → Full setup instructions
+TESTING_GUIDE.md              → When testing purchases
+ARCHITECTURE.md               → Understanding the system
+VISUAL_FLOW_GUIDE.md          → See UI mockups
+IMPLEMENTATION_SUMMARY.txt    → What was built
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 🔧 DEBUG COMMANDS (Add to Any Button)                            │
+└──────────────────────────────────────────────────────────────────┘
+
+Check Premium Status:
+```swift
+print("isPremium: \(appModel.isPremium)")
+print("RC Premium: \(RevenueCatService.shared.isPremium)")
+```
+
+Force Refresh:
+```swift
+Task {
+    await RevenueCatService.shared.refreshCustomerInfo()
+}
+```
+
+Check Offerings:
+```swift
+print("Offerings: \(RevenueCatService.shared.offerings != nil)")
+print("Packages: \(RevenueCatService.shared.availablePackages.count)")
+```
+
+┌──────────────────────────────────────────────────────────────────┐
+│ ✅ TESTING CHECKLIST (Quick Version)                             │
+└──────────────────────────────────────────────────────────────────┘
+
+□ App launches without crash
+□ Console shows "RevenueCat configured"
+□ Offerings loaded (check console)
+□ Paywall appears when tapping locked swap
+□ Can select package (monthly/yearly)
+□ Purchase completes (sandbox)
+□ All swaps unlock immediately
+□ Delete app → Reinstall → Restore works
+□ Premium status persists after app restart
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 🚀 BEFORE PRODUCTION LAUNCH                                      │
+└──────────────────────────────────────────────────────────────────┘
+
+CODE:
+□ Switch to production API key
+□ Set Purchases.logLevel = .info
+□ Add real Privacy Policy URL
+□ Add real Terms URL
+
+TESTING:
+□ Test on multiple devices
+□ Test all purchase flows
+□ Test restore purchases
+□ Test offline mode
+□ Test subscription expiry
+
+APP STORE:
+□ Subscriptions approved
+□ Screenshots updated
+□ Description mentions premium
+□ Subscription marketing ready
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 🆘 EMERGENCY CONTACTS                                            │
+└──────────────────────────────────────────────────────────────────┘
+
+RevenueCat Support:      support@revenuecat.com
+RevenueCat Docs:         https://www.revenuecat.com/docs
+Community Forum:         https://community.revenuecat.com
+Status Page:             https://status.revenuecat.com
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 💡 PRO TIPS                                                       │
+└──────────────────────────────────────────────────────────────────┘
+
+• Always check entitlements, not product IDs
+• Cache works offline - don't panic if no internet
+• Sandbox subscriptions expire quickly (test feature)
+• RevenueCatUI paywalls are A/B testable from dashboard
+• Customer Center = instant subscription management
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 📊 KEY METRICS TO TRACK (After Launch)                           │
+└──────────────────────────────────────────────────────────────────┘
+
+• Paywall impressions
+• Conversion rate (free → paid)
+• Monthly Recurring Revenue (MRR)
+• Churn rate
+• Trial conversion (if you add trials)
+• Average Revenue Per User (ARPU)
+
+All available in RevenueCat Dashboard → Charts
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 🎉 SUCCESS INDICATORS                                            │
+└──────────────────────────────────────────────────────────────────┘
+
+You're ready when:
+✅ App builds without errors
+✅ Console shows successful configuration
+✅ Test purchase completes in sandbox
+✅ Premium features unlock immediately
+✅ Restore purchases works after reinstall
+
+╔══════════════════════════════════════════════════════════════════╗
+║                         YOU'RE ALL SET!                           ║
+║                                                                   ║
+║  Your Blue Jay app has a production-ready subscription system.    ║
+║  Just install the SDK and start testing!                         ║
+║                                                                   ║
+║  Next: open BlueJayMVP.xcodeproj                                 ║
+╚══════════════════════════════════════════════════════════════════╝
