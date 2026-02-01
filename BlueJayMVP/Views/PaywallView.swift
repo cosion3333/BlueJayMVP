@@ -134,102 +134,105 @@ struct PaywallView: View {
                         .padding(.horizontal, 20)
                 }
                 .padding(.top, 40)
+                
+                // Features
+                VStack(spacing: 20) {
+                    FeatureRow(
+                        icon: "fork.knife",
+                        title: "90+ Swap Combos",
+                        description: "Trade bad foods for delicious, healthy alternatives"
+                    )
                     
-                    // Features
-                    VStack(spacing: 20) {
-                        FeatureRow(
-                            icon: "fork.knife",
-                            title: "90+ Swap Combos",
-                            description: "Trade bad foods for delicious, healthy alternatives"
-                        )
-                        
-                        FeatureRow(
-                            icon: "target",
-                            title: "Personalized Focus",
-                            description: "AI-powered analysis of your worst foods"
-                        )
-                        
-                        FeatureRow(
-                            icon: "chart.line.uptrend.xyaxis",
-                            title: "Track Progress",
-                            description: "See your wins and build healthy streaks"
-                        )
-                        
-                        FeatureRow(
-                            icon: "sparkles",
-                            title: "Weekly Updates",
-                            description: "Fresh recommendations based on your habits"
-                        )
+                    FeatureRow(
+                        icon: "target",
+                        title: "Personalized Focus",
+                        description: "AI-powered analysis of your worst foods"
+                    )
+                    
+                    FeatureRow(
+                        icon: "chart.line.uptrend.xyaxis",
+                        title: "Track Progress",
+                        description: "See your wins and build healthy streaks"
+                    )
+                    
+                    FeatureRow(
+                        icon: "sparkles",
+                        title: "Weekly Updates",
+                        description: "Fresh recommendations based on your habits"
+                    )
+                }
+                .padding(.horizontal, 24)
+                
+                // Pricing with actual RevenueCat packages
+                if !revenueCat.availablePackages.isEmpty {
+                    VStack(spacing: 16) {
+                        ForEach(revenueCat.availablePackages, id: \.identifier) { package in
+                            PricingCard(
+                                package: package,
+                                isRecommended: package.packageType == .annual
+                            ) {
+                                Task {
+                                    do {
+                                        _ = try await revenueCat.purchase(package: package)
+                                        dismiss()
+                                    } catch {
+                                        purchaseError = error
+                                        showError = true
+                                    }
+                                }
+                            }
+                        }
                     }
                     .padding(.horizontal, 24)
-                    
-                    // Pricing with actual RevenueCat packages
-                    if !revenueCat.availablePackages.isEmpty {
-                        VStack(spacing: 16) {
-                            ForEach(revenueCat.availablePackages, id: \.identifier) { package in
-                                PricingCard(
-                                    package: package,
-                                    isRecommended: package.packageType == .annual
-                                ) {
-                                    Task {
-                                        do {
-                                            _ = try await revenueCat.purchase(package: package)
-                                            dismiss()
-                                        } catch {
-                                            purchaseError = error
-                                            showError = true
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                } else {
+                    // Loading state
+                    ProgressView()
                         .padding(.horizontal, 24)
-                    } else {
-                        // Loading state
-                        ProgressView()
-                            .padding(.horizontal, 24)
-                    }
-                    
-                    // Restore purchases button
-                    Button {
-                        Task {
-                            do {
-                                _ = try await revenueCat.restorePurchases()
-                                if revenueCat.isPremium {
-                                    showRestoreSuccess = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                        dismiss()
-                                    }
-                                } else {
-                                    purchaseError = NSError(domain: "BlueJay", code: -1, userInfo: [NSLocalizedDescriptionKey: "No active subscriptions found"])
-                                    showError = true
+                }
+                
+                // Restore purchases button
+                Button {
+                    Task {
+                        do {
+                            _ = try await revenueCat.restorePurchases()
+                            if revenueCat.isPremium {
+                                showRestoreSuccess = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    dismiss()
                                 }
-                            } catch {
-                                purchaseError = error
+                            } else {
+                                purchaseError = NSError(
+                                    domain: "BlueJay",
+                                    code: -1,
+                                    userInfo: [NSLocalizedDescriptionKey: "No active subscriptions found"]
+                                )
                                 showError = true
                             }
+                        } catch {
+                            purchaseError = error
+                            showError = true
                         }
-                    } label: {
-                        Text("Restore Purchases")
-                            .font(.caption)
-                            .foregroundStyle(.blue)
                     }
-                    .padding(.top, 8)
+                } label: {
+                    Text("Restore Purchases")
+                        .font(.caption)
+                        .foregroundStyle(.blue)
+                }
+                
+                // Legal links
+                HStack(spacing: 16) {
+                    Link("Terms", destination: URL(string: "https://www.revenuecat.com/terms")!)
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
                     
-                    // Legal links
-                    HStack(spacing: 16) {
-                        Link("Terms", destination: URL(string: "https://www.revenuecat.com/terms")!)
-                            .font(.caption2)
-                            .foregroundStyle(.tertiary)
-                        
-                        Text("•")
-                            .foregroundStyle(.tertiary)
-                        
-                        Link("Privacy", destination: URL(string: "https://www.revenuecat.com/privacy")!)
-                            .font(.caption2)
-                            .foregroundStyle(.tertiary)
-                    }
-                    .padding(.bottom, 32)
+                    Text("•")
+                        .foregroundStyle(.tertiary)
+                    
+                    Link("Privacy", destination: URL(string: "https://www.revenuecat.com/privacy")!)
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
+                .padding(.bottom, 28)
             }
         }
     }
