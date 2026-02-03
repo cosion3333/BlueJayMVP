@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E06020302F2E5E2B00465B34 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = E060202F2F2E5E2B00465B34 /* RevenueCat */; };
+		E06020322F2E5E2B00465B34 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = E06020312F2E5E2B00465B34 /* RevenueCatUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E056F8352E65EFA200C7417B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -22,11 +27,6 @@
 			remoteInfo = BlueJayMVP;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXBuildFile section */
-		E06020302F2E5E2B00465B34 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = E060202F2F2E5E2B00465B34 /* RevenueCat */; };
-		E06020322F2E5E2B00465B34 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = E06020312F2E5E2B00465B34 /* RevenueCatUI */; };
-/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E056F8262E65EFA100C7417B /* BlueJayMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueJayMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -598,6 +598,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		E060202E2F2E5E0600465B34 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.56.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		E060202F2F2E5E2B00465B34 /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -610,17 +621,6 @@
 			productName = RevenueCatUI;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		E060202E2F2E5E0600465B34 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.56.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = E056F81E2E65EFA100C7417B /* Project object */;
 }
