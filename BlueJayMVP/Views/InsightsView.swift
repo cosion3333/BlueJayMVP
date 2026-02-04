@@ -41,6 +41,9 @@ struct InsightsView: View {
                             if appModel.detectedFoods.count > 1 {
                                 otherOpportunitiesSection
                             }
+                            
+                            // Weekly progress card (at bottom)
+                            weeklyProgressCard
                         }
                     }
                 }
@@ -337,6 +340,106 @@ struct InsightsView: View {
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 4)
+    }
+    
+    // MARK: - Weekly Progress Card
+    
+    private var weeklyProgressCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Header
+            HStack {
+                Image(systemName: "flame.fill")
+                    .foregroundStyle(.orange)
+                Text("THIS WEEK'S SWAPS")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                    .kerning(0.5)
+                Spacer()
+            }
+            
+            // Stats row
+            HStack(spacing: 20) {
+                // Swaps count
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("\(appModel.swapUsesThisWeek)")
+                        .font(.system(size: 32, weight: .bold, design: .rounded))
+                        .foregroundStyle(.primary)
+                    Text("swaps logged")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                
+                Spacer()
+                
+                // Streak
+                if appModel.currentStreak > 0 {
+                    VStack(alignment: .trailing, spacing: 4) {
+                        HStack(spacing: 4) {
+                            Text("\(appModel.currentStreak)")
+                                .font(.system(size: 32, weight: .bold, design: .rounded))
+                                .foregroundStyle(.orange)
+                            Text("day\(appModel.currentStreak == 1 ? "" : "s")")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        Text("streak")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+            
+            // Progress bar (visual for 7-day goal)
+            if appModel.swapUsesThisWeek > 0 {
+                VStack(alignment: .leading, spacing: 6) {
+                    GeometryReader { geometry in
+                        ZStack(alignment: .leading) {
+                            // Background
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(Color.gray.opacity(0.2))
+                                .frame(height: 8)
+                            
+                            // Progress
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(
+                                    LinearGradient(
+                                        colors: [.orange, .yellow],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .frame(width: min(geometry.size.width * CGFloat(appModel.swapUsesThisWeek) / 7.0, geometry.size.width), height: 8)
+                        }
+                    }
+                    .frame(height: 8)
+                    
+                    Text(progressMessage)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+        .padding()
+        .background(.background)
+        .cornerRadius(12)
+        .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
+    }
+    
+    private var progressMessage: String {
+        let swaps = appModel.swapUsesThisWeek
+        switch swaps {
+        case 0:
+            return "Log your first swap!"
+        case 1...2:
+            return "Good start! Keep going."
+        case 3...4:
+            return "You're building momentum!"
+        case 5...6:
+            return "Almost there! \(7 - swaps) more to hit 7."
+        default:
+            return "Amazing week! You're crushing it!"
+        }
     }
     
     // MARK: - Helper Functions
