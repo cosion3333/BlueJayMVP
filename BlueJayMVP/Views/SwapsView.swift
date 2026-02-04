@@ -352,7 +352,6 @@ struct SwapsView: View {
             }
             
             HStack(spacing: 12) {
-                // Small "Use Once" text link
                 Button {
                     appModel.logSwapUse()
                     withAnimation {
@@ -371,7 +370,6 @@ struct SwapsView: View {
                 
                 Spacer()
                 
-                // Prominent "Set as Go-To" button
                 Button {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                         appModel.setGoToSwap(combo)
@@ -404,7 +402,7 @@ struct SwapsView: View {
                 HStack(spacing: 12) {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.gray.opacity(0.1))
-                        .frame(width: 50, height: 50)
+                        .frame(width: 70, height: 50)
                         .overlay(
                             Image(systemName: "lock.fill")
                                 .foregroundStyle(.secondary)
@@ -477,26 +475,32 @@ struct SwapsView: View {
     // MARK: - Bottom Action Bar
     
     private var bottomActionBar: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             // Inline confirmation message
             if showUsageConfirmation {
                 HStack(spacing: 6) {
                     Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(.white)
-                        .font(.caption)
+                        .foregroundStyle(.green)
+                        .font(.subheadline)
                     Text("Nice swap! +1 this week")
                         .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.white)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.primary)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(Color.green)
-                .cornerRadius(20)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
             
-            // Active swaps count
+            // Weekly count - subtle text above button (Option B)
+            if appModel.goToSwap != nil && appModel.swapUsesThisWeek > 0 {
+                HStack(spacing: 4) {
+                    Image(systemName: "flame.fill")
+                        .foregroundStyle(.orange)
+                        .font(.caption)
+                    Text("\(appModel.swapUsesThisWeek) swap\(appModel.swapUsesThisWeek == 1 ? "" : "s") this week")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
             
             // Primary action button
             Button {
@@ -520,62 +524,19 @@ struct SwapsView: View {
                     }
                 }
             } label: {
-                HStack {
-                    if appModel.goToSwap == nil {
-                        Text("Set as My Go-To Swap")
-                            .shadow(color: .black.opacity(0.25), radius: 1, x: 0, y: 1)
-                    } else {
-                        Text("I Used My Go-To Swap")
-                            .shadow(color: .black.opacity(0.25), radius: 1, x: 0, y: 1)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(
-                    (appModel.goToSwap != nil || selectedSwapId != nil) 
-                        ? Color(red: 0.0, green: 0.48, blue: 1.0)
-                        : Color.gray
-                )
-                .foregroundStyle(.white)
-                .fontWeight(.bold)
-                .cornerRadius(12)
-                .shadow(color: .black.opacity(0.2), radius: 4, y: 2)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(
-                            (appModel.goToSwap != nil || selectedSwapId != nil)
-                                ? Color(red: 0.0, green: 0.38, blue: 0.85)
-                                : Color.clear,
-                            lineWidth: 1
-                        )
-                )
+                Text(appModel.goToSwap == nil ? "Set as My Go-To Swap" : "I Used My Go-To Swap")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(
+                        (appModel.goToSwap != nil || selectedSwapId != nil) 
+                            ? Color.accentColor
+                            : Color.gray
+                    )
+                    .foregroundStyle(.white)
+                    .fontWeight(.semibold)
+                    .cornerRadius(12)
             }
             .disabled(appModel.goToSwap == nil && selectedSwapId == nil)
-            
-            // Weekly usage tracker (when Go-To is set)
-            if appModel.goToSwap != nil && appModel.swapUsesThisWeek > 0 {
-                HStack(spacing: 8) {
-                    Image(systemName: "flame.fill")
-                        .foregroundStyle(.white)
-                        .font(.title3)
-                    
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("\(appModel.swapUsesThisWeek) swaps this week")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundStyle(.white)
-                        
-                        Text("Keep it going!")
-                            .font(.caption2)
-                            .fontWeight(.medium)
-                            .foregroundStyle(.white.opacity(0.9))
-                    }
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .background(Color.orange)
-                .cornerRadius(10)
-            }
         }
         .padding()
         .background(.regularMaterial)

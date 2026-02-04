@@ -21,14 +21,9 @@ struct RecallView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     // Instructions at top
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("List everything you ate today.")
-                            .font(.system(size: 22))
-                            .foregroundStyle(.secondary)
-                        Text("Rough estimates are fine.")
-                            .font(.system(size: 22))
-                            .foregroundStyle(.secondary)
-                    }
+                    Text("List everything you ate today.")
+                        .font(.system(size: 22))
+                        .foregroundStyle(.secondary)
                     
                     // 24-Hour Recall Section
                     VStack(alignment: .leading, spacing: 8) {
