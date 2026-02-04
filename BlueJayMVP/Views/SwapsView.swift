@@ -578,10 +578,8 @@ struct SwapsView: View {
             }
         }
         .padding()
-        .background(
-            Color(.white)
-                .shadow(color: .black.opacity(0.1), radius: 10, y: -5)
-        )
+        .background(.regularMaterial)
+        .shadow(color: .black.opacity(0.1), radius: 10, y: -5)
     }
 }
 
