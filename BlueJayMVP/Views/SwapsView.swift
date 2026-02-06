@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+// MARK: - Brand Colors
+
+private let swapGreen = Color(red: 0.20, green: 0.65, blue: 0.45) // #33A673
+
 struct SwapsView: View {
     @Environment(AppModel.self) private var appModel
     @Environment(\.colorScheme) private var colorScheme
@@ -297,18 +301,12 @@ struct SwapsView: View {
                         }
                     }
                 } label: {
-                    Text("I Used My Go-To Swap")
+                    Text("I Made This Swap!")
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 10)
-                        .background(
-                            LinearGradient(
-                                colors: [Color.blue, Color.blue.opacity(0.8)],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
+                        .background(swapGreen)
                         .foregroundStyle(.white)
                         .cornerRadius(10)
                 }
@@ -536,10 +534,10 @@ struct SwapsView: View {
                         }
                     }
                 } label: {
-                    Text("I Used My Go-To Swap")
+                    Text("I Made This Swap!")
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.accentColor)
+                        .background(swapGreen)
                         .foregroundStyle(.white)
                         .fontWeight(.semibold)
                         .cornerRadius(12)
