@@ -22,7 +22,7 @@ struct RecallView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     // Instructions at top
                     Text("List everything you ate today.")
-                        .font(.system(size: 22))
+                        .font(.title3)
                         .foregroundStyle(.secondary)
                     
                     // 24-Hour Recall Section
@@ -83,11 +83,11 @@ struct SectionLabel: View {
     
     var body: some View {
         Text(text)
-            .font(.caption)
-            .fontWeight(.semibold)
+            .font(.footnote)
+            .fontWeight(.bold)
             .foregroundStyle(.secondary)
             .textCase(.uppercase)
-            .kerning(0.5)
+            .kerning(0.8)
     }
 }
 
@@ -158,12 +158,12 @@ struct RecallCard: View {
             .padding(.vertical, 12)
         }
         .background(.background)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color.gray.opacity(0.3), lineWidth: 0.5)
+            RoundedRectangle(cornerRadius: 16)
+                .strokeBorder(Color.gray.opacity(0.2), lineWidth: 0.5)
         )
-        .shadow(color: .black.opacity(0.05), radius: 2, y: 1)
+        .shadow(color: .black.opacity(0.08), radius: 6, y: 3)
     }
 }
 
@@ -208,15 +208,21 @@ struct AnalyzeButton: View {
     
     var body: some View {
         Button(action: action) {
-            HStack {
-                Spacer()
+            HStack(spacing: 8) {
+                Image(systemName: "sparkle.magnifyingglass")
+                    .font(.body)
+                    .fontWeight(.semibold)
                 Text("Analyze & Find Swaps")
                     .font(.headline)
-                Spacer()
+                    .fontWeight(.bold)
             }
-            .padding(.vertical, 14)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(isEnabled ? Color.accentColor : Color.gray.opacity(0.4))
+            .foregroundStyle(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .shadow(color: isEnabled ? Color.accentColor.opacity(0.3) : .clear, radius: 8, y: 4)
         }
-        .buttonStyle(.borderedProminent)
         .disabled(!isEnabled)
     }
 }

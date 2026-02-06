@@ -130,16 +130,19 @@ struct SwapsView: View {
             Button {
                 selectedTab = 1
             } label: {
-                HStack {
+                HStack(spacing: 8) {
                     Image(systemName: "chart.bar.fill")
+                        .font(.body)
                     Text("Go to Insights")
+                        .font(.headline)
+                        .fontWeight(.bold)
                 }
                 .frame(maxWidth: .infinity)
-                .padding()
+                .padding(.vertical, 16)
                 .background(Color.accentColor)
                 .foregroundStyle(.white)
-                .fontWeight(.semibold)
-                .cornerRadius(12)
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .shadow(color: Color.accentColor.opacity(0.3), radius: 8, y: 4)
             }
             .padding(.horizontal, 40)
         }
@@ -151,15 +154,17 @@ struct SwapsView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Your Focus")
-                        .font(.caption)
+                    Text("YOUR FOCUS")
+                        .font(.footnote)
+                        .fontWeight(.bold)
                         .foregroundStyle(.secondary)
                         .textCase(.uppercase)
+                        .kerning(0.8)
                     
                     if let focused = appModel.focusedFood {
                         Text(focused.name)
                             .font(.title2)
-                            .fontWeight(.semibold)
+                            .fontWeight(.bold)
                     }
                 }
                 
@@ -170,6 +175,7 @@ struct SwapsView: View {
                 } label: {
                     Text("Change")
                         .font(.subheadline)
+                        .fontWeight(.semibold)
                         .foregroundStyle(Color.accentColor)
                 }
                 
@@ -177,10 +183,10 @@ struct SwapsView: View {
                     .foregroundStyle(.green)
                     .font(.title2)
             }
-            .padding()
+            .padding(16)
             .background(.background)
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .shadow(color: .black.opacity(0.08), radius: 8, y: 3)
         }
     }
     
@@ -212,7 +218,7 @@ struct SwapsView: View {
         } label: {
             HStack(spacing: 12) {
                 // Food emoji icon
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: 10)
                     .fill(Color.accentColor.opacity(0.1))
                     .frame(width: 70, height: 50)
                     .overlay(
@@ -223,6 +229,7 @@ struct SwapsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(combo.title)
                         .font(.headline)
+                        .fontWeight(.bold)
                         .foregroundStyle(.primary)
                     
                     Text(combo.description)
@@ -240,14 +247,14 @@ struct SwapsView: View {
                         .font(.title3)
                 }
             }
-            .padding()
+            .padding(16)
             .background(.background)
-            .cornerRadius(12)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
             .overlay(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 16)
                     .stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 3)
             )
-            .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
+            .shadow(color: .black.opacity(isSelected ? 0.1 : 0.06), radius: isSelected ? 10 : 6, y: isSelected ? 4 : 2)
             .opacity(selectedSwapId == nil || isSelected ? 1.0 : 0.6)
         }
         .buttonStyle(.plain)
@@ -260,14 +267,16 @@ struct SwapsView: View {
             HStack {
                 Image(systemName: "star.fill")
                     .foregroundStyle(.yellow)
-                Text("Your Go-To for \(appModel.focusedFood?.name ?? "")")
-                    .font(.caption)
+                Text("YOUR GO-TO FOR \(appModel.focusedFood?.name.uppercased() ?? "")")
+                    .font(.footnote)
+                    .fontWeight(.bold)
                     .foregroundStyle(.secondary)
                     .textCase(.uppercase)
+                    .kerning(0.8)
             }
             
             HStack(spacing: 12) {
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: 10)
                     .fill(Color.accentColor.opacity(0.1))
                     .frame(width: 80, height: 60)
                     .overlay(
@@ -278,7 +287,7 @@ struct SwapsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(goToSwap.title)
                         .font(.title3)
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                     
                     Text(goToSwap.description)
                         .font(.caption)
@@ -303,38 +312,42 @@ struct SwapsView: View {
                 } label: {
                     Text("I Made This Swap!")
                         .font(.subheadline)
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
+                        .padding(.vertical, 12)
                         .background(swapGreen)
                         .foregroundStyle(.white)
-                        .cornerRadius(10)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .shadow(color: swapGreen.opacity(0.3), radius: 6, y: 3)
                 }
             }
         }
-        .padding()
+        .padding(16)
         .background(
             LinearGradient(
-                colors: [Color.accentColor.opacity(0.1), Color.accentColor.opacity(0.05)],
+                colors: [Color.accentColor.opacity(0.1), Color.accentColor.opacity(0.04)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         )
-        .cornerRadius(16)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
                 .stroke(Color.accentColor.opacity(0.3), lineWidth: 2)
         )
+        .shadow(color: Color.accentColor.opacity(0.1), radius: 10, y: 4)
     }
     
     // MARK: - Other Swaps Section
     
     private var otherSwapsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Other Swaps")
-                .font(.caption)
+            Text("OTHER SWAPS")
+                .font(.footnote)
+                .fontWeight(.bold)
                 .foregroundStyle(.secondary)
                 .textCase(.uppercase)
+                .kerning(0.8)
                 .padding(.horizontal, 4)
             
             VStack(spacing: 12) {
@@ -368,7 +381,7 @@ struct SwapsView: View {
     private func otherSwapCard(_ combo: SwapCombo) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 12) {
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: 10)
                     .fill(Color.gray.opacity(0.1))
                     .frame(width: 70, height: 50)
                     .overlay(
@@ -379,6 +392,7 @@ struct SwapsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(combo.title)
                         .font(.headline)
+                        .fontWeight(.bold)
                     
                     Text(combo.description)
                         .font(.caption)
@@ -403,6 +417,7 @@ struct SwapsView: View {
                 } label: {
                     Text("Use Once")
                         .font(.subheadline)
+                        .fontWeight(.medium)
                         .foregroundStyle(Color.accentColor)
                 }
                 
@@ -415,19 +430,19 @@ struct SwapsView: View {
                 } label: {
                     Text("Set as Go-To")
                         .font(.subheadline)
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                         .foregroundStyle(.white)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                         .background(Color.accentColor)
-                        .cornerRadius(8)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             }
         }
-        .padding()
+        .padding(16)
         .background(.background)
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(color: .black.opacity(0.06), radius: 6, y: 3)
     }
     
     // MARK: - Locked Swap Card (Free Tier)
@@ -438,7 +453,7 @@ struct SwapsView: View {
         } label: {
             HStack(spacing: 12) {
                 // Show emoji clearly — appetite trigger
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: 10)
                     .fill(Color.accentColor.opacity(0.06))
                     .frame(width: 70, height: 50)
                     .overlay(
@@ -449,6 +464,7 @@ struct SwapsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(combo.title)
                         .font(.headline)
+                        .fontWeight(.bold)
                         .blur(radius: 2.5)
                     
                     Text(combo.description)
@@ -465,21 +481,21 @@ struct SwapsView: View {
                     .font(.caption2)
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
                     .background(
                         LinearGradient(
-                            colors: [Color.blue, Color.blue.opacity(0.7)],
+                            colors: [Color.accentColor, Color.accentColor.opacity(0.7)],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
                     )
-                    .cornerRadius(6)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
             }
-            .padding()
+            .padding(16)
             .background(.background)
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.03), radius: 6, y: 2)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .shadow(color: .black.opacity(0.04), radius: 6, y: 2)
         }
         .buttonStyle(.plain)
     }
@@ -526,12 +542,14 @@ struct SwapsView: View {
                     }
                 } label: {
                     Text("Set as My Go-To Swap")
+                        .font(.headline)
+                        .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(selectedSwapId != nil ? Color.accentColor : Color.gray)
+                        .padding(.vertical, 16)
+                        .background(selectedSwapId != nil ? Color.accentColor : Color.gray.opacity(0.4))
                         .foregroundStyle(.white)
-                        .fontWeight(.semibold)
-                        .cornerRadius(12)
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                        .shadow(color: selectedSwapId != nil ? Color.accentColor.opacity(0.3) : .clear, radius: 8, y: 4)
                 }
                 .disabled(selectedSwapId == nil)
             } else if appModel.isPremium {
@@ -548,12 +566,14 @@ struct SwapsView: View {
                     }
                 } label: {
                     Text("I Made This Swap!")
+                        .font(.headline)
+                        .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(.vertical, 16)
                         .background(swapGreen)
                         .foregroundStyle(.white)
-                        .fontWeight(.semibold)
-                        .cornerRadius(12)
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                        .shadow(color: swapGreen.opacity(0.3), radius: 8, y: 4)
                 }
             } else {
                 // Free user: upsell owns the sticky bar
@@ -563,20 +583,22 @@ struct SwapsView: View {
                     HStack(spacing: 8) {
                         Image(systemName: "star.fill")
                             .foregroundStyle(.yellow)
-                        Text("Unlock All Swaps")
-                            .fontWeight(.semibold)
+                        Text("Unlock All Blue Jay Swaps")
+                            .font(.headline)
+                            .fontWeight(.bold)
                     }
                     .frame(maxWidth: .infinity)
-                    .padding()
+                    .padding(.vertical, 16)
                     .background(
                         LinearGradient(
-                            colors: [Color.blue, Color.blue.opacity(0.8)],
+                            colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
                             startPoint: .leading,
                             endPoint: .trailing
                         )
                     )
                     .foregroundStyle(.white)
-                    .cornerRadius(12)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                    .shadow(color: Color.accentColor.opacity(0.3), radius: 8, y: 4)
                 }
             }
         }

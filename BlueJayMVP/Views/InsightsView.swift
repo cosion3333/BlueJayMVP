@@ -64,16 +64,19 @@ struct InsightsView: View {
                             }
                         }
                     } label: {
-                        HStack {
+                        HStack(spacing: 8) {
                             Text("Find Swaps")
+                                .font(.headline)
+                                .fontWeight(.bold)
                             Image(systemName: "arrow.right.circle.fill")
+                                .font(.body)
                         }
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(.vertical, 16)
                         .background(Color.accentColor)
                         .foregroundStyle(.white)
-                        .fontWeight(.semibold)
-                        .cornerRadius(12)
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                        .shadow(color: Color.accentColor.opacity(0.3), radius: 8, y: 4)
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
@@ -175,16 +178,19 @@ struct InsightsView: View {
             Button {
                 selectedTab = 0
             } label: {
-                HStack {
+                HStack(spacing: 8) {
                     Image(systemName: "square.and.pencil")
+                        .font(.body)
                     Text("Go to Recall")
+                        .font(.headline)
+                        .fontWeight(.bold)
                 }
                 .frame(maxWidth: .infinity)
-                .padding()
+                .padding(.vertical, 16)
                 .background(Color.accentColor)
                 .foregroundStyle(.white)
-                .fontWeight(.semibold)
-                .cornerRadius(12)
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .shadow(color: Color.accentColor.opacity(0.3), radius: 8, y: 4)
             }
             .padding(.horizontal, 40)
         }
@@ -198,10 +204,11 @@ struct InsightsView: View {
             // Header
             HStack {
                 Text("YOUR TOP PRIORITY")
-                    .font(.caption)
+                    .font(.footnote)
+                    .fontWeight(.bold)
                     .foregroundStyle(.secondary)
                     .textCase(.uppercase)
-                    .kerning(0.5)
+                    .kerning(0.8)
                 
                 Spacer()
                 
@@ -213,7 +220,7 @@ struct InsightsView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(priorityColor(for: food.priority))
-                    .cornerRadius(6)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
             }
             
             // Food info
@@ -230,7 +237,7 @@ struct InsightsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(food.name)
                         .font(.title3)
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                     
                     Text("Priority #\(food.priority) of 40")
                         .font(.subheadline)
@@ -252,14 +259,14 @@ struct InsightsView: View {
             }
             .padding(.top, 4)
         }
-        .padding()
+        .padding(16)
         .background(.background)
-        .cornerRadius(12)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 16)
                 .stroke(priorityColor(for: food.priority).opacity(0.3), lineWidth: 2)
         )
-        .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
+        .shadow(color: .black.opacity(0.1), radius: 10, y: 4)
     }
     
     // MARK: - Other Opportunities Section
@@ -275,11 +282,11 @@ struct InsightsView: View {
                 HStack {
                     Image(systemName: showOtherOpportunities ? "chevron.down" : "chevron.right")
                         .font(.caption)
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                     
                     Text("Other Opportunities Detected (\(appModel.detectedFoods.count - 1))")
                         .font(.subheadline)
-                        .fontWeight(.medium)
+                        .fontWeight(.semibold)
                     
                     Spacer()
                 }
@@ -297,10 +304,10 @@ struct InsightsView: View {
                 .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
-        .padding()
+        .padding(16)
         .background(.background)
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(color: .black.opacity(0.07), radius: 6, y: 3)
     }
     
     private func otherFoodRow(_ food: BadFood) -> some View {
@@ -352,10 +359,11 @@ struct InsightsView: View {
                 Image(systemName: "flame.fill")
                     .foregroundStyle(.orange)
                 Text("THIS WEEK'S SWAPS")
-                    .font(.caption)
+                    .font(.footnote)
+                    .fontWeight(.bold)
                     .foregroundStyle(.secondary)
                     .textCase(.uppercase)
-                    .kerning(0.5)
+                    .kerning(0.8)
                 Spacer()
             }
             
@@ -421,10 +429,10 @@ struct InsightsView: View {
                 }
             }
         }
-        .padding()
+        .padding(16)
         .background(.background)
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(color: .black.opacity(0.07), radius: 6, y: 3)
     }
     
     private var progressMessage: String {
