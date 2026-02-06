@@ -437,31 +437,44 @@ struct SwapsView: View {
             appModel.presentPaywall()
         } label: {
             HStack(spacing: 12) {
+                // Show emoji clearly — appetite trigger
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.gray.opacity(0.1))
+                    .fill(Color.accentColor.opacity(0.06))
                     .frame(width: 70, height: 50)
                     .overlay(
-                        Image(systemName: "lock.fill")
-                            .foregroundStyle(.secondary)
+                        Text(combo.emoji)
+                            .font(.system(size: 28))
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(combo.title)
                         .font(.headline)
-                        .blur(radius: 4)
+                        .blur(radius: 2.5)
                     
                     Text(combo.description)
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                        .blur(radius: 4)
+                        .blur(radius: 2.5)
                         .lineLimit(2)
                 }
                 
                 Spacer()
                 
-                Image(systemName: "lock.fill")
-                    .foregroundStyle(.blue)
-                    .font(.title3)
+                // Premium badge instead of plain lock
+                Text("PRO")
+                    .font(.caption2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(
+                        LinearGradient(
+                            colors: [Color.blue, Color.blue.opacity(0.7)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .cornerRadius(6)
             }
             .padding()
             .background(.background)
