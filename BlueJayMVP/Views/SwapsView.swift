@@ -56,6 +56,7 @@ struct SwapsView: View {
             }
         }
         .navigationTitle("Blue Jay Swaps")
+        .background(Color(.systemGroupedBackground))
         .onAppear {
             // Pre-select first swap if no Go-To is set
             if appModel.goToSwap == nil && !appModel.activeCombos.isEmpty {
@@ -282,6 +283,36 @@ struct SwapsView: View {
                 
                 Spacer()
             }
+            
+            // Inline logging for free users (sticky bar has upsell instead)
+            if !appModel.isPremium {
+                Button {
+                    appModel.logSwapUse()
+                    withAnimation {
+                        showUsageConfirmation = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation {
+                            showUsageConfirmation = false
+                        }
+                    }
+                } label: {
+                    Text("I Used My Go-To Swap")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(
+                            LinearGradient(
+                                colors: [Color.blue, Color.blue.opacity(0.8)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                }
+            }
         }
         .padding()
         .background(
@@ -320,9 +351,18 @@ struct SwapsView: View {
                 }
             }
             
-            // Upgrade button for free users
+            // Upsell hint for free users (tap any locked card, or use sticky bar)
             if !appModel.isPremium {
-                upgradeButton
+                HStack(spacing: 6) {
+                    Image(systemName: "lock.open.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.blue.opacity(0.6))
+                    Text("Tap any swap to unlock")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.top, 4)
             }
         }
     }
@@ -398,79 +438,41 @@ struct SwapsView: View {
         Button {
             appModel.presentPaywall()
         } label: {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 12) {
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.gray.opacity(0.1))
-                        .frame(width: 70, height: 50)
-                        .overlay(
-                            Image(systemName: "lock.fill")
-                                .foregroundStyle(.secondary)
-                        )
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(combo.title)
-                            .font(.headline)
-                            .blur(radius: 4)
-                        
-                        Text(combo.description)
-                            .font(.caption)
+            HStack(spacing: 12) {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.gray.opacity(0.1))
+                    .frame(width: 70, height: 50)
+                    .overlay(
+                        Image(systemName: "lock.fill")
                             .foregroundStyle(.secondary)
-                            .blur(radius: 4)
-                            .lineLimit(2)
-                    }
+                    )
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(combo.title)
+                        .font(.headline)
+                        .blur(radius: 4)
                     
-                    Spacer()
-                    
-                    Image(systemName: "lock.fill")
-                        .foregroundStyle(.blue)
-                        .font(.title3)
+                    Text(combo.description)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .blur(radius: 4)
+                        .lineLimit(2)
                 }
+                
+                Spacer()
+                
+                Image(systemName: "lock.fill")
+                    .foregroundStyle(.blue)
+                    .font(.title3)
             }
             .padding()
             .background(.background)
             .cornerRadius(12)
-            .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-            )
+            .shadow(color: .black.opacity(0.03), radius: 6, y: 2)
         }
         .buttonStyle(.plain)
     }
     
-    // MARK: - Upgrade Button
-    
-    private var upgradeButton: some View {
-        Button {
-            appModel.presentPaywall()
-        } label: {
-            VStack(spacing: 8) {
-                HStack {
-                    Image(systemName: "star.fill")
-                        .foregroundStyle(.yellow)
-                    Text("Unlock All Swaps")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                }
-                Text("Get all personalized recommendations")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(
-                LinearGradient(
-                    colors: [Color.blue, Color.blue.opacity(0.8)],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
-            .foregroundStyle(.white)
-            .cornerRadius(12)
-        }
-        .padding(.top, 8)
-    }
     
     // MARK: - Bottom Action Bar
     
@@ -490,7 +492,7 @@ struct SwapsView: View {
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
             
-            // Weekly count - subtle text above button (Option B)
+            // Weekly count - subtle text above button
             if appModel.goToSwap != nil && appModel.swapUsesThisWeek > 0 {
                 HStack(spacing: 4) {
                     Image(systemName: "flame.fill")
@@ -502,17 +504,28 @@ struct SwapsView: View {
                 }
             }
             
-            // Primary action button
-            Button {
-                if appModel.goToSwap == nil, 
-                   let selectedId = selectedSwapId,
-                   let selectedCombo = appModel.activeCombos.first(where: { $0.id == selectedId }) {
-                    // State 2: Set as Go-To
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                        appModel.setGoToSwap(selectedCombo)
+            if appModel.goToSwap == nil {
+                // State 2: first visit, picking a swap
+                Button {
+                    if let selectedId = selectedSwapId,
+                       let selectedCombo = appModel.activeCombos.first(where: { $0.id == selectedId }) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            appModel.setGoToSwap(selectedCombo)
+                        }
                     }
-                } else if appModel.goToSwap != nil {
-                    // State 3: Log usage
+                } label: {
+                    Text("Set as My Go-To Swap")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(selectedSwapId != nil ? Color.accentColor : Color.gray)
+                        .foregroundStyle(.white)
+                        .fontWeight(.semibold)
+                        .cornerRadius(12)
+                }
+                .disabled(selectedSwapId == nil)
+            } else if appModel.isPremium {
+                // Premium: logging CTA in sticky bar
+                Button {
                     appModel.logSwapUse()
                     withAnimation {
                         showUsageConfirmation = true
@@ -522,21 +535,39 @@ struct SwapsView: View {
                             showUsageConfirmation = false
                         }
                     }
+                } label: {
+                    Text("I Used My Go-To Swap")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.accentColor)
+                        .foregroundStyle(.white)
+                        .fontWeight(.semibold)
+                        .cornerRadius(12)
                 }
-            } label: {
-                Text(appModel.goToSwap == nil ? "Set as My Go-To Swap" : "I Used My Go-To Swap")
+            } else {
+                // Free user: upsell owns the sticky bar
+                Button {
+                    appModel.presentPaywall()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                        Text("Unlock All Swaps")
+                            .fontWeight(.semibold)
+                    }
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(
-                        (appModel.goToSwap != nil || selectedSwapId != nil) 
-                            ? Color.accentColor
-                            : Color.gray
+                        LinearGradient(
+                            colors: [Color.blue, Color.blue.opacity(0.8)],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
                     )
                     .foregroundStyle(.white)
-                    .fontWeight(.semibold)
                     .cornerRadius(12)
+                }
             }
-            .disabled(appModel.goToSwap == nil && selectedSwapId == nil)
         }
         .padding()
         .background(.regularMaterial)
