@@ -68,6 +68,7 @@ struct RecallView: View {
             }
         }
         .navigationTitle("Diet Recall")
+        .background(Color(.systemGroupedBackground))
     }
 }
 

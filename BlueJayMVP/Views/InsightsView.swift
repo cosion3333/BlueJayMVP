@@ -82,6 +82,7 @@ struct InsightsView: View {
             }
         }
         .navigationTitle("Insights")
+        .background(Color(.systemGroupedBackground))
     }
     
     // MARK: - Data Load Error View
