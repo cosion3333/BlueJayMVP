@@ -9,13 +9,13 @@ import SwiftUI
 import RevenueCat
 import RevenueCatUI
 
-struct CustomerCenterView: View {
+struct SubscriptionManagerView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(RevenueCatService.self) private var revenueCat
     
     var body: some View {
         NavigationStack {
-            CustomerCenterView()
+            RevenueCatUI.CustomerCenterView()
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("Done") {
@@ -28,6 +28,6 @@ struct CustomerCenterView: View {
 }
 
 #Preview {
-    CustomerCenterView()
+    SubscriptionManagerView()
         .environment(RevenueCatService.shared)
 }
