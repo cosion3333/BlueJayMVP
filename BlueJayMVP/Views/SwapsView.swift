@@ -310,7 +310,7 @@ struct SwapsView: View {
                         }
                     }
                 } label: {
-                    Text("I Made This Swap!")
+                    Text("Log This Swap")
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
@@ -565,7 +565,7 @@ struct SwapsView: View {
                         }
                     }
                 } label: {
-                    Text("I Made This Swap!")
+                    Text("Log This Swap")
                         .font(.headline)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
