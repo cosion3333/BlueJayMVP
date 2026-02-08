@@ -34,13 +34,15 @@ class RevenueCatService: NSObject {
     /// Configure RevenueCat SDK - Call this at app launch
     func configure() {
         // Configure SDK with your API key
-        Purchases.logLevel = .debug  // Set to .info in production
+        Purchases.logLevel = .info
         Purchases.configure(withAPIKey: apiKey)
         
         // Set up delegate for real-time updates
         Purchases.shared.delegate = self
         
+        #if DEBUG
         print("✅ RevenueCat configured with API key")
+        #endif
         
         // Load initial state
         Task {
@@ -62,9 +64,13 @@ class RevenueCatService: NSObject {
             self.customerInfo = info
             self.isPremium = info.entitlements[entitlementID]?.isActive == true
             
+            #if DEBUG
             print("✅ Customer info refreshed - Premium: \(isPremium)")
+            #endif
         } catch {
+            #if DEBUG
             print("❌ Error fetching customer info: \(error.localizedDescription)")
+            #endif
         }
     }
     
@@ -84,14 +90,18 @@ class RevenueCatService: NSObject {
             let offerings = try await Purchases.shared.offerings()
             self.offerings = offerings
             
+            #if DEBUG
             if let current = offerings.current {
                 print("✅ Offerings loaded - Current: \(current.identifier)")
                 print("   Packages: \(current.availablePackages.map { $0.identifier }.joined(separator: ", "))")
             } else {
                 print("⚠️ No current offering found")
             }
+            #endif
         } catch {
+            #if DEBUG
             print("❌ Error loading offerings: \(error.localizedDescription)")
+            #endif
         }
     }
     
@@ -108,10 +118,14 @@ class RevenueCatService: NSObject {
             self.customerInfo = result.customerInfo
             self.isPremium = result.customerInfo.entitlements[entitlementID]?.isActive == true
             
+            #if DEBUG
             print("✅ Purchase successful - Premium: \(isPremium)")
+            #endif
             return result.customerInfo
         } catch {
+            #if DEBUG
             print("❌ Purchase failed: \(error.localizedDescription)")
+            #endif
             throw error
         }
     }
@@ -127,10 +141,14 @@ class RevenueCatService: NSObject {
             self.customerInfo = info
             self.isPremium = info.entitlements[entitlementID]?.isActive == true
             
+            #if DEBUG
             print("✅ Purchases restored - Premium: \(isPremium)")
+            #endif
             return info
         } catch {
+            #if DEBUG
             print("❌ Restore failed: \(error.localizedDescription)")
+            #endif
             throw error
         }
     }
@@ -168,7 +186,9 @@ extension RevenueCatService: PurchasesDelegate {
         Task { @MainActor in
             self.customerInfo = customerInfo
             self.isPremium = customerInfo.entitlements[entitlementID]?.isActive == true
+            #if DEBUG
             print("🔄 Customer info updated - Premium: \(isPremium)")
+            #endif
         }
     }
 }

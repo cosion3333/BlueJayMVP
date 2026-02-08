@@ -11,6 +11,7 @@ import RevenueCat
 @main
 struct BlueJayMVPApp: App {
     @State private var appModel: AppModel
+    @Environment(\.scenePhase) private var scenePhase
     
     init() {
         // Configure RevenueCat at app launch
@@ -24,6 +25,11 @@ struct BlueJayMVPApp: App {
             ContentView()
                 .environment(appModel)
                 .environment(RevenueCatService.shared)
+                .onChange(of: scenePhase) { _, newPhase in
+                    if newPhase == .active {
+                        appModel.syncPremiumStatus()
+                    }
+                }
         }
     }
 }

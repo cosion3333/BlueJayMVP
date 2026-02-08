@@ -28,7 +28,9 @@ struct PaywallView: View {
                     performPurchase: { package in
                         do {
                             _ = try await revenueCat.purchase(package: package)
+                            #if DEBUG
                             print("✅ Purchase completed!")
+                            #endif
                             dismiss()
                             return (false, nil)
                         } catch {
@@ -45,7 +47,9 @@ struct PaywallView: View {
                     performRestore: {
                         do {
                             _ = try await revenueCat.restorePurchases()
+                            #if DEBUG
                             print("✅ Restore completed!")
+                            #endif
                             if revenueCat.isPremium {
                                 showRestoreSuccess = true
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -217,6 +221,15 @@ struct PaywallView: View {
                     Text("Restore Purchases")
                         .font(.caption)
                         .foregroundStyle(.blue)
+                }
+                
+                // Auto-renewal disclosure
+                VStack(spacing: 6) {
+                    Text("Subscription automatically renews unless cancelled at least 24 hours before the end of the current period. Your Apple ID account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions in your App Store account settings.")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
                 }
                 
                 // Legal links

@@ -75,20 +75,26 @@ class AppModel {
         let trimmed = item.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return }
         recallItems.append(trimmed)
+        #if DEBUG
         print("➕ Added recall item: \(trimmed)")
+        #endif
     }
     
     /// Remove a recall item at index
     func removeRecallItem(at index: Int) {
         guard index >= 0 && index < recallItems.count else { return }
         let removed = recallItems.remove(at: index)
+        #if DEBUG
         print("➖ Removed recall item: \(removed)")
+        #endif
     }
     
     /// Save recall items
     func saveRecall() {
         PersistenceService.saveRecallItems(recallItems)
+        #if DEBUG
         print("📝 Saved recall items: \(activeRecallItems)")
+        #endif
     }
     
     /// Analyze recall items and detect bad foods (Golden Path Step 1)
@@ -105,10 +111,12 @@ class AppModel {
         // Persist detected foods
         PersistenceService.saveDetectedFoodIds(detectedFoods.map { $0.id })
         
+        #if DEBUG
         print("🔍 Analysis complete: Found \(detectedFoods.count) bad food(s)")
         if let focused = focusedFood {
             print("🎯 Auto-selected focus: \(focused.name) (Priority #\(focused.priority))")
         }
+        #endif
     }
     
     /// Set focus on a specific bad food (Golden Path Step 2)
@@ -125,26 +133,34 @@ class AppModel {
         PersistenceService.saveGoToSwap(goToSwap)
         PersistenceService.saveSwapUsesThisWeek(0)
         
+        #if DEBUG
         print("🎯 Focus set on: \(food.name) (Priority #\(food.priority)), Default Go-To: \(goToSwap?.title ?? "none")")
+        #endif
     }
     
     /// Load suggested swaps for a bad food
     func loadSwaps(for food: BadFood) {
         activeCombos = BadFoodsService.getSwaps(forFoodId: food.id)
+        #if DEBUG
         print("📋 Loaded \(activeCombos.count) swaps for \(food.name)")
+        #endif
     }
     
     /// Set the user's Go-To swap for current focus
     func setGoToSwap(_ combo: SwapCombo) {
         goToSwap = combo
         PersistenceService.saveGoToSwap(combo)
+        #if DEBUG
         print("⭐ Go-To swap set: \(combo.title)")
+        #endif
     }
     
     /// Present paywall with RevenueCat
     func presentPaywall() {
         showPaywall = true
+        #if DEBUG
         print("🔒 Paywall triggered")
+        #endif
     }
     
     /// Sync premium status from RevenueCat
@@ -156,7 +172,9 @@ class AppModel {
     func logSwapUse() {
         swapUsesThisWeek += 1
         PersistenceService.saveSwapUsesThisWeek(swapUsesThisWeek)
+        #if DEBUG
         print("✅ Swap used! Total this week: \(swapUsesThisWeek)")
+        #endif
     }
     
     /// Reset weekly swap usage (call on Monday)
@@ -191,7 +209,9 @@ class AppModel {
             completedCheckIns: completedCheckIns
         )
         
+        #if DEBUG
         print("✅ Check-in saved: \(replacementsCount) swaps, craving: \(Int(cravingLevel))/10")
+        #endif
     }
     
     /// Reset daily check-in state
