@@ -1,8 +1,9 @@
 //
-//  CustomerCenterView.swift
+//  CustomerCenterWrapper.swift
 //  BlueJayMVP
 //
 //  Customer Center for subscription management
+//  Wraps RevenueCatUI.CustomerCenterView to avoid name collision
 //
 
 import SwiftUI

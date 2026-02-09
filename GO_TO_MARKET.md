@@ -136,6 +136,8 @@ Goal is learning (message + creative), not scale.
 
 ## Launch checklist (operational)
 
+> **Detailed step-by-step execution plan**: See [MVP_LAUNCH_PLAN.md](MVP_LAUNCH_PLAN.md)
+
 ### RevenueCat + App Store Connect
 - Create subscription group + products (monthly + annual) in App Store Connect
 - Configure entitlement (e.g. `premium`) + offering in RevenueCat

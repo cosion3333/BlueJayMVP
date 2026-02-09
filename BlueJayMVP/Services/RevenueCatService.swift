@@ -15,6 +15,7 @@ class RevenueCatService: NSObject {
     static let shared = RevenueCatService()
     
     // MARK: - Configuration
+    // TODO: Replace with production API key from RevenueCat dashboard before App Store submission
     private let apiKey = "test_DWbLlQNWFHLimjMuupRGeegPNlL"
     private let entitlementID = "Blue Jay Swaps Pro"
     
