@@ -43,10 +43,9 @@ Check items off as you go. Any AI agent working on this project should reference
   - Deleted `BlueJayMVP/Views/CheckInView.swift` ✅
   - AppModel properties (currentStreak, etc.) kept — still used by InsightsView
 
-- [ ] **1.5** Decide on deployment target
-  - Currently: iOS 17.6 (very high — excludes older devices)
-  - Recommendation: Lower to iOS 17.0 minimum (or 16.0 for broader reach)
-  - Decision: ______________________
+- [x] **1.5** Decide on deployment target
+  - Changed from iOS 17.6 → iOS 17.0 (all targets including test targets) ✅
+  - Supports iPhone XS (2018) and newer, ~85-90% of active iPhones
 
 - [ ] **1.6** Wire Privacy Policy & Terms URLs in-app
   - Update `PaywallView.swift` with the real hosted URLs (created in Phase 3)
