@@ -23,12 +23,52 @@ final class BlueJayMVPUITests: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testRecallAnalyzeNavigatesToInsights() throws {
         let app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        let recallInput = app.textFields["Add what you ate or drank…"]
+        XCTAssertTrue(recallInput.waitForExistence(timeout: 5))
+        
+        recallInput.tap()
+        recallInput.typeText("fries\n")
+        recallInput.tap()
+        recallInput.typeText("soda\n")
+        
+        let analyzeButton = app.buttons["Analyze & Find Swaps"]
+        XCTAssertTrue(analyzeButton.isHittable)
+        analyzeButton.tap()
+        
+        let noButton = app.buttons["No"]
+        XCTAssertTrue(noButton.waitForExistence(timeout: 3))
+        noButton.tap()
+        
+        XCTAssertTrue(app.navigationBars["Insights"].waitForExistence(timeout: 5))
+    }
+    
+    @MainActor
+    func testInsightsFindSwapsShowsFreeTierUpsell() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let recallInput = app.textFields["Add what you ate or drank…"]
+        XCTAssertTrue(recallInput.waitForExistence(timeout: 5))
+        
+        recallInput.tap()
+        recallInput.typeText("chips\n")
+        recallInput.tap()
+        recallInput.typeText("cola\n")
+        
+        app.buttons["Analyze & Find Swaps"].tap()
+        XCTAssertTrue(app.buttons["No"].waitForExistence(timeout: 3))
+        app.buttons["No"].tap()
+        
+        let findSwaps = app.buttons["Find Swaps"]
+        XCTAssertTrue(findSwaps.waitForExistence(timeout: 5))
+        findSwaps.tap()
+        
+        XCTAssertTrue(app.navigationBars["Blue Jay Swaps"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Unlock All Blue Jay Swaps"].waitForExistence(timeout: 5))
     }
 
     @MainActor

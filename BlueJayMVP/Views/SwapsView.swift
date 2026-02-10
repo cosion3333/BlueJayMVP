@@ -15,7 +15,7 @@ struct SwapsView: View {
     @Environment(AppModel.self) private var appModel
     @Environment(\.colorScheme) private var colorScheme
     @Binding var selectedTab: Int
-    @State private var selectedSwapId: UUID?
+    @State private var selectedSwapId: String?
     @State private var showUsageConfirmation = false
     
     var body: some View {
@@ -60,6 +60,18 @@ struct SwapsView: View {
             }
         }
         .navigationTitle("Blue Jay Swaps")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    appModel.openSubscriptionManagement()
+                } label: {
+                    Label(
+                        appModel.isPremium ? "Manage" : "Upgrade",
+                        systemImage: appModel.isPremium ? "person.crop.circle" : "star.circle"
+                    )
+                }
+            }
+        }
         .background(Color(.systemGroupedBackground))
         .onAppear {
             // Pre-select first swap if no Go-To is set

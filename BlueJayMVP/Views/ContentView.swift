@@ -35,6 +35,10 @@ struct ContentView: View {
         .sheet(isPresented: $appModel.showPaywall) {
             PaywallView()
         }
+        .sheet(isPresented: $appModel.showSubscriptionManager) {
+            SubscriptionManagerView()
+                .environment(RevenueCatService.shared)
+        }
     }
 }
 

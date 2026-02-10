@@ -15,8 +15,6 @@ class RevenueCatService: NSObject {
     static let shared = RevenueCatService()
     
     // MARK: - Configuration
-    // TODO: Replace with production API key from RevenueCat dashboard before App Store submission
-    private let apiKey = "test_DWbLlQNWFHLimjMuupRGeegPNlL"
     private let entitlementID = "Blue Jay Swaps Pro"
     
     // MARK: - State
@@ -34,6 +32,11 @@ class RevenueCatService: NSObject {
     
     /// Configure RevenueCat SDK - Call this at app launch
     func configure() {
+        guard let apiKey = resolveAPIKey() else {
+            assertionFailure("RevenueCat API key missing. Set REVENUECAT_API_KEY in app configuration.")
+            return
+        }
+        
         // Configure SDK with your API key
         Purchases.logLevel = .info
         Purchases.configure(withAPIKey: apiKey)
@@ -176,6 +179,23 @@ class RevenueCatService: NSObject {
     /// Get all available packages
     var availablePackages: [Package] {
         return offerings?.current?.availablePackages ?? []
+    }
+    
+    private func resolveAPIKey() -> String? {
+        if let apiKey = Bundle.main.object(forInfoDictionaryKey: "REVENUECAT_API_KEY") as? String,
+           !apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return apiKey
+        }
+        
+        #if DEBUG
+        if let envKey = ProcessInfo.processInfo.environment["REVENUECAT_API_KEY"],
+           !envKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return envKey
+        }
+        return "test_DWbLlQNWFHLimjMuupRGeegPNlL"
+        #else
+        return nil
+        #endif
     }
 }
 

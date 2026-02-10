@@ -23,18 +23,22 @@ struct BadFood: Identifiable, Hashable, Codable {
 
 /// A recommended food swap
 struct SwapCombo: Identifiable, Codable, Hashable {
-    let id: UUID
+    let id: String
     let targetFoodId: String  // Links to BadFood.id
     let title: String
     let description: String
     let foods: [String]
     
-    init(id: UUID = UUID(),
+    init(id: String? = nil,
          targetFoodId: String,
          title: String,
          description: String,
          foods: [String]) {
-        self.id = id
+        self.id = id ?? SwapCombo.makeStableID(
+            targetFoodId: targetFoodId,
+            title: title,
+            foods: foods
+        )
         self.targetFoodId = targetFoodId
         self.title = title
         self.description = description
@@ -48,11 +52,34 @@ struct SwapCombo: Identifiable, Codable, Hashable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
         self.targetFoodId = try container.decode(String.self, forKey: .targetFoodId)
         self.title = try container.decode(String.self, forKey: .title)
         self.description = try container.decode(String.self, forKey: .description)
         self.foods = try container.decode([String].self, forKey: .foods)
+        
+        if let stringID = try? container.decode(String.self, forKey: .id),
+           !stringID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            self.id = stringID
+        } else {
+            self.id = SwapCombo.makeStableID(
+                targetFoodId: targetFoodId,
+                title: title,
+                foods: foods
+            )
+        }
+    }
+    
+    private static func makeStableID(targetFoodId: String, title: String, foods: [String]) -> String {
+        let normalizedTitle = normalize(title)
+        let normalizedFoods = foods.map(normalize).joined(separator: "-")
+        return "\(targetFoodId)__\(normalizedTitle)__\(normalizedFoods)"
+    }
+    
+    private static func normalize(_ text: String) -> String {
+        text
+            .lowercased()
+            .replacingOccurrences(of: "[^a-z0-9]+", with: "-", options: .regularExpression)
+            .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
     }
     
     // Smart emoji detection based on swap contents - shows 2 key emojis

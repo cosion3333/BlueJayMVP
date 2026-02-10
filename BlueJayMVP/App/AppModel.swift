@@ -50,12 +50,14 @@ class AppModel {
     }
     
     var showPaywall: Bool = false  // Controls paywall sheet visibility
+    var showSubscriptionManager: Bool = false
     
     // MARK: - Check-In State
     var replacedToday: Bool = false
     var replacementsCount: Int = 0
     var cravingLevel: Double = 5.0  // 1-10 scale
     var lastCheckInDate: Date?
+    var usedSwapYesterday: Bool?
     
     // MARK: - User Progress
     var currentStreak: Int = 0
@@ -66,6 +68,7 @@ class AppModel {
     init(revenueCat: RevenueCatService = .shared) {
         self.revenueCat = revenueCat
         loadPersistedData()
+        checkAndResetWeeklySwapUsesIfNeeded()
     }
     
     // MARK: - Actions
@@ -110,6 +113,10 @@ class AppModel {
         
         // Persist detected foods
         PersistenceService.saveDetectedFoodIds(detectedFoods.map { $0.id })
+        ObservabilityService.track(
+            .recallCompleted,
+            metadata: ["detected_count": "\(detectedFoods.count)"]
+        )
         
         #if DEBUG
         print("🔍 Analysis complete: Found \(detectedFoods.count) bad food(s)")
@@ -132,6 +139,8 @@ class AppModel {
         PersistenceService.saveFocusedFoodId(food.id)
         PersistenceService.saveGoToSwap(goToSwap)
         PersistenceService.saveSwapUsesThisWeek(0)
+        PersistenceService.saveLastSwapResetWeekStart(startOfWeek(for: Date()))
+        ObservabilityService.track(.focusFoodSet, metadata: ["focus_food_id": food.id])
         
         #if DEBUG
         print("🎯 Focus set on: \(food.name) (Priority #\(food.priority)), Default Go-To: \(goToSwap?.title ?? "none")")
@@ -158,9 +167,19 @@ class AppModel {
     /// Present paywall with RevenueCat
     func presentPaywall() {
         showPaywall = true
+        ObservabilityService.track(.paywallShown)
         #if DEBUG
         print("🔒 Paywall triggered")
         #endif
+    }
+    
+    /// Open subscription management for premium users, or paywall for free users.
+    func openSubscriptionManagement() {
+        if isPremium {
+            showSubscriptionManager = true
+        } else {
+            presentPaywall()
+        }
     }
     
     /// Sync premium status from RevenueCat
@@ -172,6 +191,7 @@ class AppModel {
     func logSwapUse() {
         swapUsesThisWeek += 1
         PersistenceService.saveSwapUsesThisWeek(swapUsesThisWeek)
+        ObservabilityService.track(.swapUsedConfirmed, metadata: ["weekly_count": "\(swapUsesThisWeek)"])
         #if DEBUG
         print("✅ Swap used! Total this week: \(swapUsesThisWeek)")
         #endif
@@ -181,6 +201,32 @@ class AppModel {
     func resetWeeklySwapUses() {
         swapUsesThisWeek = 0
         PersistenceService.saveSwapUsesThisWeek(0)
+        PersistenceService.saveLastSwapResetWeekStart(startOfWeek(for: Date()))
+    }
+    
+    /// Check if a new week started and reset weekly swap usage when needed.
+    func checkAndResetWeeklySwapUsesIfNeeded(referenceDate: Date = Date()) {
+        let currentWeekStart = startOfWeek(for: referenceDate)
+        guard let lastReset = PersistenceService.loadLastSwapResetWeekStart() else {
+            PersistenceService.saveLastSwapResetWeekStart(currentWeekStart)
+            return
+        }
+        
+        if currentWeekStart > lastReset {
+            swapUsesThisWeek = 0
+            PersistenceService.saveSwapUsesThisWeek(0)
+            PersistenceService.saveLastSwapResetWeekStart(currentWeekStart)
+        }
+    }
+    
+    /// Save whether user used a swap yesterday from Recall exit prompt.
+    func setUsedSwapYesterday(_ value: Bool) {
+        usedSwapYesterday = value
+        PersistenceService.saveUsedSwapYesterday(value)
+        
+        if value {
+            logSwapUse()
+        }
     }
     
     /// Save daily check-in
@@ -264,8 +310,16 @@ class AppModel {
             loadSwaps(for: food)
         }
         
-        // Load Go-To swap state
-        goToSwap = PersistenceService.loadGoToSwap()
+        // Load Go-To swap state. Match by stable ID so it points to active combos.
+        if let persistedGoTo = PersistenceService.loadGoToSwap() {
+            goToSwap = activeCombos.first(where: { $0.id == persistedGoTo.id }) ?? persistedGoTo
+        }
+        
+        if goToSwap == nil, !activeCombos.isEmpty {
+            goToSwap = activeCombos.first
+            PersistenceService.saveGoToSwap(goToSwap)
+        }
+        
         swapUsesThisWeek = PersistenceService.loadSwapUsesThisWeek()
         
         // Load check-in state
@@ -274,11 +328,19 @@ class AppModel {
         replacementsCount = checkInState.replacementsCount
         cravingLevel = checkInState.cravingLevel
         lastCheckInDate = PersistenceService.loadLastCheckInDate()
+        usedSwapYesterday = PersistenceService.loadUsedSwapYesterday()
         
         // Load progress stats
         let progress = PersistenceService.loadProgressStats()
         currentStreak = progress.streak
         totalReplacements = progress.totalReplacements
         completedCheckIns = progress.completedCheckIns
+    }
+    
+    private func startOfWeek(for date: Date) -> Date {
+        var calendar = Calendar.current
+        calendar.firstWeekday = 2 // Monday
+        let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)
+        return calendar.date(from: components) ?? date
     }
 }

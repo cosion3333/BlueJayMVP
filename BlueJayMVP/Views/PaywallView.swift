@@ -18,6 +18,9 @@ struct PaywallView: View {
     @State private var showError = false
     @State private var showRestoreSuccess = false
     
+    private let termsURL = URL(string: "https://bluejayapp.com/terms")!
+    private let privacyURL = URL(string: "https://bluejayapp.com/privacy-policy")!
+    
     var body: some View {
         ZStack(alignment: .topTrailing) {
             // Use RevenueCat's native paywall if offerings are loaded
@@ -28,6 +31,10 @@ struct PaywallView: View {
                     performPurchase: { package in
                         do {
                             _ = try await revenueCat.purchase(package: package)
+                            ObservabilityService.track(
+                                .subscriptionStarted,
+                                metadata: ["package": package.identifier]
+                            )
                             #if DEBUG
                             print("✅ Purchase completed!")
                             #endif
@@ -178,6 +185,10 @@ struct PaywallView: View {
                                 Task {
                                     do {
                                         _ = try await revenueCat.purchase(package: package)
+                                        ObservabilityService.track(
+                                            .subscriptionStarted,
+                                            metadata: ["package": package.identifier]
+                                        )
                                         dismiss()
                                     } catch {
                                         purchaseError = error
@@ -234,14 +245,14 @@ struct PaywallView: View {
                 
                 // Legal links
                 HStack(spacing: 16) {
-                    Link("Terms", destination: URL(string: "https://www.revenuecat.com/terms")!)
+                    Link("Terms", destination: termsURL)
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                     
                     Text("•")
                         .foregroundStyle(.tertiary)
                     
-                    Link("Privacy", destination: URL(string: "https://www.revenuecat.com/privacy")!)
+                    Link("Privacy", destination: privacyURL)
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }

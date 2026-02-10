@@ -152,13 +152,12 @@ The files have been created, but you need to add them to Xcode:
 
 ### API Keys
 
-**Current (Test Mode):**
-```swift
-private let apiKey = "test_DWbLlQNWFHLimjMuupRGeegPNlL"
-```
+**Current (Configuration-Driven):**
+- Debug uses `INFOPLIST_KEY_REVENUECAT_API_KEY` (currently test key for local development)
+- Release expects `INFOPLIST_KEY_REVENUECAT_API_KEY` set to your production RevenueCat key
 
 **Before Production Launch:**
-Replace with your **production API key** from RevenueCat dashboard.
+Set `INFOPLIST_KEY_REVENUECAT_API_KEY` in Release build settings to your production key from RevenueCat dashboard.
 
 ### Entitlement
 

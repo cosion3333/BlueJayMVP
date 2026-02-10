@@ -10,6 +10,7 @@ import SwiftUI
 struct RecallView: View {
     @Environment(AppModel.self) private var appModel
     @State private var newItemText = ""
+    @State private var showSwapYesterdayPrompt = false
     @FocusState private var isInputFocused: Bool
     @Binding var selectedTab: Int
     
@@ -54,12 +55,7 @@ struct RecallView: View {
                     isEnabled: appModel.activeRecallItems.count >= 2,
                     action: {
                         isInputFocused = false
-                        appModel.saveRecall()
-                        appModel.analyzeRecall()
-                        // Auto-navigate to Insights (Tab 2)
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            selectedTab = 1
-                        }
+                        showSwapYesterdayPrompt = true
                     }
                 )
                 .padding(.horizontal, 16)
@@ -69,6 +65,30 @@ struct RecallView: View {
         }
         .navigationTitle("Diet Recall")
         .background(Color(.systemGroupedBackground))
+        .confirmationDialog(
+            "Did you use your Go-To swap yesterday?",
+            isPresented: $showSwapYesterdayPrompt,
+            titleVisibility: .visible
+        ) {
+            Button("Yes") {
+                finalizeRecallAnalysis(usedSwapYesterday: true)
+            }
+            Button("No") {
+                finalizeRecallAnalysis(usedSwapYesterday: false)
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("This keeps your weekly progress accurate.")
+        }
+    }
+    
+    private func finalizeRecallAnalysis(usedSwapYesterday: Bool) {
+        appModel.setUsedSwapYesterday(usedSwapYesterday)
+        appModel.saveRecall()
+        appModel.analyzeRecall()
+        withAnimation(.easeInOut(duration: 0.3)) {
+            selectedTab = 1
+        }
     }
 }
 

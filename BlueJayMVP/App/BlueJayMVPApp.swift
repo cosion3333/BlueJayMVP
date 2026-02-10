@@ -14,6 +14,8 @@ struct BlueJayMVPApp: App {
     @Environment(\.scenePhase) private var scenePhase
     
     init() {
+        ObservabilityService.configure()
+        
         // Configure RevenueCat at app launch
         let revenueCat = RevenueCatService.shared
         revenueCat.configure()
@@ -28,6 +30,7 @@ struct BlueJayMVPApp: App {
                 .onChange(of: scenePhase) { _, newPhase in
                     if newPhase == .active {
                         appModel.syncPremiumStatus()
+                        appModel.checkAndResetWeeklySwapUsesIfNeeded()
                     }
                 }
         }
