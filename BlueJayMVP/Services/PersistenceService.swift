@@ -32,7 +32,6 @@ struct PersistenceService {
         static let goToSwap = "go_to_swap"
         static let swapUsesThisWeek = "swap_uses_this_week"
         static let lastSwapResetWeekStart = "last_swap_reset_week_start"
-        static let usedSwapYesterday = "used_swap_yesterday"
     }
     
     // MARK: - Recall
@@ -155,17 +154,6 @@ struct PersistenceService {
         return defaults.object(forKey: Keys.lastSwapResetWeekStart) as? Date
     }
     
-    static func saveUsedSwapYesterday(_ used: Bool) {
-        defaults.set(used, forKey: Keys.usedSwapYesterday)
-    }
-    
-    static func loadUsedSwapYesterday() -> Bool? {
-        guard defaults.object(forKey: Keys.usedSwapYesterday) != nil else {
-            return nil
-        }
-        return defaults.bool(forKey: Keys.usedSwapYesterday)
-    }
-    
     // MARK: - Reset
     
     /// Clear all persisted data (useful for testing or user logout)
@@ -187,8 +175,7 @@ struct PersistenceService {
             Keys.completedCheckIns,
             Keys.goToSwap,
             Keys.swapUsesThisWeek,
-            Keys.lastSwapResetWeekStart,
-            Keys.usedSwapYesterday
+            Keys.lastSwapResetWeekStart
         ]
         
         keys.forEach { defaults.removeObject(forKey: $0) }

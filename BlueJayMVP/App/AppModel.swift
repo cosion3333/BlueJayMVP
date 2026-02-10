@@ -57,7 +57,6 @@ class AppModel {
     var replacementsCount: Int = 0
     var cravingLevel: Double = 5.0  // 1-10 scale
     var lastCheckInDate: Date?
-    var usedSwapYesterday: Bool?
     
     // MARK: - User Progress
     var currentStreak: Int = 0
@@ -113,10 +112,6 @@ class AppModel {
         
         // Persist detected foods
         PersistenceService.saveDetectedFoodIds(detectedFoods.map { $0.id })
-        ObservabilityService.track(
-            .recallCompleted,
-            metadata: ["detected_count": "\(detectedFoods.count)"]
-        )
         
         #if DEBUG
         print("🔍 Analysis complete: Found \(detectedFoods.count) bad food(s)")
@@ -140,7 +135,6 @@ class AppModel {
         PersistenceService.saveGoToSwap(goToSwap)
         PersistenceService.saveSwapUsesThisWeek(0)
         PersistenceService.saveLastSwapResetWeekStart(startOfWeek(for: Date()))
-        ObservabilityService.track(.focusFoodSet, metadata: ["focus_food_id": food.id])
         
         #if DEBUG
         print("🎯 Focus set on: \(food.name) (Priority #\(food.priority)), Default Go-To: \(goToSwap?.title ?? "none")")
@@ -167,7 +161,6 @@ class AppModel {
     /// Present paywall with RevenueCat
     func presentPaywall() {
         showPaywall = true
-        ObservabilityService.track(.paywallShown)
         #if DEBUG
         print("🔒 Paywall triggered")
         #endif
@@ -191,7 +184,6 @@ class AppModel {
     func logSwapUse() {
         swapUsesThisWeek += 1
         PersistenceService.saveSwapUsesThisWeek(swapUsesThisWeek)
-        ObservabilityService.track(.swapUsedConfirmed, metadata: ["weekly_count": "\(swapUsesThisWeek)"])
         #if DEBUG
         print("✅ Swap used! Total this week: \(swapUsesThisWeek)")
         #endif
@@ -216,16 +208,6 @@ class AppModel {
             swapUsesThisWeek = 0
             PersistenceService.saveSwapUsesThisWeek(0)
             PersistenceService.saveLastSwapResetWeekStart(currentWeekStart)
-        }
-    }
-    
-    /// Save whether user used a swap yesterday from Recall exit prompt.
-    func setUsedSwapYesterday(_ value: Bool) {
-        usedSwapYesterday = value
-        PersistenceService.saveUsedSwapYesterday(value)
-        
-        if value {
-            logSwapUse()
         }
     }
     
@@ -328,7 +310,6 @@ class AppModel {
         replacementsCount = checkInState.replacementsCount
         cravingLevel = checkInState.cravingLevel
         lastCheckInDate = PersistenceService.loadLastCheckInDate()
-        usedSwapYesterday = PersistenceService.loadUsedSwapYesterday()
         
         // Load progress stats
         let progress = PersistenceService.loadProgressStats()

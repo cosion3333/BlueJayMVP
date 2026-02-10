@@ -31,13 +31,9 @@ struct PaywallView: View {
                     performPurchase: { package in
                         do {
                             _ = try await revenueCat.purchase(package: package)
-                            ObservabilityService.track(
-                                .subscriptionStarted,
-                                metadata: ["package": package.identifier]
-                            )
-                            #if DEBUG
-                            print("✅ Purchase completed!")
-                            #endif
+                             #if DEBUG
+                             print("✅ Purchase completed!")
+                             #endif
                             dismiss()
                             return (false, nil)
                         } catch {
@@ -185,10 +181,6 @@ struct PaywallView: View {
                                 Task {
                                     do {
                                         _ = try await revenueCat.purchase(package: package)
-                                        ObservabilityService.track(
-                                            .subscriptionStarted,
-                                            metadata: ["package": package.identifier]
-                                        )
                                         dismiss()
                                     } catch {
                                         purchaseError = error
