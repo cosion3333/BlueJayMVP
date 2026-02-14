@@ -19,7 +19,7 @@ Check items off as you go. Any AI agent working on this project should reference
 - **Content**: 40 bad foods + 120 swaps bundled in `bluejay_data.json`
 - **Persistence**: UserDefaults (local only, no backend)
 - **Auth**: None — shipping without login (see Deferred to v1.1 section below)
-- **StoreKit config**: Products defined (`com.bluejay.premium.monthly` $9.99, `com.bluejay.premium.annual` $59.99)
+- **StoreKit config**: Products defined (`com.bluejay.premium.monthly` $9.99, `com.bluejay.premium.annual` $79.99)
 - **Bundle ID**: `Orion.BlueJayMVP`
 - **Team ID**: `V7KVJ3ZRT8`
 
@@ -29,9 +29,9 @@ Check items off as you go. Any AI agent working on this project should reference
 
 > Estimated effort: 1–2 hours (blocked on Phase 2B for the production API key)
 
-- [ ] **1.1** Replace RevenueCat test API key with production key
+- [x] **1.1** Replace RevenueCat test API key with production key
   - File: `BlueJayMVP/Services/RevenueCatService.swift` line 18
-  - Replace `test_DWbLlQNWFHLimjMuupRGeegPNlL` with the production Apple API key from RevenueCat dashboard (created in step 2B.7)
+  - Replaced `test_DWbLlQNWFHLimjMuupRGeegPNlL` with production key `appl_ioydwLPhnHRWhYBhNZDXMQCCPSy` ✅
 
 - [x] **1.2** Change RevenueCat log level to `.info`
   - File: `BlueJayMVP/Services/RevenueCatService.swift`
@@ -58,31 +58,30 @@ Check items off as you go. Any AI agent working on this project should reference
 
 > Estimated effort: 1–2 hours | Requires: Apple Developer Program membership
 
-- [ ] **2A.1** Sign in to [App Store Connect](https://appstoreconnect.apple.com)
+- [x] **2A.1** Sign in to [App Store Connect](https://appstoreconnect.apple.com) ✅
 
-- [ ] **2A.2** Create a new app record
+- [x] **2A.2** Create a new app record ✅
   - Platform: iOS
-  - Name: "BlueJay" (or chosen name — check availability)
+  - Name: "BlueJayMVP"
   - Bundle ID: `Orion.BlueJayMVP`
-  - SKU: `bluejay-mvp`
-  - Primary language: English (U.S.)
 
-- [ ] **2A.3** Create a Subscription Group: "BlueJay Premium"
+- [x] **2A.3** Create a Subscription Group: "BlueJay Premium" (Group ID: 21912401) ✅
 
-- [ ] **2A.4** Add subscription product: Monthly
+- [x] **2A.4** Add subscription product: Monthly ✅
   - Product ID: `com.bluejay.premium.monthly`
   - Price: $9.99/month
-  - Display name & description
+  - Status: Ready to Submit
 
-- [ ] **2A.5** Add subscription product: Annual
+- [x] **2A.5** Add subscription product: Annual ✅
   - Product ID: `com.bluejay.premium.annual`
-  - Price: $59.99/year
+  - Price: $79.99/year
   - Free trial: ______ (7 days recommended per GO_TO_MARKET.md)
-  - Display name & description
+  - Status: Ready to Submit
 
 - [ ] **2A.6** Set territory availability: United States only
 
-- [ ] **2A.7** Generate a Shared Secret (for RevenueCat, used in step 2B.2)
+- [x] **2A.7** Generate a Shared Secret ✅
+  - Shared secret: `cc750135be424adf8df6068c9410cbd1`
 
 ---
 
@@ -90,9 +89,15 @@ Check items off as you go. Any AI agent working on this project should reference
 
 > Estimated effort: 1 hour | Can be done in parallel with Phase 2A
 
-- [ ] **2B.1** Create a new app in RevenueCat dashboard (Apple platform)
+- [x] **2B.1** Create a new app in RevenueCat dashboard (Apple platform) ✅
+  - App name: "Blue Jay Swaps (App Store)"
+  - Bundle ID: `Orion.BlueJayMVP`
 
-- [ ] **2B.2** Enter the App Store Connect shared secret (from step 2A.7)
+- [x] **2B.2** Enter the App Store Connect shared secret + P8 key ✅
+  - Shared secret: `cc750135be424adf8df6068c9410cbd1`
+  - P8 key file: `SubscriptionKey_JP9PL97U78.p8`
+  - Key ID: `JP9PL97U78`
+  - Issuer ID: `8018cd52-744f-4431-8cbb-732cbba96176`
 
 - [ ] **2B.3** Create entitlement: `Blue Jay Swaps Pro`
 
@@ -102,7 +107,7 @@ Check items off as you go. Any AI agent working on this project should reference
 
 - [ ] **2B.6** Create an Offering, mark as "Current", add both products as packages
 
-- [ ] **2B.7** Copy the **production Apple API key** — this goes into step 1.1
+- [x] **2B.7** Copy the **production Apple API key** — `appl_ioydwLPhnHRWhYBhNZDXMQCCPSy` → swapped into code ✅
 
 ---
 
@@ -280,7 +285,7 @@ The following features were **consciously deferred** to ship v1.0 faster. The co
 ## Assumptions
 
 - **Bundle ID**: Shipping with `Orion.BlueJayMVP`. If you want to change it, do so before creating anything in App Store Connect.
-- **Pricing**: Using $9.99/month + $59.99/year (matches current StoreKit config and GO_TO_MARKET.md "aggressive" option).
+- **Pricing**: Using $9.99/month + $79.99/year (matches App Store Connect pricing).
 - **Login**: No login for v1.0. No Firebase dependency. Subscriptions managed entirely by RevenueCat + Apple ID. This means no Sign in with Apple requirement from Apple's review guidelines.
 - **Data risk**: User data is local-only (UserDefaults). If the app is deleted, data is lost. This is accepted for v1.0.
 

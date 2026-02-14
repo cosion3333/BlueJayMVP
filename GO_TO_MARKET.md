@@ -59,7 +59,7 @@ Aligned to `BLUEJAY_SPEC.md` core loop: Recall → Focus → Go-To Swap → Trac
 
 ### Alternative (more aggressive conversion)
 - **Monthly**: $9.99/month
-- **Annual**: $59.99/year
+- **Annual**: $79.99/year
 - **Trial**: none initially (consider intro discount later)
 
 ### Decision (fill this in)
