@@ -11,12 +11,14 @@ Check items off as you go. Any AI agent working on this project should reference
 
 ---
 
-## Current State (as of 2025-02-09)
+## Current State (as of 2025-02-14)
 
 - **Core app**: All 3 tabs implemented and functional (Recall, Insights, Swaps)
+- **Core loop works**: Recall → Focus → Go-To Swap → Track Usage
 - **RevenueCat**: SDK integrated, paywall/purchase/restore flows wired, entitlement checks in place
 - **Content**: 40 bad foods + 120 swaps bundled in `bluejay_data.json`
 - **Persistence**: UserDefaults (local only, no backend)
+- **Auth**: None — shipping without login (see Deferred to v1.1 section below)
 - **StoreKit config**: Products defined (`com.bluejay.premium.monthly` $9.99, `com.bluejay.premium.annual` $59.99)
 - **Bundle ID**: `Orion.BlueJayMVP`
 - **Team ID**: `V7KVJ3ZRT8`
@@ -251,20 +253,36 @@ App Store Review requires a Privacy Policy URL. Terms of Service is strongly rec
 - [ ] **7.2** Verify live App Store listing looks correct
 - [ ] **7.3** Monitor RevenueCat dashboard for first purchases
 - [ ] **7.4** Begin weekly results tracking in GO_TO_MARKET.md
-- [ ] **7.5** Plan v1.1 fast-follows:
-  - Onboarding flow
-  - Analytics / crash reporting (TelemetryDeck, Firebase Crashlytics)
+- [ ] **7.5** Plan v1.1 fast-follows (see "Deferred to v1.1" section):
+  - Firebase Auth (Sign in with Apple) + Firestore cloud sync
+  - Onboarding flow (3–4 screens)
+  - "Did you use a swap?" check-in popup
+  - Analytics / crash reporting (TelemetryDeck or Firebase)
   - Iterate paywall copy based on conversion data
+
+---
+
+## Deferred to v1.1
+
+The following features were **consciously deferred** to ship v1.0 faster. The core product loop works without them.
+
+| Feature | Why It's OK to Skip for v1.0 | v1.1 Plan |
+|---------|------------------------------|-----------|
+| **Sign-in / Auth** | Apple only requires Sign in with Apple if you offer other social logins. No login = zero friction from download to first use. RevenueCat ties subscriptions to Apple ID, so purchases restore fine without our own auth. | Add Firebase Auth (Sign in with Apple) if retention data justifies it. |
+| **Cloud sync (Firebase/Firestore)** | Data lives in UserDefaults locally. Risk: data lost if app deleted. Acceptable for launch — most users won't delete in week one. | Add Firestore sync so user data persists across devices/reinstalls. Consider iCloud Key-Value Storage as a quick interim solution. |
+| **Onboarding flow** | The 3-tab structure is self-explanatory. Can add later when we see where users drop off. | Add 3–4 screen onboarding (welcome, first recall, focus explanation, tab tour). |
+| **"Did you use a swap?" popup** | Engagement driver from the spec but not blocking core loop. | Add check-in popup on Tab 1 exit to boost swap tracking. |
+| **Analytics / crash reporting** | RevenueCat provides purchase funnel data. Flying blind on in-app behavior is acceptable for initial launch. | Add Firebase Analytics or TelemetryDeck + crash reporting. |
+| **FNDDS food database (SQLite)** | Current JSON keyword matching works. FNDDS typeahead search is a polish feature. | Evaluate if users struggle with food entry before investing. |
 
 ---
 
 ## Assumptions
 
-- **Onboarding**: Not blocking v1.0. The 3-tab structure is self-explanatory. Add onboarding in v1.1.
-- **Analytics**: Not included for MVP. RevenueCat provides purchase funnel data. Add crash reporting in a fast follow.
 - **Bundle ID**: Shipping with `Orion.BlueJayMVP`. If you want to change it, do so before creating anything in App Store Connect.
 - **Pricing**: Using $9.99/month + $59.99/year (matches current StoreKit config and GO_TO_MARKET.md "aggressive" option).
-- **Login**: No login for v1 (per GO_TO_MARKET.md decision).
+- **Login**: No login for v1.0. No Firebase dependency. Subscriptions managed entirely by RevenueCat + Apple ID. This means no Sign in with Apple requirement from Apple's review guidelines.
+- **Data risk**: User data is local-only (UserDefaults). If the app is deleted, data is lost. This is accepted for v1.0.
 
 ---
 
