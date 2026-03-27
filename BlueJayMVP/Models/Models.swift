@@ -145,7 +145,7 @@ struct SwapCombo: Identifiable, Codable, Hashable {
         if titleLower.contains("edamame") { emojis.append("🫛") }
         
         // Return first 2 unique emojis
-        let uniqueEmojis = Array(NSOrderedSet(array: emojis)) as! [String]
+        let uniqueEmojis = (Array(NSOrderedSet(array: emojis)) as? [String]) ?? emojis
         let limitedEmojis = Array(uniqueEmojis.prefix(2))
         
         return limitedEmojis.isEmpty ? "🍽️" : limitedEmojis.joined()
