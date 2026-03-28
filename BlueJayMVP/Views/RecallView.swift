@@ -21,13 +21,12 @@ struct RecallView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     // Instructions at top
-                    Text("List everything you ate today.")
+                    Text("What did you eat in the last 24 hours?")
                         .font(.title3)
                         .foregroundStyle(.secondary)
-                    
-                    // 24-Hour Recall Section
+
+                    // Recall card
                     VStack(alignment: .leading, spacing: 8) {
-                        SectionLabel("24-HOUR RECALL")
                         RecallCard(
                             items: appModel.recallItems,
                             newItemText: $newItemText,
