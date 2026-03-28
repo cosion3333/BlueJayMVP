@@ -187,7 +187,8 @@ struct RecallItemRow: View {
             
             // Item text
             Text(text)
-                .font(.body)
+                .font(.title3)
+                .fontWeight(.bold)
                 .foregroundStyle(.primary)
             
             Spacer()
