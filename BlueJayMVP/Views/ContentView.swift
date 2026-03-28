@@ -97,7 +97,7 @@ struct TabBarButton: View {
         Button(action: action) {
             VStack(spacing: 4) {
                 Image(systemName: icon)
-                    .font(.system(size: 24, weight: isSelected ? .semibold : .regular))
+                    .font(.system(size: 24, weight: isSelected ? .bold : .semibold))
                     .foregroundStyle(isSelected ? Color.accentColor : .secondary)
                 
                 Text(label)
