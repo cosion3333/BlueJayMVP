@@ -68,6 +68,9 @@ struct RecallView: View {
         }
         .navigationTitle("Diet Recall")
         .background(Color(.systemGroupedBackground))
+        .onChange(of: isInputFocused) { _, focused in
+            appModel.isKeyboardVisible = focused
+        }
     }
 }
 

@@ -10,8 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @Environment(AppModel.self) private var appModel
     @State private var selectedTab = 0
-    @State private var isKeyboardVisible = false
-
     var body: some View {
         @Bindable var appModel = appModel
 
@@ -31,15 +29,9 @@ struct ContentView: View {
             }
 
             // Custom full-width tab bar — hidden when keyboard is showing
-            if !isKeyboardVisible {
+            if !appModel.isKeyboardVisible {
                 CustomTabBar(selectedTab: $selectedTab)
             }
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
-            isKeyboardVisible = true
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
-            isKeyboardVisible = false
         }
         .sheet(isPresented: $appModel.showPaywall) {
             PaywallView()

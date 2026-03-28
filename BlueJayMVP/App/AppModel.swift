@@ -12,6 +12,9 @@ import SwiftUI
 @Observable
 class AppModel {
     
+    // MARK: - UI State
+    var isKeyboardVisible = false
+
     // MARK: - Recall State
     var recallItems: [String] = [] {
         didSet {
