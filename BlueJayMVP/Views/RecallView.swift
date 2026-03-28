@@ -146,6 +146,7 @@ struct RecallCard: View {
             // Add new item field
             HStack(spacing: 12) {
                 TextField("Add what you ate or drank…", text: $newItemText)
+                    .font(.body)
                     .focused(isInputFocused)
                     .submitLabel(.done)
                     .onSubmit {
@@ -160,7 +161,7 @@ struct RecallCard: View {
                 .disabled(newItemText.trimmingCharacters(in: .whitespaces).isEmpty)
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 12)
+            .padding(.vertical, 16)
         }
         .background(.background)
         .clipShape(RoundedRectangle(cornerRadius: 16))
