@@ -71,7 +71,7 @@ struct CustomTabBar: View {
             }
             
             TabBarButton(
-                icon: "arrow.2.squarepath",
+                icon: "arrow.triangle.2.circlepath",
                 label: "Swaps",
                 isSelected: selectedTab == 2
             ) {
