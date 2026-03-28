@@ -185,15 +185,11 @@ struct SwapsView: View {
                 Button {
                     selectedTab = 1
                 } label: {
-                    Text("Change")
+                    Text("Change Focus")
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.accentColor)
                 }
-                
-                Image(systemName: "target")
-                    .foregroundStyle(.green)
-                    .font(.title2)
             }
             .padding(16)
             .background(.background)
