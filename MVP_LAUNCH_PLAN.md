@@ -124,13 +124,13 @@ App Store Review requires a Privacy Policy URL. Terms of Service is strongly rec
   - Created `privacy-policy.html` in repo root
   - Covers: local-only data storage, RevenueCat purchase processing, no personal data collection, no account required
 
-- [ ] **3.2** Write Terms of Service
-  - What to include: subscription auto-renewal terms, cancellation via Apple settings, no refund through the app (handled by Apple), limitation of liability
-  - Can use a standard template adapted for your app
+- [x] **3.2** Write Terms of Service ✅
+  - Created `terms.html` in `bluejay-privacy` GitHub Pages repo
+  - Covers: subscription auto-renewal, cancellation via Apple settings, refunds through Apple, limitation of liability, medical disclaimer
 
-- [x] **3.3** Host privacy policy at stable URL ✅
-  - Privacy policy live on GitHub Pages
-  - Terms of Service URL: ______________________ (pending 3.2)
+- [x] **3.3** Host both pages at stable URLs ✅
+  - Privacy Policy: https://cosion3333.github.io/bluejay-privacy/
+  - Terms of Service: https://cosion3333.github.io/bluejay-privacy/terms.html
 
 - [ ] **3.4** Add URLs to App Store Connect (app metadata section)
 
