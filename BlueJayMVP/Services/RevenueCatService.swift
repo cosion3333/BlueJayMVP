@@ -15,8 +15,13 @@ class RevenueCatService: NSObject {
     static let shared = RevenueCatService()
     
     // MARK: - Configuration
-    // Production API key from RevenueCat dashboard (Blue Jay Swaps - App Store)
-    private let apiKey = "appl_ioydwLPhnHRWhYBhNZDXMQCCPSy"
+    // API key is loaded from Secrets.xcconfig via Info.plist at runtime
+    private let apiKey: String = {
+        guard let key = Bundle.main.infoDictionary?["RevenueCatAPIKey"] as? String, !key.isEmpty else {
+            fatalError("RevenueCatAPIKey not found in Info.plist. Ensure Secrets.xcconfig exists — see Secrets.example.xcconfig.")
+        }
+        return key
+    }()
     private let entitlementID = "Blue Jay Swaps Pro"
     
     // MARK: - State

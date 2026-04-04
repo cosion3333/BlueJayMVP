@@ -55,5 +55,8 @@ fastlane/test_output
 # Code Injection
 iOSInjectionProject/
 
+# Secrets
+Secrets.xcconfig
+
 # macOS
 .DS_Store

@@ -7,7 +7,7 @@
 │ 🎯 CRITICAL INFO (Keep This Handy)                               │
 └──────────────────────────────────────────────────────────────────┘
 
-TEST API KEY:   test_DWbLlQNWFHLimjMuupRGeegPNlL
+API KEY:        (stored in Secrets.xcconfig — see Secrets.example.xcconfig)
 ENTITLEMENT:    Blue Jay Swaps Pro
 PRODUCT IDs:    monthly, yearly
 

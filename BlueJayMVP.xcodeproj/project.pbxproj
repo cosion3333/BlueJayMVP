@@ -32,6 +32,7 @@
 		E056F8262E65EFA100C7417B /* BlueJayMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueJayMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E056F8342E65EFA200C7417B /* BlueJayMVPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueJayMVPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E056F83E2E65EFA200C7417B /* BlueJayMVPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueJayMVPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0SEC00012F40000SECRETS01 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -82,6 +83,7 @@
 		E056F81D2E65EFA100C7417B = {
 			isa = PBXGroup;
 			children = (
+				E0SEC00012F40000SECRETS01 /* Secrets.xcconfig */,
 				E056F8282E65EFA100C7417B /* BlueJayMVP */,
 				E056F8372E65EFA200C7417B /* BlueJayMVPTests */,
 				E056F8412E65EFA200C7417B /* BlueJayMVPUITests */,
@@ -283,6 +285,7 @@
 /* Begin XCBuildConfiguration section */
 		E056F8462E65EFA200C7417B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0SEC00012F40000SECRETS01 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -344,6 +347,7 @@
 		};
 		E056F8472E65EFA200C7417B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0SEC00012F40000SECRETS01 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -406,6 +410,7 @@
 				DEVELOPMENT_TEAM = V7KVJ3ZRT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_RevenueCatAPIKey = "$(REVENUECAT_API_KEY)";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -441,6 +446,7 @@
 				DEVELOPMENT_TEAM = V7KVJ3ZRT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_RevenueCatAPIKey = "$(REVENUECAT_API_KEY)";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
