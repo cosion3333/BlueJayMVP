@@ -11,15 +11,18 @@ Check items off as you go. Any AI agent working on this project should reference
 
 ---
 
-## Current State (as of 2025-02-14)
+## Current State (as of 2026-04-04)
 
 - **Core app**: All 3 tabs implemented and functional (Recall, Insights, Swaps)
 - **Core loop works**: Recall → Focus → Go-To Swap → Track Usage
 - **RevenueCat**: SDK integrated, paywall/purchase/restore flows wired, entitlement checks in place
+- **API key management**: RevenueCat API key loaded from `Secrets.xcconfig` (gitignored) via Info.plist at runtime — see `Secrets.example.xcconfig`
 - **Content**: 40 bad foods + 120 swaps bundled in `bluejay_data.json`
 - **Persistence**: UserDefaults (local only, no backend)
 - **Auth**: None — shipping without login (see Deferred to v1.1 section below)
 - **StoreKit config**: Products defined (`com.bluejay.premium.monthly` $9.99, `com.bluejay.premium.annual` $79.99)
+- **App icon**: Custom blue jay icon added to asset catalog ✅
+- **Privacy policy**: Written and bundled as `privacy-policy.html` ✅
 - **Bundle ID**: `Orion.BlueJayMVP`
 - **Team ID**: `V7KVJ3ZRT8`
 
@@ -30,8 +33,8 @@ Check items off as you go. Any AI agent working on this project should reference
 > Estimated effort: 1–2 hours (blocked on Phase 2B for the production API key)
 
 - [x] **1.1** Replace RevenueCat test API key with production key
-  - File: `BlueJayMVP/Services/RevenueCatService.swift` line 18
-  - Replaced `test_DWbLlQNWFHLimjMuupRGeegPNlL` with production key `appl_ioydwLPhnHRWhYBhNZDXMQCCPSy` ✅
+  - API key moved out of source code into `Secrets.xcconfig` (gitignored), loaded via Info.plist at runtime
+  - See `Secrets.example.xcconfig` for setup instructions ✅
 
 - [x] **1.2** Change RevenueCat log level to `.info`
   - File: `BlueJayMVP/Services/RevenueCatService.swift`
@@ -99,13 +102,13 @@ Check items off as you go. Any AI agent working on this project should reference
   - Key ID: `JP9PL97U78`
   - Issuer ID: `8018cd52-744f-4431-8cbb-732cbba96176`
 
-- [ ] **2B.3** Create entitlement: `Blue Jay Swaps Pro`
+- [x] **2B.3** Create entitlement: `Blue Jay Swaps Pro` ✅
 
-- [ ] **2B.4** Create product: `com.bluejay.premium.monthly` — attach to entitlement
+- [x] **2B.4** Create product: `com.bluejay.premium.monthly` — attach to entitlement ✅
 
-- [ ] **2B.5** Create product: `com.bluejay.premium.annual` — attach to entitlement
+- [x] **2B.5** Create product: `com.bluejay.premium.annual` — attach to entitlement ✅
 
-- [ ] **2B.6** Create an Offering, mark as "Current", add both products as packages
+- [x] **2B.6** Create an Offering, mark as "Current", add both products as packages ✅
 
 - [x] **2B.7** Copy the **production Apple API key** — `appl_ioydwLPhnHRWhYBhNZDXMQCCPSy` → swapped into code ✅
 
@@ -117,18 +120,17 @@ Check items off as you go. Any AI agent working on this project should reference
 
 App Store Review requires a Privacy Policy URL. Terms of Service is strongly recommended.
 
-- [ ] **3.1** Write a Privacy Policy
-  - What to include: the app stores food logs locally on-device only; RevenueCat processes purchase data; no personal data is collected or shared; no account/login required
-  - Keep it simple and honest
+- [x] **3.1** Write a Privacy Policy ✅
+  - Created `privacy-policy.html` in repo root
+  - Covers: local-only data storage, RevenueCat purchase processing, no personal data collection, no account required
 
 - [ ] **3.2** Write Terms of Service
   - What to include: subscription auto-renewal terms, cancellation via Apple settings, no refund through the app (handled by Apple), limitation of liability
   - Can use a standard template adapted for your app
 
-- [ ] **3.3** Host both pages at stable URLs
-  - Options: GitHub Pages, Notion public page, simple HTML on any static host
-  - Privacy Policy URL: ______________________
-  - Terms of Service URL: ______________________
+- [x] **3.3** Host privacy policy at stable URL ✅
+  - Privacy policy live on GitHub Pages
+  - Terms of Service URL: ______________________ (pending 3.2)
 
 - [ ] **3.4** Add URLs to App Store Connect (app metadata section)
 
@@ -142,10 +144,10 @@ App Store Review requires a Privacy Policy URL. Terms of Service is strongly rec
 
 ### App Icon
 
-- [ ] **4.1** Design or finalize the app icon (1024x1024 PNG, no transparency, no rounded corners)
+- [x] **4.1** Design or finalize the app icon (1024x1024 PNG, no transparency, no rounded corners) ✅
 
-- [ ] **4.2** Add icon to `BlueJayMVP/Resources/Assets.xcassets/AppIcon.appiconset/`
-  - The asset catalog is configured but currently has no image files
+- [x] **4.2** Add icon to `BlueJayMVP/Resources/Assets.xcassets/AppIcon.appiconset/` ✅
+  - `AppIcon.png` added to asset catalog
 
 ### Screenshots
 
