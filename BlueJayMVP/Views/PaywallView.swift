@@ -24,59 +24,18 @@ struct PaywallView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             // Use RevenueCat's native paywall if offerings are loaded
-            if let offering = revenueCat.offerings?.current {
-                RevenueCatUI.PaywallView(
-                    offering: offering,
-                    displayCloseButton: false,
-                    performPurchase: { package in
-                        do {
-                            _ = try await revenueCat.purchase(package: package)
-                             #if DEBUG
-                             print("✅ Purchase completed!")
-                             #endif
+            if revenueCat.offerings?.current != nil {
+                RevenueCatUI.PaywallView(displayCloseButton: false)
+                    .onPurchaseCompleted { _ in
+                        revenueCat.syncCustomerInfo()
+                        dismiss()
+                    }
+                    .onRestoreCompleted { _ in
+                        revenueCat.syncCustomerInfo()
+                        if revenueCat.isPremium {
                             dismiss()
-                            return (false, nil)
-                        } catch {
-                            let nsError = error as NSError
-                            let isCancelled = (error as? ErrorCode) == .purchaseCancelledError ||
-                                nsError.code == ErrorCode.purchaseCancelledError.rawValue
-                            if !isCancelled {
-                                purchaseError = error
-                                showError = true
-                            }
-                            return (isCancelled, isCancelled ? nil : error)
-                        }
-                    },
-                    performRestore: {
-                        do {
-                            _ = try await revenueCat.restorePurchases()
-                            #if DEBUG
-                            print("✅ Restore completed!")
-                            #endif
-                            if revenueCat.isPremium {
-                                showRestoreSuccess = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                    dismiss()
-                                }
-                                return (true, nil)
-                            } else {
-                                let error = NSError(
-                                    domain: "BlueJay",
-                                    code: -1,
-                                    userInfo: [NSLocalizedDescriptionKey: "No active subscriptions found"]
-                                )
-                                purchaseError = error
-                                showError = true
-                                return (false, error)
-                            }
-                        } catch {
-                            purchaseError = error
-                            showError = true
-                            return (false, error)
                         }
                     }
-                )
-                .paywallFooter()
             } else {
                 // Custom paywall fallback
                 customPaywallView
